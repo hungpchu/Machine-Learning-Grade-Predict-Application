@@ -18,3 +18,4 @@
     - lr.pkl: logistic regression model
     - nb.pkl: naive bayes model
 
+Developer: Hung Chu
