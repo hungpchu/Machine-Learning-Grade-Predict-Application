@@ -1,0 +1,109 @@
+<style>
+    table, th, td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+        background-color:white;
+    }
+
+	#hello{
+
+position: absolute;
+top: 8px;
+right: 16px;
+
+width: 324px;
+height: 375px;
+background-image: url('../images/sprites1.png');
+
+
+}
+
+@keyframes move {
+  from {background-position-x: 0px;}
+  to {background-position-x: -972px;}
+}
+
+
+#text {
+position: absolute;
+right: 90px;
+
+top: 390px;
+
+}
+
+
+#start {
+position: absolute;
+right: 67px;
+
+top: 420px;
+
+}
+
+#stopBt{
+position: absolute;
+right: 16px;
+
+top: 420px;
+
+}
+
+</style>
+
+
+
+	
+
+
+
+
+<div ng-app = "Grade" ng-controller = "StudCtrl" style = "text-align:center">
+	
+
+
+
+	
+	
+	<h1 style = "max-width:600px;margin:auto;text-align:center;width:80%;background-color:#8f8f8f;color:white;padding:10px">{{account["Full name"]}}</h1>
+	<a href = "/#/">Logout</a>
+	<p>
+		{{message}}
+	</p>
+	<div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
+		<h4>Profile:</h4>
+		<table border = "0" id = "profileTable" style = "margin:auto">
+		</table>
+	</div>
+
+
+	<div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid grey;border-radius:5px">
+		<label style = "margin-right:10px">Course:</label>
+		<select ng-model = "course" style = "width:150px;height:30px;">
+			<option disable selected value>Choose course...</option>
+			<option value = "csce156">CSCE156</option>
+			<option value = "csce235">CSCE235</option>
+		</select>
+		<button class = "btn btn-primary" ng-click = "viewGrade()" style = "margin-left:10px">View grade</button>
+	</div>
+
+
+   <div>
+	<button id = "hello" >Start</button>
+	<input id = "text" type="text" class="txt">
+
+
+	<button id = "start" >Start</button>
+	
+	<button  id = "stopBt" >Stop</button>
+
+
+   </div>
+
+  
+</div>
+
+
+  
+
