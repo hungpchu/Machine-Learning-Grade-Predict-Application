@@ -20,13 +20,17 @@ router.get('/csce235', function(req, res) {
 	var uint8ToString = function(data) {
 		return String.fromCharCode.apply(null, data);
 	};
+
 	var fs = require('fs');
+
 	fs.readFile('ml_scripts/data/csce235/grade.json', function(err, data) {
+
 		if (err) return console.log(err);
 		var wrapObj = {
 			grades: uint8ToString(data)
 		};
 		res.json(wrapObj);
+
 	});
 });
 
@@ -55,32 +59,61 @@ router.get('/csce235/:nuid', function(req, res) {
     });
 });
 
-
+// ấn vào grade generation step(2) -> POST /api/grades/csce235 
+// put data in the table 
 router.post('/csce235', function(req, res) {
-    var collection = db.get('csce235');
+
+	var collection = db.get('csce235');
+
+	collection.remove({});
+
+
+	console.log("inside router.post('/csce235', function(req, res)");
+
+	// same initialize in multipp.js
     var uint8ToString = function(data) {
 		return String.fromCharCode.apply(null, data);
 	};
+
+	// 
 	var params = ['ml_scripts/predict.py', 'csce235'];
+
 	params.push(req.body.students, req.body.fields);
+
+	//console.log("param = ");
+	//console.log(param);
+
 	for(var i in req.body.grade) {
 		var thisGrade = req.body.grade[i];
 		for(var prop in thisGrade) {
 			params.push(prop, thisGrade[prop]);
 		}
 	}
+
+
+
 	const spawn = require('child_process').spawn;
 	const ls = spawn('python3', params);
 	ls.stdout.on('data', (data) => {
+
 		var predict = uint8ToString(data).split(',');
+
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
+
+			console.log("database cua csce235: ");
+
 			console.log(thisGrade);
+			
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);
 			});
 		}
+
+
+		console.log("update thanh cong");
+
         return res.json({});
 	});
 	ls.stderr.on('data', (data) => {
@@ -90,6 +123,9 @@ router.post('/csce235', function(req, res) {
 	  console.log("child process exited with code " + code);
 	});
 });
+
+
+
 
 router.get('/csce156', function(req, res) {
 	var uint8ToString = function(data) {

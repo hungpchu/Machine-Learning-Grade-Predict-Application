@@ -24,13 +24,20 @@ router.get('/students', function(req, res) {
 router.get('/:username', function(req, res) {
     var collection = db.get('accounts');
 
-     console.log("hung db");
+     console.log(" trong account.js, router.get('/:username', function(req, res)");
+
 
     collection.findOne({ Username: req.params.username }, function(err, account) {
+
         if (err) return console.log(err);
         if (account == null) {
+            console.log("account null  ");
 			return res.json({});
-		}
+        }
+        
+        console.log(" co account ");
+        console.log(account );
+        
 		res.json(account);
 		/*
 		var uint8arrayToString = function(data) {
@@ -65,8 +72,11 @@ router.get('/:username', function(req, res) {
 router.get('/:nuid', function(req, res) {
     var collection = db.get('accounts');
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+        console.log(" o trong router.get('/:nuid', function(req, res) ")
         if (err) return console.log(err);
         if (account == null) {
+
+            console.log(" account null trong router.get('/:nuid', function(req, res) ");
 			return res.json({});
 		}
 		var uint8arrayToString = function(data) {
@@ -127,16 +137,24 @@ router.post('/', function(req, res) {
 });
 */
 
+// save data 
 router.post('/', function(req, res) {
-	var collection = db.get('accounts');
-	console.log(req.body);
+    var collection = db.get('accounts');
+    console.log(" trong account.js, req.body  = " );
+
+    // content of request 
+    console.log(req.body);
+    
+    // insert data i guess 
 	collection.insert(req.body, {w: 1}, function(err, result) {
-		if (err) return console.log(err);
-		//console.log(result);
+        if (err) return console.log(err);
+        console.log(" trong router.post('/', function(req, res), result = ");
+		console.log(result);
 		res.json(result);
 	});
 }); 
 
+//send email confirm
 router.post('/register', function(req, res) {
     const nodemailer = require('nodemailer');
     var wrapObj = {
@@ -158,6 +176,8 @@ router.post('/register', function(req, res) {
         subject: 'Confirmation',
         html: '<h1>Hi! Welcome to the system.</h1><p><i>This is an auto-generated email from Grade Prediction System.</i></p><p>Your confirmation code is: <font size="6"><b>' + wrapObj.code + '</b></font></p>'
     };
+
+    // press send confirmation code 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
             console.log(error);

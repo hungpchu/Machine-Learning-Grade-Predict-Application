@@ -121,7 +121,11 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 				$scope.message = "Username cannot be empty!";
 				return;
 			}
+
+			// declare from account.js
 			var Account = $resource('/api/accounts/:username');
+
+			// check user exist or not
 			Account.get({username: $scope.username}, function(account) {
 				if (account.Username != undefined) {
 					$scope.message = "Username has already existed!";
@@ -133,36 +137,53 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 				}
 			});
 		}
+
+		
+
+		// send email 
         $scope.sendEmail = function() {
             $scope.message = "";
-            $scope.email = format($scope.email);
+			$scope.email = format($scope.email);
+			
             if (($scope.email).trim() == "") {
                 $scope.message = "You have to enter your email to receive confirmation code.";
                 return;
-            }
-            var Email = $resource('/api/accounts/register');
+			}
+			
+			// declare trong accounts also -> 
+			var Email = $resource('/api/accounts/register');
+			
             Email.save({email: $scope.email}, function(data) {
                 correctCode = data.code;
             });
-        }
+		}
+		
+		// verify
         $scope.verify = function() {
             $scope.message = "";
             if (correctCode == "") {
                 $scope.message = "The confirmation code has not been generated.";
                 return;
-            }
+			}
+			
+			// press verify
             if (($scope.confirmCode).trim() == correctCode) {
                 confirmed = true;
                 $scope.message = "Email confirmed!";
             } else {
                 $scope.message = "Incorrect code!";
             }
-        }
+		}
+		
+
         $scope.reset = function() {
             document.getElementById("registerForm").reset();
             $scope.message = "";
-        }
+		}
+		
+
         $scope.regist = function() {
+
 			var roles = document.getElementsByName("optradio");
 			var role = "";
 			for(var i = 0; i < roles.length; i++) {
@@ -170,11 +191,14 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 					role = roles[i].value;
 				}
 			}
+
 			if (role == "") {
 				$scope.message = "You need to select your role.";
 				return;
 			}
+
 			$scope.nuid = format($scope.nuid);
+
 			if ($scope.nuid == "") {
 				$scope.message = "NUID cannot be empty!";
 				return;
@@ -188,22 +212,29 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 					}
 				});
 			}
+
+
             if (!usernameChecked) {
 				$scope.message = "Your username has not been checked yet!";
 				return;
 			}
+
 			if (!confirmed) {
                 $scope.message = "Your email has not been confirmed yet!";
                 return;
-            }
+			}
+			
 			if ($scope.password == undefined || $scope.password == "") {
 				$scope.message = "Password cannot be empty!";
 				return;
 			}
+
+
             if ($scope.password != $scope.rpassword) {
                 $scope.message = "Password does not match!";
                 return;
-            }
+			}
+			
 			var account = {
 				"Full name": $scope.fullname,
 				"Role": role,
@@ -212,7 +243,10 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 				"Username": $scope.username,
 				"Password": $scope.password
 			};
+
+
 			var Accounts = $resource('/api/accounts');
+
 			Accounts.save(account, function() {
 				alert("You have successfully registered!\nYou will be redirected to the login page.");
 	            $location.path("/");
@@ -224,6 +258,8 @@ app.controller('RegisterCtrl', ['$scope', '$resource', '$location',
 // professor.html
 app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
     function($scope, $resource, $location, $routeParams) {
+
+
 		var Account = $resource('/api/accounts/:username');
 		var Properties = $resource('/api/multipp/properties');
 
@@ -251,6 +287,8 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 				}
 			});
 		});
+
+
 		var addRow = function(table, fullname) {
 			var tr = document.createElement("tr");
 			var td = document.createElement("td");
@@ -265,6 +303,8 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 			}
 		};
 		$scope.getLists = function() {
+
+
 			document.getElementById('counter').innerHTML = '';
 			var option = $scope.courseStat;
 			var goodList = document.getElementById('goodList');
@@ -298,11 +338,14 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 			});
 		}
 
+		// Run button
 		$scope.rerunModel = function() {
 			if ($scope.courseToRun == "") {
 				$scope.message = "No course is chosen.";
 				return;
 			}
+
+
 			var Model = $resource('/api/models');
 			Model.save({course: $scope.courseToRun}, function (newdata) {
 				var i;
@@ -310,12 +353,17 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 				$scope.message = "Finished!";
 			});
 		};
+
+
+		// Predict button
 		$scope.predict = function() {
 			if ($scope.courseToRun == "") {
 				$scope.message = "No course is chosen.";
 				return;
 			}
 			var Grades = $resource('/api/grades/' + $scope.courseToRun);
+
+
 			Grades.get(function(jsonGrade) {
 				var fullGrade = JSON.parse(jsonGrade.grades);
 				var wrapObj = {
@@ -323,6 +371,8 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 					students: 0,
 					fields: 0
 				};
+
+
 				Properties.save({filename: $scope.courseToRun}, function(data) {
 					for(var i in fullGrade) {
 						wrapObj.students++;
@@ -334,6 +384,8 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 							if (thisGrade[data.list[prop]] != undefined) {
 								validGrade[data.list[prop]] = thisGrade[data.list[prop]];
 							}
+
+							// invalid grade = -1.
 							else {
 								validGrade[data.list[prop]] = -1;
 							}
@@ -344,19 +396,30 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 						validGrade["Full name"] = thisGrade["Full name"];
 						wrapObj.grade.push(validGrade);
 					}
+
+
 					Grades.save(wrapObj, function(data) {
 						$scope.message = "Predictions are generated!"
 					});
 				});
+
+
 			});
 		};
+
+
+		// upload thing1
         $scope.upload = function() {
 			if ($scope.course == "") {
 				$scope.message = "No course is chosen.";
 				return;
 			}
             $location.path('/professor/' + $routeParams.username + '/uploadGrade/' + $scope.course);
-        };
+		};
+
+
+		
+
     }
 ]);
 
