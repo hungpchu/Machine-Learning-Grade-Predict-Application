@@ -19,56 +19,39 @@ router.post('/properties', function(req, res) {
 	var fs = require('fs');
 
 	function readProperties(callback) {
-		
-		// param.txt chỉ chứa đống data điểm nhỏ
-		//  read from file temp/csce235.txt
+
+		console.log(" req.body.filename la userinfo trong multipp= " + req.body.filename);
+	
+		//  1a/ read from file temp/UserInfo.txt
 		fs.readFile("temp/" + req.body.filename + ".txt", function(err, data) {
 
-			// req.body.filename = csce235
+			// 1b/ req.body.filename = UserInfo
 			if (err)
 				return console.log(err);
 			
-			// 
+			// -> store Full Name, .. from UserInfo.txt to data
 			callback(uint8ToString(data));
 		});
 	}
 
-	// read data = string voi noi dung = Homework 1,Homework 2,Homework 3,Homework 4, blahh
+
+	// read data from UserInfo.txt
 	readProperties(function(data) {
 	
 
+
 		// initialize var wrapObj
-		// store data vao list cua object wrapObj
+		//1/ store data vao list cua object wrapObj = Full Name, ... 
 		var wrapObj = {
 			// list la danh sách cho data vào 
 			list: data.trim().split(",")
 			
 		};
 
-		/*
-		 wrapObj = {
-			 list: 
-   			[ 	'Homework 1',
-     			'Homework 2',
-     			'Homework 3',
-     			'Homework 4',
-     			'Homework 5',
-     			'Homework 6',
-     			'Quiz 1',
-     			'Quiz 2',
-     			'Quiz 3',
-     			'Quiz 4',
-     			'Quiz 5',
-     			'Quiz 6',
-     			'Quiz 7',
-     			'Quiz 8',
-     			'Quiz 9',
-     			'Quiz 10',
-     			'Midterm',
-     			'Final' ] }
+		console.log(" wrapObj = ");
+		console.log(wrapObj);
 
-	
-		*/
+
 		res.json(wrapObj);
 	});
 });

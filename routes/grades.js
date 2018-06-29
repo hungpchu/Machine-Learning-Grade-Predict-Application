@@ -23,6 +23,7 @@ router.get('/csce235', function(req, res) {
 
 	var fs = require('fs');
 
+
 	fs.readFile('ml_scripts/data/csce235/grade.json', function(err, data) {
 
 		if (err) return console.log(err);
@@ -34,8 +35,36 @@ router.get('/csce235', function(req, res) {
 	});
 });
 
+router.get('/csce23', function(req, res) {
+	var uint8ToString = function(data) {
+		return String.fromCharCode.apply(null, data);
+	};
+
+	var fs = require('fs');
+
+
+	fs.readFile('ml_scripts/data/csce23/grade.json', function(err, data) {
+
+		if (err) return console.log(err);
+		var wrapObj = {
+			grades: uint8ToString(data)
+		};
+		res.json(wrapObj);
+
+	});
+});
+
+
 router.get('/csce235/db', function(req, res) {
     var collection = db.get('csce235');
+    collection.find({}, function(err, accounts) {
+        if (err) return console.log(err);
+        res.json(accounts);
+    });
+});
+
+router.get('/csce23/db', function(req, res) {
+    var collection = db.get('csce23');
     collection.find({}, function(err, accounts) {
         if (err) return console.log(err);
         res.json(accounts);
@@ -59,8 +88,25 @@ router.get('/csce235/:nuid', function(req, res) {
     });
 });
 
+router.get('/csce23/:nuid', function(req, res) {
+    var collection = db.get('csce23');
+    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+		console.log("hung 23");
+        if (err) return console.log(err);
+        if (account == null) {
+			console.log("account1");
+			return res.json({});
+		}
+		console.log("account");
+		console.log(account);
+		return res.json(account);
+    });
+});
+
 // ấn vào grade generation step(2) -> POST /api/grades/csce235 
 // put data in the table 
+// run python3 train_models.py csce235
+// press run = activate ml_scripts/predict.py
 router.post('/csce235', function(req, res) {
 
 	var collection = db.get('csce235');
@@ -75,13 +121,18 @@ router.post('/csce235', function(req, res) {
 		return String.fromCharCode.apply(null, data);
 	};
 
-	// 
-	var params = ['ml_scripts/predict.py', 'csce235'];
 
+	var params = ['ml_scripts/predict.py', 'csce235'];
+		// req.body.fields = 20
 	params.push(req.body.students, req.body.fields);
 
-	//console.log("param = ");
-	//console.log(param);
+	// param = [ 'ml_scripts/predict.py', 'csce235', 2, 20 ]
+	//console.log("params ban dau = ", params);
+
+	// 
+	console.log("req.body.fields = ", req.body.fields);
+
+
 
 	for(var i in req.body.grade) {
 		var thisGrade = req.body.grade[i];
@@ -90,10 +141,18 @@ router.post('/csce235', function(req, res) {
 		}
 	}
 
-
+	// console.log("params = ");
+	// console.log(params);
 
 	const spawn = require('child_process').spawn;
 	const ls = spawn('python3', params);
+
+	ls.stdout.on('data', (data) => {
+
+		console.log(`stdout in 235 predict: ${data}`);
+
+	});
+
 	ls.stdout.on('data', (data) => {
 
 		var predict = uint8ToString(data).split(',');
@@ -102,9 +161,86 @@ router.post('/csce235', function(req, res) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
 
-			console.log("database cua csce235: ");
+			// console.log("database cua csce235: ");
 
-			console.log(thisGrade);
+			// console.log(thisGrade);
+			
+			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
+				if (err) console.log(err);
+			});
+		}
+
+
+		console.log("update thanh cong");
+
+        return res.json({});
+	});
+	ls.stderr.on('data', (data) => {
+	  console.log("stderr: " + data);
+	});
+	ls.on('exit', (code) => {
+	  console.log("child process exited with code " + code);
+	});
+});
+
+
+router.post('/csce23', function(req, res) {
+
+	var collection = db.get('csce23');
+
+	collection.remove({});
+
+
+	console.log("inside router.post('/csce23', function(req, res)");
+
+	// same initialize in multipp.js
+    var uint8ToString = function(data) {
+		return String.fromCharCode.apply(null, data);
+	};
+
+
+	var params = ['ml_scripts/predict.py', 'csce23'];
+		// req.body.fields = 20
+	params.push(req.body.students, req.body.fields);
+
+	// param = [ 'ml_scripts/predict.py', 'csce23', 2, 20 ]
+	console.log("params ban dau = ", params);
+
+	// 
+	console.log("req.body.fields = ", req.body.fields);
+
+
+
+	for(var i in req.body.grade) {
+		var thisGrade = req.body.grade[i];
+		for(var prop in thisGrade) {
+			params.push(prop, thisGrade[prop]);
+		}
+	}
+
+	// console.log("params = ");
+	// console.log(params);
+
+	const spawn = require('child_process').spawn;
+	const ls = spawn('python3', params);
+
+	ls.stdout.on('data', (data) => {
+
+		console.log(`stdout in predict: ${data}`);
+
+	});
+
+	ls.stdout.on('data', (data) => {
+
+		var predict = uint8ToString(data).split(',');
+
+		for(var i in req.body.grade) {
+			var thisGrade = req.body.grade[i];
+			thisGrade.Predict = predict[i];
+
+			// console.log("database cua csce23: ");
+
+			// console.log(thisGrade);
 			
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);
@@ -162,22 +298,43 @@ router.get('/csce156/:nuid', function(req, res) {
 
 
 router.post('/csce156', function(req, res) {
-    var collection = db.get('csce156');
+	var collection = db.get('csce156');
+	
+	collection.remove({});
+
     var uint8ToString = function(data) {
 		return String.fromCharCode.apply(null, data);
 	};
 	var params = ['ml_scripts/predict.py', 'csce156'];
 	params.push(req.body.students, req.body.fields);
+
+
+	// 
+	//console.log("req.body.grade 156 = ", req.body.grade);
+
+
+
 	for(var i in req.body.grade) {
 		var thisGrade = req.body.grade[i];
 		for(var prop in thisGrade) {
 			params.push(prop, thisGrade[prop]);
 		}
 	}
+
+	//console.log("params 156 luc sau = ", params);
+
+
 	const spawn = require('child_process').spawn;
 	const ls = spawn('python3', params);
+
+	ls.stdout.on('data', (data) => {
+
+		 console.log(`stdout in 156 predict: ${data}`);
+	});
+
 	ls.stdout.on('data', (data) => {
 		var predict = uint8ToString(data).split(',');
+		console.log("predict = ", predict)
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];

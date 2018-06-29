@@ -3,7 +3,7 @@ var multer = require('multer');
 var router = express.Router();
 
 
-// used for upload button
+// store content of grade.csv at filr storage
 const multerConfig = {
     storage: multer.diskStorage({
         destination: function(req, file, next) {
@@ -106,14 +106,27 @@ router.post('/', function(req, res) {
 	};
 	
 
-    const spawn = require('child_process').spawn;
+
+	const spawn = require('child_process').spawn;
+	// run python3 train_models.py csce235
+	// press run = activate ml_scripts/train_models_new.py
 	const ls = spawn('python3', ['ml_scripts/train_models_new.py', req.body.course]);
-	
+
+	console.log(" req.body.course = " + req.body.course );
+
 	ls.stdout.on('data', (data) => {
 
+		//console.log(`stdout in train model: ${data}`);
+	});
+	ls.stdout.on('data', (data) => {
+
+		//console.log(`stdout in train model: ${data}`);
 		// transform data from uint8 to string, temp tùy ý đổi tên 
 		temp = uint8ToString(data).split(';');
 
+
+		console.log(" uint8ToString(data) =");
+		console.log( uint8ToString(data));
 		console.log("temp = ");
 		console.log(temp);
 
@@ -173,10 +186,11 @@ router.post('/', function(req, res) {
 });
 
 
-// used multerConfig
+// used multerConfig -> used for form action in upload.html
 router.post('/upload', multer(multerConfig).single('csvfile'), function(req, res) {
 
 	console.log("Upload button");
+	// direct back to professor.html
 	res.redirect('/#/profProfile/');
 });
 

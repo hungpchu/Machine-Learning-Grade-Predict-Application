@@ -263,14 +263,23 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 		var Account = $resource('/api/accounts/:username');
 		var Properties = $resource('/api/multipp/properties');
 
+		// use resource Account here -> get accounts/hasan3
 		Account.get({username: $routeParams.username}, function(account) {
 			$scope.fullname = account["Full name"];
+
+			console.log(" account[Full name] =  " + account["Full name"]);
+			
+			// use resource Properties here -> post /api/multipp/properties
 			Properties.save({filename: "UserInfo"}, function(data) {
+				
+				console.log("trong propertise, data = ");
 				console.log(data.list);
+				
 				var table = document.getElementById("profileTable");
 				while (table.firstChild) {
 					table.removeChild(table.firstChild);
 				}
+				
 				for(var prop in data.list) {
 					var tr = document.createElement("tr");
 					var td_name = document.createElement("td");
@@ -297,11 +306,14 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 			tr.appendChild(td);
 			table.appendChild(tr);
 		};
+
 		var resetTable = function(table) {
 			while (table.children[1]) {
 				table.removeChild(table.children[1]);
 			}
 		};
+
+
 		$scope.getLists = function() {
 
 
@@ -314,9 +326,15 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 			resetTable(goodList);
 			resetTable(okList);
 			resetTable(hrList);
+
 			if (option == "") return;
+
+			console.log("option = "+ option);
+
+			// take option to put here -> generate table on the web
 			var Students = $resource('/api/grades/' + option + '/db');
 
+			// Students return all the info from database 
 			Students.query(function(data) {
 				for(var i in data) {
 					var student = data[i];
@@ -414,6 +432,8 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 				$scope.message = "No course is chosen.";
 				return;
 			}
+			console.log("To Upload page");
+			// to the upload page
             $location.path('/professor/' + $routeParams.username + '/uploadGrade/' + $scope.course);
 		};
 
@@ -424,9 +444,10 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 ]);
 
 
-// say here
+// Upload.html -> form action = api/models/upload
 app.controller('UploadCtrl', ['$scope', '$routeParams', 
     function($scope, $routeParams) {
+		console.log("in Upload");
         var str = $routeParams.course;
         $scope.course = str.toUpperCase();
     }
@@ -771,8 +792,8 @@ app.controller('ViewCtrl', ['$scope', '$resource', '$location', '$routeParams',
 
 				//console.log(" $scope.account.NUID ngoai = " + $scope.account.NUID);
 				// lay cai predict ra, call back function chay xong moi chay cai nay
-				//var Predicts = $resource('/api/grades/' + $routeParams.course + '/:nuid');
-				var Predicts = $resource('/api/grades/csce235/:nuid');
+				var Predicts = $resource('/api/grades/' + $routeParams.course + '/:nuid');
+				//var Predicts = $resource('/api/grades/csce235/:nuid');
 
 				Predicts.get({nuid: $scope.account.NUID}, function(data) {
 

@@ -20,23 +20,23 @@ router.get('/students', function(req, res) {
     });
 });
 
-// get the username from the database
+// get the accounts info with the username as the input from the database
 router.get('/:username', function(req, res) {
     var collection = db.get('accounts');
 
-     console.log(" trong account.js, router.get('/:username', function(req, res)");
+     //console.log(" trong account.js, router.get('/:username', function(req, res)");
 
 
     collection.findOne({ Username: req.params.username }, function(err, account) {
 
         if (err) return console.log(err);
         if (account == null) {
-            console.log("account null  ");
+            //console.log("account null  ");
 			return res.json({});
         }
         
-        console.log(" co account ");
-        console.log(account );
+        // console.log(" co account ");
+        // console.log(account );
         
 		res.json(account);
 		/*
@@ -72,7 +72,7 @@ router.get('/:username', function(req, res) {
 router.get('/:nuid', function(req, res) {
     var collection = db.get('accounts');
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
-        console.log(" o trong router.get('/:nuid', function(req, res) ")
+        console.log(" o trong account.js, router.get('/:nuid', function(req, res) ")
         if (err) return console.log(err);
         if (account == null) {
 
