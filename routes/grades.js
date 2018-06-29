@@ -149,7 +149,7 @@ router.post('/csce235', function(req, res) {
 
 	ls.stdout.on('data', (data) => {
 
-		console.log(`stdout in 235 predict: ${data}`);
+		//console.log(`stdout in 235 predict: ${data}`);
 
 	});
 
@@ -161,9 +161,9 @@ router.post('/csce235', function(req, res) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
 
-			// console.log("database cua csce235: ");
+			console.log("database cua csce235: ");
 
-			// console.log(thisGrade);
+			console.log(thisGrade);
 			
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);

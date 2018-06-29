@@ -20,7 +20,7 @@ router.post('/properties', function(req, res) {
 
 	function readProperties(callback) {
 
-		console.log(" req.body.filename la userinfo trong multipp= " + req.body.filename);
+		console.log(" req.body.filename la = " + req.body.filename);
 	
 		//  1a/ read from file temp/UserInfo.txt
 		fs.readFile("temp/" + req.body.filename + ".txt", function(err, data) {
