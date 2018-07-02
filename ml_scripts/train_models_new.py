@@ -93,7 +93,7 @@ for label in y:
 		y1.append(1)
 	if label == "High-risk":
 		y1.append(2)
-#print('data = ', y1)
+# print('data = ', y1)
 
 #Create models
 models = []

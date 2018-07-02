@@ -114,10 +114,10 @@ router.post('/', function(req, res) {
 
 	console.log(" req.body.course = " + req.body.course );
 
-	ls.stdout.on('data', (data) => {
+	// ls.stdout.on('data', (data) => {
 
-		//console.log(`stdout in train model: ${data}`);
-	});
+	// 	//console.log(`stdout in train model: ${data}`);
+	// });
 	ls.stdout.on('data', (data) => {
 
 		//console.log(`stdout in train model: ${data}`);
@@ -127,8 +127,8 @@ router.post('/', function(req, res) {
 
 		console.log(" uint8ToString(data) =");
 		console.log( uint8ToString(data));
-		console.log("temp = ");
-		console.log(temp);
+		//console.log("temp = ");
+		//console.log(temp);
 
 		wrapObj.noOfModels = temp[0];
 		// wrapObj.params = string with Homework 1,Homework 2,Homework 3, blahh

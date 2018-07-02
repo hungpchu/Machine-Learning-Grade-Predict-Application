@@ -130,7 +130,11 @@ router.post('/csce235', function(req, res) {
 	//console.log("params ban dau = ", params);
 
 	// 
+
+	console.log("req.body.students = ", req.body.students);
+
 	console.log("req.body.fields = ", req.body.fields);
+
 
 
 
@@ -163,7 +167,7 @@ router.post('/csce235', function(req, res) {
 
 			console.log("database cua csce235: ");
 
-			console.log(thisGrade);
+			//console.log(thisGrade);
 			
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);
@@ -207,6 +211,8 @@ router.post('/csce23', function(req, res) {
 	console.log("params ban dau = ", params);
 
 	// 
+	console.log("req.body.students = ", req.body.students);
+
 	console.log("req.body.fields = ", req.body.fields);
 
 
@@ -310,7 +316,7 @@ router.post('/csce156', function(req, res) {
 
 
 	// 
-	//console.log("req.body.grade 156 = ", req.body.grade);
+	//console.log("req.body.students 156 = ", req.body.students);
 
 
 
@@ -329,12 +335,12 @@ router.post('/csce156', function(req, res) {
 
 	ls.stdout.on('data', (data) => {
 
-		 console.log(`stdout in 156 predict: ${data}`);
+		// console.log(`stdout in 156 predict: ${data}`);
 	});
 
 	ls.stdout.on('data', (data) => {
 		var predict = uint8ToString(data).split(',');
-		console.log("predict = ", predict)
+		//console.log("predict = ", predict)
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];

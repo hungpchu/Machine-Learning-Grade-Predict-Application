@@ -67,6 +67,7 @@ def main():
 	rFile.close()
 #	resnum = 0
 	resnum = [0] * len(X)
+	# print(" len(X) = ", len(X)
 	for i in range(noOfModels):
 		# print(" sys.argv[1] trong loop = ", sys.argv[1])
 		# model = joblib.load('ml_scripts/models/csce156/model' + str(i) + '.pkl')	
@@ -75,10 +76,12 @@ def main():
 		newPred = get_prediction(model, X)
 		resnum = [max(resnum[i], newPred[i]) for i in range(len(X))]
 	res = []
+	# print("resnum = ", resnum)	
 	for pred in resnum:
 		if (pred == 0): res += ["Good"]
 		elif (pred == 1): res += ["OK"]
 		else: res += ["High-risk"]
+	# print(" res = ",res)
 #	if (resnum == 0): 
 #		res = "Good"
 #	elif (resnum == 1): 
