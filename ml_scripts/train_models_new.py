@@ -49,10 +49,12 @@ course = read_in()
 for name in names:
     newName = re.sub(r"\(.*\)", "", name).strip()
     inpgrade.rename(columns = {name: newName}, inplace = True)
+
+if (course == 'csce235'):
 # drop the row of NaN
-inpgrade = inpgrade.drop(inpgrade.index[0])
+    inpgrade = inpgrade.drop(inpgrade.index[0])
 #  drop the fisrt row of point 
-inpgrade = inpgrade.drop(inpgrade.index[0])
+    inpgrade = inpgrade.drop(inpgrade.index[0])
 
 #  drop the column ID 
 if ('ID' in inpgrade.columns.values):
