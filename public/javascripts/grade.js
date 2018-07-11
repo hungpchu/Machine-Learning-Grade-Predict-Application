@@ -363,13 +363,25 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 				return;
 			}
 
+			if ($scope.weekToRun == "") {
+				$scope.message = "No week is chosen.";
+				return;
+			}
+
+
 
 			var Model = $resource('/api/models');
-			Model.save({course: $scope.courseToRun}, function (newdata) {
+			Model.save({course: $scope.courseToRun, week: $scope.weekToRun},  function (newdata) {
 				var i;
 				for (i = 0; i < 10000; i++) {console.log("done");}
-				$scope.message = "Finished!";
+				$scope.message = "Finished update course !";
 			});
+
+			// Model.save({week: $scope.weekToRun}, function (newdata) {
+			// 	var i;
+			// 	for (i = 0; i < 10000; i++) {console.log("done");}
+			// 	$scope.message = "Finished update week!";
+			// });
 		};
 
 
@@ -391,7 +403,7 @@ app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 				};
 
 
-				Properties.save({filename: $scope.courseToRun}, function(data) {
+				Properties.save({filename: $scope.courseToRun, week: $scope.weekToRun}, function(data) {
 					for(var i in fullGrade) {
 						wrapObj.students++;
 						wrapObj.fields = 0;

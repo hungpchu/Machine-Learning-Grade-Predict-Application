@@ -316,7 +316,7 @@ router.post('/csce156', function(req, res) {
 
 
 	// 
-	//console.log("req.body.students 156 = ", req.body.students);
+	console.log("req.body.students 156 = ", req.body.students);
 
 
 
@@ -335,7 +335,7 @@ router.post('/csce156', function(req, res) {
 
 	ls.stdout.on('data', (data) => {
 
-		// console.log(`stdout in 156 predict: ${data}`);
+		 console.log(`stdout in 156 predict: ${data}`);
 	});
 
 	ls.stdout.on('data', (data) => {
@@ -344,6 +344,7 @@ router.post('/csce156', function(req, res) {
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
+			console.log("this grade 156 = ");
 			console.log(thisGrade);
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);

@@ -20,10 +20,19 @@ router.post('/properties', function(req, res) {
 
 	function readProperties(callback) {
 
-		console.log(" req.body.filename la = " + req.body.filename);
+
+		// Userinfo.txt
+		console.log(" req.body.filename cua Hung la = " + req.body.filename);
+		console.log(" req.body.week cua Hung la = " + req.body.week);
+
 	
+		if ( req.body.filename != "UserInfo"){
+
+
+		console.log(" req.body.filename != UserInfo la = " + req.body.filename);
+		console.log(" req.body.week != UserInfo la = " + req.body.week);
 		//  1a/ read from file temp/UserInfo.txt
-		fs.readFile("temp/" + req.body.filename + ".txt", function(err, data) {
+		fs.readFile("temp/" + req.body.filename +  req.body.week + ".txt", function(err, data) {
 
 			// 1b/ req.body.filename = UserInfo
 			if (err)
@@ -32,6 +41,23 @@ router.post('/properties', function(req, res) {
 			// -> store Full Name, .. from UserInfo.txt to data
 			callback(uint8ToString(data));
 		});
+	}
+
+	else {
+
+		console.log(" req.body.filename == UserInfo la = " + req.body.filename);
+	// for the UserInfo.txt	
+	fs.readFile("temp/user/" + req.body.filename + ".txt", function(err, data) {
+
+			// 1b/ req.body.filename = UserInfo
+			if (err)
+				return console.log(err);
+			
+			// -> store Full Name, .. from UserInfo.txt to data
+			callback(uint8ToString(data));
+		});
+	}
+
 	}
 
 

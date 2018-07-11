@@ -71,15 +71,31 @@ inpgrade.fillna(0, inplace = True)
 inpgrade['Full name'] = inpgrade.index.values
 # choose all column with type of float64 as number
 chosen = inpgrade.select_dtypes(include='float64').columns.values
+inpgrade1 = inpgrade[inpgrade.columns.difference(['Student', 'SIS User ID', 'SIS Login ID', 'Full name'])]
 #fileO = open("ml_scripts/data/" + course + "/grade.json", "w")
 #fileO.write(inpgrade.to_json(orient="records"))
 #fileO.close() 
 
+
+if ( len(inpgrade1.columns) == 4 ):
+	grade = load_data("ml_scripts/data/" + course + "/full-grade-week1.csv")
+    
+elif ( len(inpgrade1.columns) == 9 ):   
+	grade = load_data("ml_scripts/data/" + course + "/full-grade-week2.csv")
+elif ( len(inpgrade1.columns) == 18 ):
+	grade = load_data("ml_scripts/data/" + course + "/full-grade-week3.csv")
+    
+elif ( len(inpgrade1.columns) == 22 ): 
+	grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
+
+
+
 #Load data
 #  grade = data for training
-grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
+# grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
 # intersect = ['Homework 1', 'Homework 2', 'Homework 3', ..]
-intersect = [val for val in chosen if val in grade.columns.values]
+# intersect = [val for val in chosen if val in grade.columns.values]
+intersect = [val for val in inpgrade1]
 # X = all value of ['Homework 1', 'Homework 2', 'Homework 3', ..]
 # X = grade[intersect]
 X = grade[intersect]
@@ -101,7 +117,7 @@ for label in y:
 models = []
 models.append(sklearn.linear_model.LogisticRegression(solver='newton-cg',multi_class='multinomial')) # Logistic Regression ( supervise algo)
 models.append(sklearn.naive_bayes.GaussianNB()) # Naive Bayes 
-models.append(sklearn.neighbors.KNeighborsRegressor(n_neighbors=10)) # k Nearest Neighbors ( supervise algo)
+models.append(sklearn.neighbors.KNeighborsRegressor(n_neighbors=3)) # k Nearest Neighbors ( supervise algo)
 models.append(svm.SVR()) # Support Vector Machine
 #models.append(MLPRegressor(hidden_layer_sizes=(60,),activation='logistic',solver='lbfgs',learning_rate='adaptive',max_iter=1000,learning_rate_init=0.01,alpha=0.01)) # Neuron network
 models.append(DecisionTreeRegressor()) # Decision Tree ( supervise algo)
@@ -152,6 +168,13 @@ rmse = np.sqrt(mse)
 if (rmse <= minRMSE):
 	chosenModels[0] = models[0]
 	chosenModels.append(models[1])
+
+
+chosenModels[0] = models[0]
+
+
+
+
 
 #Export models in the file
 # chosenModels = SVR for 0,1,2 and Logistic for 10,8,2
