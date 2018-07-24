@@ -1,0 +1,243 @@
+html{
+  background: #834d9b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #834d9b , #d04ed6); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #834d9b , #d04ed6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+  height: 100%;
+}
+body{
+  text-align: center;
+  font-family: avenir, helvetica, roboto, arial, sans-serif;
+  color: white;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+#mpcanvas{
+  max-height: 375px;
+  max-width: 324px;
+  position: absolute;
+top: 8px;
+right: 16px;
+  /* display:  none; */
+
+}
+
+#text {
+  position: absolute;
+  right: 90px;
+  
+  top: 390px;
+  
+  }
+
+
+#slider{
+  max-height: 550px;
+  z-index: 10;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+}
+#video{
+  max-height: 700px;
+  max-width: 700px;
+  background:transparent;
+  display:  none;
+}
+#mplogs{
+  position: fixed;
+  left: 10px;
+  top: 20px;
+}
+.page-header {
+  margin: 0px;
+  padding-top: 10px;
+}
+
+#mpfooter {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:200px;
+   width:100%;
+   display: none;
+   /*background:rgba(9,14,7,0.5);
+   padding: 20px;*/
+}
+#mpfooter > div{
+  width: 100%;
+  min-width: 160px;
+  display: inline-flex;
+  padding-top: 20px;
+}
+fieldset {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  height: 200px;
+  padding-bottom: 5px;
+  border: none;
+}
+legend {
+  background: #F44336;
+  border: solid 1px black;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  padding: 6px;
+  font-family: 'Lobster', cursive;
+  text-align: left;
+}
+.row{
+  width: 100%;
+  height: 42px;
+} 
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    background: #2196f3;
+    cursor: pointer;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/*loader*/
+
+.loadingbar body:after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: -webkit-radial-gradient(center center, circle cover, rgba(0,0,0,0), rgba(0,0,0,0.5));
+    background: radial-gradient(center center, circle cover, rgba(0,0,0,0), rgba(0,0,0,0.5));
+}
+
+.loadingbar .bar {
+    font-size: 20px;
+    display: none;
+    width: 100%;
+    height: 1em;
+    border-radius: .5em;
+    background: rgba(255,255,255,0.6);
+    box-shadow: 
+        0 0 0 .05em rgba(100,100,100,0.075),
+        0 0 0 .25em rgba(0,0,0,0.1),
+        inset 0 .1em .05em rgba(0,0,0,0.1),
+        0 .05em rgba(255,255,255,0.7);
+}
+
+.loadingbar .bar:after {
+    position: absolute;
+    left: 25%;
+    top: 150%;
+    font-family: 'Carrois Gothic', sans-serif;
+    font-size: 1em;
+    color: #555;
+    text-shadow: 0 .05em rgba(255,255,255,0.7);
+}
+
+.loadingbar .bar .sphere {
+    border-radius: 50%;
+    width: 1em;
+    height: 100%;
+    background: -webkit-linear-gradient(#eee, #ddd);
+    background: linear-gradient(#eee, #ddd);
+    box-shadow:
+        inset 0 .15em .1em rgba(255,255,255,0.3),
+        inset 0 -.1em .15em rgba(0,0,0,0.15),
+        0 0 .25em rgba(0,0,0,0.3);
+    display: block;
+    -webkit-animation: slide 1.75s ease-in-out infinite alternate;
+    animation: slide 1.75s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes slide {
+    from { }
+    to { margin-left: 90%; }
+}
+
+@keyframes slide {
+    from { }
+    to { margin-left: 90%; }
+}
+
+.col_left{
+  width: 30%;
+  float: left;
+  text-align: right;
+  padding: 5px 10px 5px 0;
+}
+.col_right{
+  width: 65%;
+  float: left;
+  text-align: left;
+  font-size: 12px;
+}
+.col_right > a{
+  margin-right: 5px;
+}
+/*
+iPhone 5 & 5S in portrait
+*/
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) { 
+  .col_left{
+    width: 28%;
+    float: left;
+    text-align: right;
+    padding: 5px 10px 5px 0;
+  }
+  .col_right{
+    width: 65%;
+    float: left;
+    text-align: left;
+    font-size: 9px;
+  }
+}
+
+/*
+iPhone 6 Plus in portrait
+*/
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) 
+and (orientation : portrait) {
+  .col_left{
+    width: 30%;
+    float: left;
+    text-align: right;
+    padding: 5px 10px 5px 0;
+  }
+  .col_right{
+    width: 65%;
+    float: left;
+    text-align: left;
+    font-size: 12px;
+  }
+}
+@media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */ 
+    .ui-tabs-panel {text-align: right;}
+    #tabs > div {padding-right:  20px}
+    #items{width: 230px; float: right;}
+}
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+   #items{width: 100%;}
+}
+

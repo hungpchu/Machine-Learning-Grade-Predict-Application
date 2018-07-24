@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Hung Chu</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/btns.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--
+     <style>
+      .ui-tabs-vertical { width: 55em;}
+      .ui-tabs-vertical .ui-tabs-nav {width: 140px; }
+      .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+      .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+      .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {border-right-width: 1px; }
+      .ui-tabs-vertical .ui-tabs-panel {padding: 0; width: 100%}
+      .ui-widget-content{background: rgba(255,255,255, 0.2)}
+      .ui-tabs-vertical .ui-tabs-nav li{
+          background: #F44336;
+      }
+      .ui-tabs .ui-tabs-nav{padding:0px;}
+      .ui-tabs .ui-tabs-nav .ui-tabs-anchor{width: 100px;}
+      .ui-widget-header{border: none;background:transparent;}
+      #MkOvrType,#mkMovieType{background: white;}
+
+      #mpfooter {
+          height: 180px;
+      }
+    </style>
+    -->
+  </head>
+
+  <body>
+      <link rel="shortcut icon" href="">
+      <h3 class="page-header">Hung Chu</h3>
+
+      
+     
+      <div>
+
+        <canvas id="mpcanvas"></canvas>
+
+          <!--
+        <video id="video" controls autoplay loop style="display:none;">
+            <source src="" type="video/mp4">
+        </video>
+        
+      
+        <div id="slider" style="display: none; height: 400px; margin: 0px 0px 38px 52px;"></div> 
+        --> 
+      </div>
+      
+      <div id="mplogs">
+        <!--
+        <div id="fpscounter"></div>
+        -->
+        <div class="emscripten" id="status"></div>
+        <div class="emscripten">
+          <progress value="0" max="100" id="progress" hidden=1></progress>
+        </div>
+      </div>    
+      
+      <!--
+      <div id="mpfooter">
+        <div id="tabs">
+            <ul>
+              <li><a href="#tabs-1">Avatar</a></li>
+              <li><a href="#tabs-2">items</a></li>
+              <li><a href="#tabs-3">Animation</a></li>
+            </ul>
+            <div id="tabs-1">
+                <div id="avatar">
+                    <div>
+                        <a id="avatarChange" href="#" class="btn btn--blue" style="margin-bottom: 30px;">ChangeAvatar</a>
+                    </div>
+                    <label class="btn btn-default btn-file" id="lblfilesavtr">
+                        Browse File... <input type="file" id="filesavtr" style="display: none;" accept="image/jpg,image/jpeg,image/png">
+                   </label>
+                   <div class="loadingbar">
+                      <div class="bar" id="loadingbar">
+                        <i class="sphere"></i>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tabs-2">
+                <div id="items">
+                    <div class="row">
+                      <div class="col_left">
+                        <label>Hair</label>
+                      </div>                  
+                      <div class="col_right">
+                        <a id="hairChange" href="#" class="btn btn--black">Change</a>
+                        <a id="hairClear" href="#" class="btn btn--gray">Clear</a>    
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col_left">
+                        <label>Glasses</label>
+                      </div>                  
+                      <div class="col_right">
+                        <a id="glassesChange" href="#" class="btn btn--black">Change</a>
+                        <a id="glassesClear" href="#" class="btn btn--gray">Clear</a>    
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col_left">
+                        <label>Beard</label>
+                      </div>                  
+                      <div class="col_right">
+                        <a id="beardChange" href="#" class="btn btn--black">Change</a>
+                        <a id="beardClear" href="#" class="btn btn--gray">Clear</a>    
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col_left">
+                          <label>Cosme</label>
+                        </div>                  
+                        <div class="col_right">
+                          <a id="cosmeLip" href="#" class="btn btn--black" >Lip</a>
+                          <a id="cosmeCheek" href="#" class="btn btn--black" >Cheek</a>
+                          <a id="cosmeEye" href="#" class="btn btn--black" >Eye</a>    
+                          <a id="cosmeClear" href="#" class="btn btn--gray">Clear</a>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tabs-3">
+                <div id="anim">
+                    <div class="row">
+                         <a id="animationStart" href="#" class="btn btn--black">Animation</a>
+                    </div>
+                    <div class="row">
+                         <a id="voiceStart" href="#" class="btn btn--black">Speak</a>
+                    </div>
+                    <div class="row">
+                         <a id="expressionStart" href="#" class="btn btn--black">Expression</a>
+                    </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    -->
+   
+      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script type="text/javascript" src="js/mp_config.js"></script>
+      <script type="text/javascript" src="js/mp_fileio.js"></script>
+      <script type="text/javascript" src="../js/mplib.js"></script>
+      <script type="text/javascript" src="js/mp_demo.js"></script>
+      <script type="text/javascript" src="../lib/jszip/jszip.min.js"></script>
+      <script type="text/javascript" src="js/resizecanvas.js"></script>
+  </body>
+</html>

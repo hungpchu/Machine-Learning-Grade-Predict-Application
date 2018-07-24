@@ -40,7 +40,7 @@ app.config(['$routeProvider', function($routeProvider) {
         controller: 'UploadCtrl'
     })
     .when('/student/:username', {
-        templateUrl: 'partials/student.html',
+        templateUrl: 'partials/student1.html',
         controller: 'StudCtrl'
     })
 	.when('/student/:username/viewGrade/:course', {
@@ -664,26 +664,26 @@ function($scope, $resource, $routeParams, $location) {
 		  
 			  var move = true;
 		  
-		  hello.addEventListener("click",function(){
+		//   hello.addEventListener("click",function(){
 		  
-			  if (move){
+		// 	  if (move){
   
-			  speak();
-			  hello.style.animation = "move 2s steps(3) infinite";
+		// 	  speak();
+		// 	  hello.style.animation = "move 2s steps(3) infinite";
 		  
-			  move = false;
+		// 	  move = false;
 		  
-			  }else{
+		// 	  }else{
 		  
 			  
 		  
-		  hello.style.animation = "";
+		//   hello.style.animation = "";
 		  
-		  move = true;
-			  }
+		//   move = true;
+		// 	  }
 		  
 		  
-		  });
+		//   });
 		
 		
 

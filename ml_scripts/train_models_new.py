@@ -78,7 +78,7 @@ inpgrade1 = inpgrade[inpgrade.columns.difference(['Student', 'SIS User ID', 'SIS
 
 
 if ( len(inpgrade1.columns) == 4 ):
-	grade = load_data("ml_scripts/data/" + course + "/full-grade-week1.csv")
+	grade = load_data("ml_scripts/data/" + course + "/full-grade-week11.csv")
     
 elif ( len(inpgrade1.columns) == 9 ):   
 	grade = load_data("ml_scripts/data/" + course + "/full-grade-week2.csv")
@@ -170,7 +170,7 @@ if (rmse <= minRMSE):
 	chosenModels.append(models[1])
 
 
-chosenModels[0] = models[0]
+chosenModels[0] = models[2]
 
 
 
@@ -190,32 +190,3 @@ for feature in intersect:
 res = res[:-1] + ";"
 res += inpgrade.to_json(orient="records")
 print(res, end='', flush=True)
-
-# print = 
-# 1;Homework 1,Homework 2,Homework 3,Homework 4,Quiz 1,Quiz 2,Quiz 3,Quiz 4,Midterm,Quiz 5;
-# [{"SIS User ID":50018756.0,"SIS Login ID":"madamec2","Homework 1":98.0,"Homework 2":101.0,"Homework 3":106.5,
-# "Homework 4":0.0,"Quiz 1":9.5,"Quiz 2":10.0,"Quiz 3":9.0,"Quiz 4":10.0,"Midterm":35.0,"Quiz 5":8.0,"Assignments Current Points":"387",
-# "Assignments Final Points":"387","Assignments Current Score":"100.52","Assignments Final Score":"79.63","Current Points":"387",
-# "Final Points":"387","Current Score":"100.52","Final Score":"79.63","Full name":"Matous Adamec"},{"SIS User ID":8558403.0,
-# "SIS Login ID":"aalawfi2","Homework 1":55.0,"Homework 2":0.0,"Homework 3":0.0,"Homework 4":0.0,"Quiz 1":7.0,"Quiz 2":0.0,
-# "Quiz 3":0.0,"Quiz 4":0.0,"Midterm":0.0,"Quiz 5":0.0,"Assignments Current Points":"62","Assignments Final Points":"62",
-# "Assignments Current Score":"21.75","Assignments Final Score":"12.76","Current Points":"62","Final Points":"62",
-# "Current Score":"21.75","Final Score":"12.76","Full name":"Abdullah Al Awfi"}]
-
-
-#Testing
-#some_rows = inpgrade
-#some_data = some_rows[intersect]
-#lr_predict = lr_model.predict(some_data)
-#nb_predict = nb_model.predict(some_data)
-#predict = [""] * len(lr_predict)
-#for i in range(len(lr_predict)):
-#    if (lr_predict[i] == "High-risk" or nb_predict[i] == "High-risk"):
-#        predict[i] = "High-risk"
-#    elif (lr_predict[i] == "OK" or nb_predict[i] == "OK"):
-#        predict[i] = "OK"
-#    else:
-#        predict[i] = "Good"
-#print("Data:", some_data)
-#nuid = list(map(int, inpgrade['SIS User ID'].values))
-#print("Predictions:", np.column_stack((nuid, predict)))

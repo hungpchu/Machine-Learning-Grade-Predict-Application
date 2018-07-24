@@ -76,8 +76,9 @@ def main():
 		newPred = get_prediction(model, X)
 		resnum = [max(resnum[i], newPred[i]) for i in range(len(X))]
 	res = []
-	print("model.predict(X) = ")	
-	print(model.predict(X))	
+	print("model.predict(X) = ",model.predict(X))	
+	print("newPred = ", newPred)		
+	print("resnum = ", resnum)		
 	for pred in resnum:
 		if (pred == 0): res += ["Good"]
 		elif (pred == 1): res += ["OK"]
