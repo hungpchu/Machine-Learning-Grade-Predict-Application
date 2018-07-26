@@ -32,6 +32,15 @@ right: 16px;
   }
 
 
+#voiceStart {
+  position: absolute;
+  right: 67px;
+  
+  top: 420px;
+  
+  }
+
+
 #slider{
   max-height: 550px;
   z-index: 10;

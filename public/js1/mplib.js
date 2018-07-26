@@ -927,9 +927,9 @@ var Module = {
     $.fn.mpwebgl = function(options) {
         $.mpwebgl.options = options;
         Module['canvas'] = $(this)[0];
-        console.log( "this = ");
-        console.log( $(this)[0]);
-        console.log()
+        // console.log( "this = ");
+        // console.log( $(this)[0]);
+        // console.log()
         _checkInstance();
         return $.mpwebgl;
     };

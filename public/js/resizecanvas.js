@@ -2,10 +2,10 @@ var maxmobilesize = 700;
 var canvas;
 $(document).ready(function() {
     canvas = Module['canvas'];
-    console.log(" Module['canvas'] = ");
-    console.log(Module['canvas']);
-    console.log('canvas = ');
-    console.log(canvas);
+    // console.log(" Module['canvas'] = ");
+    // console.log(Module['canvas']);
+    // console.log('canvas = ');
+    // console.log(canvas);
     $(window).resize( respondCanvas);
     $(window).on("orientationchange", respondCanvas);
     $(window).on('touchmove', function(e) {
@@ -27,17 +27,17 @@ $(document).ready(function() {
 });
 function respondCanvas(){
     var w = $(window).width();
-    console.log('w= ', w);
+    // console.log('w= ', w);
     var h = $(window).height();  
-    console.log('h = ', h); 
+    // console.log('h = ', h); 
     if(w > maxmobilesize)
         w = maxmobilesize;
     if(h > maxmobilesize)
         h = maxmobilesize;
     var offsetf = 20;
 
-    console.log('canvas.width trc = ');
-    console.log(canvas.width);  
+    // console.log('canvas.width trc = ');
+    // console.log(canvas.width);  
     if (Math.abs(window.orientation) === 90) { //only run on mobile
         //Landscape
         canvas.width = h; 
@@ -48,12 +48,12 @@ function respondCanvas(){
             $(video).width(h);
     } else {
         // Portrait
-        console.log('w NULL = ', w);
-        console.log('canvas.width trc = ', canvas.width);   
+        // console.log('w NULL = ', w);
+        // console.log('canvas.width trc = ', canvas.width);   
         canvas.width = w; 
-        console.log('canvas.width = ', canvas.width);   
+        // console.log('canvas.width = ', canvas.width);   
         canvas.height = w;
-        console.log(' canvas.height = ',  canvas.height);   
+        // console.log(' canvas.height = ',  canvas.height);   
         if(window['slider'] != undefined)
             $(slider).height(w);
         if(window['video'] != undefined)

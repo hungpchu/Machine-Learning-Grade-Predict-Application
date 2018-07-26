@@ -6,33 +6,21 @@ html(ng-app='Grade')
     link(rel='stylesheet',href='/css/main.css')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-resource.js')
-    // include the AngularJS route module.
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(src='/javascripts/grade.js')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
-    //- script(src='/javascripts/grade.js')
-    //- script(src="https://code.jquery.com/jquery-latest.min.js")
-    //- script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
-    //- script(src='/javascripts/mp_config.js')
-    //- script(src='js/mp_fileio.js')
-    //- script(src='/js1/mplib.js')
-    //- script(src='/js/mp_demo.js')
-    //- script(src='/lib/jszip/jszip.min.js')
-    //- script(src='js/resizecanvas.js')
   body
     block content
-    //- script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js')
-    //- script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
-    //- script(src='/javascripts/grade.js')
     div
       canvas#mpcanvas
     #mplogs
       #status.emscripten
       .emscripten
         progress#progress(value='0', max='100', hidden='1')
-    div
-      input#text.txt(type='text')
+    //- div
+    //-   input#text.txt(type='text')
+    button#voiceStart Speak
     script(src="https://code.jquery.com/jquery-latest.min.js")
     script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
     script(src='/javascripts/mp_config.js')
@@ -41,7 +29,6 @@ html(ng-app='Grade')
     script(src='/js/mp_demo.js')
     script(src='/lib/jszip/jszip.min.js')
     script(src='js/resizecanvas.js')
-    //- script(src='/javascripts/grade.js')
 
 
 

@@ -8,6 +8,7 @@
 // ngResource' + ngRoute = module depend
 
 
+
 var app = angular.module('Grade', ['ngResource', 'ngRoute']);
 
 
@@ -471,10 +472,8 @@ app.controller('StudCtrl', ['$scope', '$resource', '$routeParams', '$location',
    
 //dependency inject
 function($scope, $resource, $routeParams, $location) {
-		
 
-	
-		//console.log("hung1 = " + hung);
+
 		var Predicts = $resource('/api/grades/csce235/:nuid');
 
 		
