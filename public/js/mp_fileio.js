@@ -1,6 +1,6 @@
 var faceFiles = ["face0.bin", "face1.bin", "face2.bin", "face3.bin", "face4.bin", "face5.bin"];
 var hairDirs = ["hair0.bin", "hair1.bin", "hair2.bin", "hair3.bin", "hair4.bin"];
-var voiceFiles = ["voice0", "voice1"];
+var voiceFiles = [ "good4"];
 var cosmeCheeks = ["000","001","002","003","004","005"];
 var cosmeEyes = ["000","001","002","003","004","005"];
 var cosmeLips = ["000","001","002","003","004"];
@@ -132,13 +132,13 @@ var MpFS = {
          false
     );
     voiceFiles.forEach(function (arg) {
-      FS.createPreloadedFile(
-        '/items/voice',
-        arg+',mp3',
-        MpConfig["documentPath"] + 'items/voice/'+arg+'.mp3',
-        true,
-        false
-      );
+      // FS.createPreloadedFile(
+      //   '/items/voice',
+      //   arg+',mp3',
+      //   MpConfig["documentPath"] + 'items/voice/'+arg+'.mp3',
+      //   true,
+      //   false
+      // );
       FS.createPreloadedFile(
         '/items/voice',
         arg+'.env',

@@ -433,7 +433,8 @@ var Module = {
                 audio_.pause();
             }
             mpVoice_ = mpFace_.GetCtlSpeech();
-            audio_.src = name + '.mp3';
+            audio_.src = name + '.env';
+            //audio_.src = name + '.env';
             audio_.addEventListener('canplaythrough', function() {
                 audio_.play();
                 mpVoice_.Speak(mpVoiceId_);
