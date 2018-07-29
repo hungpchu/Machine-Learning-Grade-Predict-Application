@@ -139,6 +139,9 @@ var MpFS = {
       //   true,
       //   false
       // );
+      console.log("voce file = ", voice.file);
+      console.log('arg = ', arg);
+      console.log('voiceFiles trong nay = ', voiceFiles);
       FS.createPreloadedFile(
         '/items/voice',
         arg+'.env',
@@ -195,5 +198,8 @@ var MpFS = {
     });
 
   }),
+//  addVoice: function (var text){
+//     voiceFiles.push(text);
+//   },
 };
 

@@ -7,7 +7,10 @@
 // tham số 2: danh sách các dependencies, các modules khác ta cần
 // ngResource' + ngRoute = module depend
 
+var voice = {
+  file : ["good","bad"]
 
+};
 
 var app = angular.module('Grade', ['ngResource', 'ngRoute']);
 
@@ -516,7 +519,9 @@ function($scope, $resource, $routeParams, $location) {
             Params.get(function(data) {
                 console.log(data.params.split(","));
 			});*/
-			
+
+		
+			console.log(" voice file = " + voice.file);
 			console.log(" account.NUID = " + account.NUID);
 
 			Predicts.get({nuid: account.NUID}, function(data) {
