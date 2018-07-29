@@ -38,8 +38,8 @@ router.get('/:username', function(req, res) {
 var fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 
-var text = "You are OK";
-    var fn = "good4";
+var text = "You are high-risk";
+    var fn = "high-risk";
 
     console.log("text = ",text);
     console.log("fn = ",fn);

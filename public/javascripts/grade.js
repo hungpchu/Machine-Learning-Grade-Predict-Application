@@ -8,9 +8,11 @@
 // ngResource' + ngRoute = module depend
 
 var voice = {
-  file : ["good","bad"]
+  file : []
 
 };
+
+var voiceFiles = ["good4"];
 
 var app = angular.module('Grade', ['ngResource', 'ngRoute']);
 
@@ -521,8 +523,10 @@ function($scope, $resource, $routeParams, $location) {
 			});*/
 
 		
-			console.log(" voice file = " + voice.file);
+			console.log(" voice file ban dau = " + voice.file);
 			console.log(" account.NUID = " + account.NUID);
+			//voice.file.push("high-risk");
+			console.log("voiceFiles = ", voiceFiles);
 
 			Predicts.get({nuid: account.NUID}, function(data) {
 
@@ -532,20 +536,24 @@ function($scope, $resource, $routeParams, $location) {
 	
 				if (data.Predict == "Good") {
 					console.log("good");
+					voice.file.push("good");
 					predict = "You are good";
 	
 	
 				} else if (data.Predict == "OK") {
 				
 					console.log("ok");
+					voice.file.push("ok");
 					predict = "You are ok";
 	
 				} else {
 					console.log("high-risk");
+					voice.file.push("high-risk");
+					voiceFiles.push("high-risk");
 					predict = "You are high risk";
 					
 				}	
-				
+				console.log(" voiceFiles luc sau = " + voiceFiles);
 				
 			});
 			

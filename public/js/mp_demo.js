@@ -107,11 +107,10 @@ function onVoiceStart() {
     }
 
     var name = "good4";
-    var name1 = "good1";
+    var name1 = "high-risk";
     console.log("name = ", name);
     // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
     console.log(" voiceFiles trong demo = ", voiceFiles);
-    voiceFiles.push("good1");
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
     // if(voiceId > 0){
     //     if (++voiceIndex == voiceFiles.length)
