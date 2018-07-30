@@ -1,6 +1,10 @@
 "use strict"
 var Module = {
     preRun: (function() {
+        console.log("prerun");
+        console.log("MpFS in mplib");
+        console.log('voiceFiles trong mplib = ', voiceFiles);
+        // console.log(MpFS.prepareResource());
         MpFS.prepareResource();
     }),
     postRun: (function() {
@@ -418,9 +422,12 @@ var Module = {
                 mpCtlGlasses_.SetGlassesTexture(mpGlassesId_, Module.MpCtlItemGlassesTexType.GLASSES_TEX_COLOR, "");
             }
         },
+
         loadvoice: function(name) {
             if(!_validateMpFace())
                 return 0;
+            // console.log("mpwgl = ");
+            // console.log(mpwgl);
             mpwgl.destroyvoice();
             mpwgl.unloadanimation();
             mpwgl.pauseaudio();
@@ -444,7 +451,9 @@ var Module = {
             audio_.load();
             return mpVoiceId_;
         },
+
         loadvoicewav: function(path, file) {
+           
             if(!_validateMpFace())
                 return -1;
             mpwgl.destroyvoice();

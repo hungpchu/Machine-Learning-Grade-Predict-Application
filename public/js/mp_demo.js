@@ -108,16 +108,25 @@ function onVoiceStart() {
 
     var name = "good4";
     var name1 = "high-risk";
-    console.log("name = ", name);
+    
+    // console.log("name = ", name);
     // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
-    console.log(" voiceFiles trong demo = ", voiceFiles);
+    //console.log("mpwebgl.instance = ", mpwebgl.instance);
+
+    // voiceFiles.pop();
+    // MpFS.prepareResource();
+   // console.log(" MPFS trong demo = ", MpFS);
+
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
-    // if(voiceId > 0){
-    //     if (++voiceIndex == voiceFiles.length)
-    //         voiceIndex = 0;
-    // }
-    // else
-    //     console.log("load voice fail");
+    if(voiceId > 0){
+        console.log(" voiceId > 0  trong demo = ",voiceId);
+        if (++voiceIndex == voiceFiles.length)
+            voiceIndex = 0;
+    }
+    else{
+        console.log("voiceId = ", voiceId);
+        console.log("load voice fail");
+    }
 }
 
 function onAnimationStart() {

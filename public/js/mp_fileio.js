@@ -1,12 +1,13 @@
 var faceFiles = ["face0.bin", "face1.bin", "face2.bin", "face3.bin", "face4.bin", "face5.bin"];
 var hairDirs = ["hair0.bin", "hair1.bin", "hair2.bin", "hair3.bin", "hair4.bin"];
-// var voiceFiles = [ "good4"];
+var voiceFiles = [];
 var cosmeCheeks = ["000","001","002","003","004","005"];
 var cosmeEyes = ["000","001","002","003","004","005"];
 var cosmeLips = ["000","001","002","003","004"];
 var beardDirs = ["beard0.bin", "beard1.bin", "beard2.bin", "beard3.bin"];
 var glassesDirs = ["glasses0.bin", "glasses1.bin", "glasses2.bin", "glasses3.bin", "glasses4.bin"];
 var animDirs  = ["anim0", "anim1"];
+
 var MpFS = {
   prepareResource : (function(dir){
     FS.createFolder(
@@ -139,14 +140,14 @@ var MpFS = {
       //   true,
       //   false
       // );
-  
+      console.log("trong fileio");
       // console.log("voce file trong fileIO = ", voice.file);
       // console.log('arg = ', arg);
-      // console.log('voiceFiles trong nay = ', voiceFiles);
+      console.log('voiceFiles trong fileio = ', voiceFiles);
       FS.createPreloadedFile(
         '/items/voice',
         arg+'.env',
-        MpConfig["documentPath"] + 'items/voice/'+arg+'.env',
+        MpConfig["documentPath"] + '/items/voice/'+arg+'.env',
         true,
         false
       );
@@ -204,66 +205,66 @@ var MpFS = {
 //   },
 };
 
-function hung ($scope, $resource, $routeParams, $location) {
+// function hung ($scope, $resource, $routeParams, $location) {
 
 
-  var Predicts = $resource('/api/grades/csce235/:nuid');
+//   var Predicts = $resource('/api/grades/csce235/:nuid');
 
 
   
 
-    // route den file accounts.js 
-    var Account = $resource('/api/accounts/:username');
+//     // route den file accounts.js 
+//     var Account = $resource('/api/accounts/:username');
 
 
-   Account.get({username: $routeParams.username}, function(account) {
-          /*var Params = $resource('/api/models');
-          Params.get(function(data) {
-              console.log(data.params.split(","));
-    });*/
+//    Account.get({username: $routeParams.username}, function(account) {
+//           /*var Params = $resource('/api/models');
+//           Params.get(function(data) {
+//               console.log(data.params.split(","));
+//     });*/
 
   
-    console.log(" voice file ban dau = " + voice.file);
-    console.log(" account.NUID = " + account.NUID);
-    //voice.file.push("high-risk");
-    console.log("voiceFiles = ", voiceFiles);
+//     console.log(" voice file ban dau = " + voice.file);
+//     console.log(" account.NUID = " + account.NUID);
+//     //voice.file.push("high-risk");
+//     console.log("voiceFiles = ", voiceFiles);
 
-    Predicts.get({nuid: account.NUID}, function(data) {
+//     Predicts.get({nuid: account.NUID}, function(data) {
 
-      //console.log(" $scope.account.NUID = " + $scope.account.NUID);
-
-
-
-      if (data.Predict == "Good") {
-        console.log("good");
-        voice.file.push("good");
-        predict = "You are good";
+//       //console.log(" $scope.account.NUID = " + $scope.account.NUID);
 
 
-      } else if (data.Predict == "OK") {
+
+//       if (data.Predict == "Good") {
+//         console.log("good");
+//         voice.file.push("good");
+//         predict = "You are good";
+
+
+//       } else if (data.Predict == "OK") {
       
-        console.log("ok");
-        voice.file.push("ok");
-        predict = "You are ok";
+//         console.log("ok");
+//         voice.file.push("ok");
+//         predict = "You are ok";
 
-      } else {
-        console.log("high-risk");
-        voice.file.push("high-risk");
-        predict = "You are high risk";
+//       } else {
+//         console.log("high-risk");
+//         voice.file.push("high-risk");
+//         predict = "You are high risk";
         
-      }	
-      // console.log(" voice file luc sau = " + voice.file);
+//       }	
+//       // console.log(" voice file luc sau = " + voice.file);
       
-    });
+//     });
     
 
    
 
-  });
+//   });
 
     
 
   
 
 
-}
+// }

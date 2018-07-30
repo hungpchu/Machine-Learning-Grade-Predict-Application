@@ -12,15 +12,20 @@ var voice = {
 
 };
 
-var voiceFiles = ["good4"];
+// var voiceFiles = ["good1"];
+
+
+// var voiceFiles = [];
 
 var app = angular.module('Grade', ['ngResource', 'ngRoute']);
 
 
-
+// voiceFiles.push("high-risk");
 
 
 var hung = "hung1";
+
+
 
 
 
@@ -479,6 +484,9 @@ app.controller('StudCtrl', ['$scope', '$resource', '$routeParams', '$location',
 function($scope, $resource, $routeParams, $location) {
 
 
+	// voiceFiles.push("high-risk");
+
+
 		var Predicts = $resource('/api/grades/csce235/:nuid');
 
 		
@@ -523,16 +531,29 @@ function($scope, $resource, $routeParams, $location) {
 			});*/
 
 		
-			console.log(" voice file ban dau = " + voice.file);
-			console.log(" account.NUID = " + account.NUID);
+			// console.log(" voice file ban dau = " + voice.file);
+			// console.log(" account.NUID = " + account.NUID);
 			//voice.file.push("high-risk");
 			console.log("voiceFiles = ", voiceFiles);
+			var voice1 = ["high","high"];
+			function removeDuplicateUsingFilter(arr){
+				let unique_array = arr.filter(function(elem, index, self) {
+					return index == self.indexOf(elem);
+				});
+				return unique_array
+			}
+			console.log("unique voice1 = ");
+			console.log(removeDuplicateUsingFilter(voice1));
+			// if (voiceFiles.length == 1){
+			// 	voiceFiles.pop();
+			// }
+			// voiceFiles.push("high-risk");
 
 			Predicts.get({nuid: account.NUID}, function(data) {
 
 				//console.log(" $scope.account.NUID = " + $scope.account.NUID);
 	
-	
+				// console.log("vao predict");
 	
 				if (data.Predict == "Good") {
 					console.log("good");
@@ -548,12 +569,17 @@ function($scope, $resource, $routeParams, $location) {
 	
 				} else {
 					console.log("high-risk");
-					voice.file.push("high-risk");
+					// voice.file.push("high-risk");
+					// if (voiceFiles.length == 1){
+					// 	voiceFiles.pop();
+					// }
 					voiceFiles.push("high-risk");
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					// voiceFiles = ["high-risk"];
 					predict = "You are high risk";
 					
 				}	
-				console.log(" voiceFiles luc sau = " + voiceFiles);
+				console.log(" voiceFiles trong predict = " + voiceFiles);
 				
 			});
 			
