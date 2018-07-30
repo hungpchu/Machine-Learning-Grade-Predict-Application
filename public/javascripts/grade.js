@@ -533,7 +533,6 @@ function($scope, $resource, $routeParams, $location) {
 		
 			// console.log(" voice file ban dau = " + voice.file);
 			// console.log(" account.NUID = " + account.NUID);
-			//voice.file.push("high-risk");
 			console.log("voiceFiles = ", voiceFiles);
 			var voice1 = ["high","high"];
 			function removeDuplicateUsingFilter(arr){
@@ -544,10 +543,7 @@ function($scope, $resource, $routeParams, $location) {
 			}
 			console.log("unique voice1 = ");
 			console.log(removeDuplicateUsingFilter(voice1));
-			// if (voiceFiles.length == 1){
-			// 	voiceFiles.pop();
-			// }
-			// voiceFiles.push("high-risk");
+		
 
 			Predicts.get({nuid: account.NUID}, function(data) {
 
@@ -557,23 +553,25 @@ function($scope, $resource, $routeParams, $location) {
 	
 				if (data.Predict == "Good") {
 					console.log("good");
-					voice.file.push("good");
+					voiceFiles.push(data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					predict = "You are good";
 	
 	
 				} else if (data.Predict == "OK") {
 				
 					console.log("ok");
-					voice.file.push("ok");
+					voiceFiles.push(data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					predict = "You are ok";
 	
 				} else {
-					console.log("high-risk");
+					console.log("High-risk");
 					// voice.file.push("high-risk");
 					// if (voiceFiles.length == 1){
 					// 	voiceFiles.pop();
 					// }
-					voiceFiles.push("high-risk");
+					voiceFiles.push(data.Predict);
 					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					// voiceFiles = ["high-risk"];
 					predict = "You are high risk";

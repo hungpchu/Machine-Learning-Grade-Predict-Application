@@ -107,17 +107,17 @@ function onVoiceStart() {
     }
 
     var name = "good4";
-    var name1 = "high-risk";
+    var name1 = "OK";
     
     // console.log("name = ", name);
-    // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
+    var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
     //console.log("mpwebgl.instance = ", mpwebgl.instance);
 
     // voiceFiles.pop();
     // MpFS.prepareResource();
    // console.log(" MPFS trong demo = ", MpFS);
 
-    var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
+    // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
     if(voiceId > 0){
         console.log(" voiceId > 0  trong demo = ",voiceId);
         if (++voiceIndex == voiceFiles.length)
