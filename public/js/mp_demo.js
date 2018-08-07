@@ -4,6 +4,8 @@
 // var fs = require('fs');
 // const ffmpeg = require('fluent-ffmpeg');
 
+var change = true
+
 var mpwebgl, faceIndex = 1,
     hairIndex = 0,
     beardIndex = 0,
@@ -168,12 +170,71 @@ function oncosmeclear() {
     mpwebgl.instance.unloadcosme();
 }
 
+
+
 function handleFileSelectAvtr(evt) {
+
+    change = false;
+
+    rhino1 = evt.target.files;
+
+    if (change == true) {
+        console.log("if");
+    // Reuse existing Data URL from localStorage
+    // rhino.setAttribute("src", rhinoStorage);
+    }
+    else {
+    // Create XHR, Blob and FileReader objects
+    console.log("else");
+    var xhr = new XMLHttpRequest(),blob,fileReader = new FileReader();
+    
+    // xhr.open("GET", input, true);
+    xhr.open("GET", "../images/avatar.png", true);
+    // xhr.open("GET", "../images/lip1.JPG", true);
+    
+    
+    // Set the responseType to arraybuffer. "blob" is an option too, rendering manual Blob creation unnecessary, but the support for "blob" is not widespread enough yet
+    xhr.responseType = "arraybuffer";
+    
+    xhr.addEventListener("load", function () {
+        console.log("load");
+        if (xhr.status === 200) {
+            // Create a blob from the response
+            blob = new Blob([xhr.response], {type: "image/png"});
+    
+            // onload needed since Google Chrome doesn't support addEventListener for FileReader
+            fileReader.onload = function (evt) {
+                // Read out file contents as a Data URL
+                // var result = evt.target.result;
+                var result1 = evt.target.result;
+                // Set image src to Data URL
+                // rhino.setAttribute("src", result);
+                // Store Data URL in localStorage
+                try {
+                    // localStorage.setItem("rhino", result);
+                    localStorage.setItem("rhino1", result1);
+                }
+                catch (e) {
+                    console.log("Storage failed: " + e);
+                }
+            };
+            // Load blob as Data URL
+            fileReader.readAsDataURL(blob);
+        }
+    }, false);
+    // Send XHR
+    xhr.send();
+    }
+    console.log(" avater file trong filehandle= ",localStorage.getItem("rhino1"));
+
     var files = evt.target.files;
     genMode = "avatar";
     mpwebgl.instance.requestAvatar(files[0], genMode);
     onloading();
 }
+
+
+
 function onloading(argument) {
     $(loadingbar).show();
     $(inputbar).hide();
@@ -197,15 +258,41 @@ jQuery(document).ready(function() {
         loadingbar = $("#loadingbar");
     
     $('#filesavtr').on("change", handleFileSelectAvtr);
+
     $(document).on("mpLoadComplete", function() {
+
+        if (localStorage.getItem("rhino1") != null){
+
+        console.log(" avatar file = ",localStorage.getItem("rhino1"));
+        // // var dataURI = localStorage.getItem("rhino");
+        var dataURI = localStorage.getItem("rhino1");
+        
+        var byteString = atob(dataURI.split(',')[1]);
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+        }
+        var blob = new Blob([ia], {
+         type: 'image/jpeg'
+        });
+        var file = new File([blob], "image.jpg");
+        console.log("file = ",file);
+        genMode = "avatar";
+        mpwebgl.instance.requestAvatar(file, genMode);
+        console.log("change = ",change);
+    }
+
         $("#mpcanvas").show();
         initEvt();
-        if(faceFiles == undefined || faceFiles == null || faceFiles.length <= 0)
-            return;
-        var faceId = mpwebgl.instance.loadnextface("items/face/" + faceFiles[0]);
-        if(faceId < 0)
-            console.error("Load face error");
+        // if(faceFiles == undefined || faceFiles == null || faceFiles.length <= 0)
+        //     return;
+        // var faceId = mpwebgl.instance.loadnextface("items/face/" + faceFiles[0]);
+        // if(faceId < 0)
+        //     console.error("Load face error");
     });
+
+
     $(document).on("mpLoadYourAvatarComplete", function() {
         offloading();
         disableAnimButton();
@@ -231,6 +318,8 @@ jQuery(document).ready(function() {
     });
     timeout = setTimeout(hideFooter, hidetime);
 });
+
+
 function hideFooter(argument) {
     footer.animate({
         opacity: 0.25,
@@ -238,6 +327,8 @@ function hideFooter(argument) {
     }, 1000, function() {
     });
 }
+
+
 function showFooter() {
     footer.animate({
         opacity: 1.0,
@@ -245,14 +336,20 @@ function showFooter() {
     }, 100, function() {
     });
 }
+
+
 function disableAnimButton() {
     $("#animationStart").css( "opacity", 0.2);
     $("#animationStart").attr('disabled', true);
 }
+
+
 function enableAnimButton() {
     $("#animationStart").css( "opacity", 1.0);
     $("#animationStart").attr('disabled', false);
 }
+
+
 
 function onCosmeLipChange() {
     if(cosmeLips == undefined || cosmeLips == null || cosmeLips.length <= 0)
@@ -265,6 +362,8 @@ function onCosmeLipChange() {
     else
         console.error("load comse lip fail");
 }
+
+
 function onCosmeCheekChange() {
     if(cosmeCheeks == undefined || cosmeCheeks == null || cosmeCheeks.length <= 0)
         return;
@@ -276,6 +375,8 @@ function onCosmeCheekChange() {
     else
         console.error("load comse cheek fail");
 }
+
+
 function onCosmeEyeChange() {
     if(cosmeEyes == undefined || cosmeEyes == null || cosmeEyes.length <= 0)
         return;
@@ -287,13 +388,19 @@ function onCosmeEyeChange() {
     else
         console.error("load comse eye fail");
 }
+
+
 function oncosmeclear() {
     mpwebgl.instance.unloadcosme(3); // LIP:0, EYE:1, CHEEK:2, ALL: 3
 }
+
+
 function showError(jsonStrErr){
     var errText = jsonStrErr.responseJSON.error.message;
     alert(errText);
 }
+
+
 function initLookAt(){
     if(!Module['canvas'])
         return;

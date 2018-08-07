@@ -18,9 +18,25 @@ html(ng-app='Grade')
       #status.emscripten
       .emscripten
         progress#progress(value='0', max='100', hidden='1')
+#mpfooter
+  #tabs
+    ul
+      li
+        a(href='#tabs-1') Avatar
+    #tabs-1
+      #avatar
+        div
+          a#avatarChange.btn.btn--blue(href='#', style='margin-bottom: 30px;') ChangeAvatar
+        label#lblfilesavtr.btn.btn-default.btn-file
+          | Browse File... 
+          input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')
+        .loadingbar
+          #loadingbar.bar
+            i.sphere
+
     //- div
     //-   input#text.txt(type='text')
-    button#voiceStart Speak
+button#voiceStart Speak
     script(src="https://code.jquery.com/jquery-latest.min.js")
     script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
     script(src='/js/mp_config.js')
