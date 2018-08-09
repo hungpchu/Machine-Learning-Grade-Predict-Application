@@ -10,7 +10,7 @@
 
 </style>
 
-
+<!-- ng-app = ten cua app va ng-controller = ten bo dieu khien -->
 <div ng-app = "Grade" ng-controller = "StudCtrl" style = "text-align:center">
 	
 
@@ -65,6 +65,12 @@
 		<button class = "btn btn-primary" ng-click = "viewGrade()" style = "margin-left:10px">View grade</button>
 	</div>
 
+	
+	<form action="../public/images" method="POST" enctype="multipart/form-data">
+		Select an image to upload:
+		<input type="file" name="image"> 
+		<input type="submit" value="Upload Image">
+	  </form>
     
    
 

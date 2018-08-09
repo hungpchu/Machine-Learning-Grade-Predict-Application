@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var formidable = require('formidable');
 
 //2 routes modules index and user 
 var index = require('./routes/index');
@@ -17,6 +18,7 @@ var accounts = require('./routes/accounts');
 var models = require('./routes/models');
 var multipp = require('./routes/multipp');
 var grades = require('./routes/grades');
+// var picture = require('./routes/picture');
 
 var app = express();
 
@@ -39,12 +41,35 @@ app.use('/api/accounts', accounts);
 app.use('/api/grades', grades);
 app.use('/api/models', models);
 app.use('/api/multipp', multipp);
+// app.use('/public/images',picture);
 
 app.get('/',function(res,req){
 
   res.send = "Hello";
 
 });
+
+// app.get('/', function (req, res){
+//   console.log(" dirname = ", __dirname);
+//   res.sendFile(__dirname + '/index.html');
+// });
+
+app.post('/', function (req, res){
+  var form = new formidable.IncomingForm();
+
+  form.parse(req);
+
+  form.on('fileBegin', function (name, file){
+      file.path = __dirname + '/public/images/' + file.name;
+  });
+
+  form.on('file', function (name, file){
+      console.log('Uploaded ' + file.name);
+  });
+
+  res.sendFile(__dirname + '/index.html');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

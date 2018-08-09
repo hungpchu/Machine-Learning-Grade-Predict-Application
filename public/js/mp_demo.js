@@ -177,6 +177,9 @@ function handleFileSelectAvtr(evt) {
     change = false;
 
     rhino1 = evt.target.files;
+    var files = evt.target.files;
+    var file = files[0];
+    // file.moveTo("item", "lip3.JPG");
 
     if (change == true) {
         console.log("if");
@@ -189,8 +192,8 @@ function handleFileSelectAvtr(evt) {
     var xhr = new XMLHttpRequest(),blob,fileReader = new FileReader();
     
     // xhr.open("GET", input, true);
-    xhr.open("GET", "../images/avatar.png", true);
-    // xhr.open("GET", "../images/lip1.JPG", true);
+    xhr.open("GET", "../images/" + file.name, true);
+
     
     
     // Set the responseType to arraybuffer. "blob" is an option too, rendering manual Blob creation unnecessary, but the support for "blob" is not widespread enough yet
