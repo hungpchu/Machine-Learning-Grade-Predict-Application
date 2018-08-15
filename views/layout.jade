@@ -27,12 +27,21 @@ html(ng-app='Grade')
       #avatar
         div
           a#avatarChange.btn.btn--blue(href='#', style='margin-bottom: 30px;') ChangeAvatar
-        label#lblfilesavtr.btn.btn-default.btn-file
-          | Browse File... 
-          input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')
-        .loadingbar
-          #loadingbar.bar
-            i.sphere
+        //- label#lblfilesavtr.btn.btn-default.btn-file
+        //-   | Browse File... 
+        //-   input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')
+        //- .loadingbar
+        //-   #loadingbar.bar
+        //-     i.sphere
+        form(action='/', enctype='multipart/form-data', method='post')
+          label#lblfilesavtr.btn.btn-default.btn-file
+            | Browse File... 
+            input#filesavtr(type='file', name='upload', multiple='', style='display: none;', accept='image/jpg,image/jpeg,image/png')
+          input(type='submit', value='Upload')
+
+
+
+
 
     //- div
     //-   input#text.txt(type='text')
@@ -51,4 +60,7 @@ button#voiceStart Speak
 
 
 
-  
+  //- form(action='/', enctype='multipart/form-data', method='post')
+  //- label#lblfilesavtr.btn.btn-default.btn-file
+  //-   | Browse File... 
+  //-   input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')

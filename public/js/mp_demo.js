@@ -4,7 +4,9 @@
 // var fs = require('fs');
 // const ffmpeg = require('fluent-ffmpeg');
 
-var change = true
+var change = true;
+
+var name = "hung";
 
 var mpwebgl, faceIndex = 1,
     hairIndex = 0,
@@ -171,16 +173,28 @@ function oncosmeclear() {
 }
 
 
-
 function handleFileSelectAvtr(evt) {
+
 
     change = false;
 
     rhino1 = evt.target.files;
     var files = evt.target.files;
     var file = files[0];
-    // file.moveTo("item", "lip3.JPG");
 
+    // var form = new formidable.IncomingForm();
+
+    // form.parse(req);
+  
+    // form.on('fileBegin', function (name, file){
+    //     file.path = __dirname + '/public/images/' + file.name;
+    //     console.log("choose file HUng");
+    // });
+  
+    // form.on('file', function (name, file){
+    //     console.log('Uploaded ' + file.name);
+    // });
+ setTimeout(function () { 
     if (change == true) {
         console.log("if");
     // Reuse existing Data URL from localStorage
@@ -234,6 +248,8 @@ function handleFileSelectAvtr(evt) {
     genMode = "avatar";
     mpwebgl.instance.requestAvatar(files[0], genMode);
     onloading();
+}, 2400);
+
 }
 
 
@@ -261,14 +277,27 @@ jQuery(document).ready(function() {
         loadingbar = $("#loadingbar");
     
     $('#filesavtr').on("change", handleFileSelectAvtr);
+    // $('#name').on("change", handleFileSelectAvtr);
 
     $(document).on("mpLoadComplete", function() {
 
+        
+        console.log("name = ", $('#name'));
+
+    //    var fileLo = new File("../images/avatar.png");
+
+    console.log("name1 = ", $('#filesavtr'));
+
+        // console.log("file = ", fileLo);
+    
+
         if (localStorage.getItem("rhino1") != null){
 
-        console.log(" avatar file = ",localStorage.getItem("rhino1"));
+        // console.log(" avatar file = ",localStorage.getItem("rhino1"));
         // // var dataURI = localStorage.getItem("rhino");
         var dataURI = localStorage.getItem("rhino1");
+
+        console.log("url = ",dataURI);
         
         var byteString = atob(dataURI.split(',')[1]);
         var ab = new ArrayBuffer(byteString.length);

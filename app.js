@@ -1,5 +1,7 @@
 // entry point to your applicaiton
 
+var file1 = "Hung";
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -61,14 +63,26 @@ app.post('/', function (req, res){
 
   form.on('fileBegin', function (name, file){
       file.path = __dirname + '/public/images/' + file.name;
+      console.log("choose file HUng");
+      console.log("file1 = ", file1);
+      console.log("filename = ", file.name);
+     
   });
 
   form.on('file', function (name, file){
       console.log('Uploaded ' + file.name);
   });
 
-  res.sendFile(__dirname + '/index.html');
+  // res.send('Thank for uploading');
+  setTimeout(function() {
+    // res.end(' World\n');
+    res.json('success');
+}, 3400);
+ 
+  // res.render('index', { title: 'HungCHU2' });
 });
+
+
 
 
 // catch 404 and forward to error handler
@@ -90,3 +104,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
