@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html ng-app="Grade">
+  <head>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/javascripts/gradeTest.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body>
+
+      <!-- <div>
+          <canvas id="mpcanvas"></canvas>
+        </div>
+
+        <div id="mplogs">
+          <div class="emscripten" id="status"></div>
+          <div class="emscripten">
+            <progress id="progress" value="0" max="100" hidden="1"></progress>
+          </div>
+        </div>
+
+        <button id="voiceStart">Speak
+        
+
+      <div id="mpfooter">
+
+      <div id="tabs">
+
+        <ul>
+          <li><a href="#tabs-1">Avatar</a></li>
+        </ul>
+
+        <div id="tabs-1">
+          <div id="avatar">
+            <div><a class="btn btn--blue" id="avatarChange" href="#" style="margin-bottom: 30px;">ChangeAvatar</a></div>
+
+            <form action="/" enctype="multipart/form-data" method="post">
+              <label class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
+                <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
+              </label>
+              <input type="submit" value="Upload">
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      </div>
+    </div> -->
+
+    
+
+        <div ng-app = "Grade" ng-controller = "StudCtrl" style = "text-align:center">
+	
+
+                 <div> 
+            
+                <canvas id="mpcanvas" ></canvas>
+              
+              </div>
+              
+              <div id="mplogs">
+              
+                <div class="emscripten" id="status"></div>
+                <div class="emscripten">
+                  <progress value="0" max="100" id="progress" hidden=1></progress>
+                </div>
+              </div>     
+
+              <button id="voiceStart">Speak</button>
+
+              <div id="mpfooter">
+
+                  <!-- <div id="tabs"> -->
+            
+                    <!-- <ul>
+                      <li><a href="#tabs-1">Avatar</a></li>
+                    </ul>
+             -->
+                    <!-- <div id="tabs-1">
+                      <div id="avatar">
+                        <div><a class="btn btn--blue" id="avatarChange" href="#" style="margin-bottom: 30px;">ChangeAvatar</a></div>
+             -->
+                        <form action="/" enctype="multipart/form-data" method="post">
+                          <label class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
+                            <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
+                          </label>
+                          <input type="submit" value="Upload">
+                        </form>
+            
+                      <!-- </div>
+            
+                    </div>
+            
+                  </div> -->
+            
+                  <!-- </div> -->
+                </div>
+             
+            
+            
+                
+                <h1 style = "max-width:600px;margin:auto;text-align:center;width:80%;background-color:#8f8f8f;color:white;padding:10px">{{account["Full name"]}}</h1>
+                <a href = "/#/">Logout</a>
+                <p>
+                    {{message}}
+                </p>
+                <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
+                    <h4>Profile:</h4>
+                    <table border = "0" id = "profileTable" style = "margin:auto">
+                    </table>
+                </div>
+            
+            
+                <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid grey;border-radius:5px">
+                    <label style = "margin-right:10px">Course:</label>
+                    <select ng-model = "course" style = "width:150px;height:30px;">
+                        <option disable selected value>Choose course...</option>
+                        <option value = "csce156">CSCE156</option>
+                        <option value = "csce235">csce235</option>
+                        <option value = "csce235">CSCE 23</option>
+                    </select>
+                    <button class = "btn btn-primary" ng-click = "viewGrade()" style = "margin-left:10px">View grade</button>
+                </div>
+            
+                
+               
+            
+              
+            </div>
+
+
+        
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src='../js/mp_config.js'></script>
+<script type="text/javascript" src="../js/mp_fileio.js"></script>
+<script type="text/javascript" src='../js1/mplib.js'></script>
+<script type="text/javascript" src='../js/mp_demo.js'></script>
+<script type="text/javascript" src='../lib/jszip/jszip.min.js'></script>
+<script type="text/javascript" src='../js/resizecanvas.js'></script>
+
+    
+  </body>
+</html>
+
+<!-- <div>
+    <canvas id="mpcanvas"></canvas>
+  </div>
+  <div id="mplogs">
+    <div class="emscripten" id="status"></div>
+    <div class="emscripten">
+      <progress id="progress" value="0" max="100" hidden="1"></progress>
+    </div>
+  </div>
+</body>
+</html>
+<div id="mpfooter">
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Avatar</a></li>
+  </ul>
+  <div id="tabs-1">
+    <div id="avatar">
+      <div><a class="btn btn--blue" id="avatarChange" href="#" style="margin-bottom: 30px;">ChangeAvatar</a></div>
+      <form action="/" enctype="multipart/form-data" method="post">
+        <label class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
+          <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
+        </label>
+        <input type="submit" value="Upload">
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<button id="voiceStart">Speak -->

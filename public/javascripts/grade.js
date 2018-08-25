@@ -44,7 +44,7 @@ app.config(['$routeProvider', function($routeProvider) {
     })
     .when('/professor/:username', {
         templateUrl: 'partials/professor.html',
-        controller: 'ProfCtrl'
+		controller: 'ProfCtrl'
     })
     .when('/professor/:username/uploadGrade/:course', {
         templateUrl: 'partials/uploadGrade.html',
@@ -75,7 +75,7 @@ app.config(['$routeProvider', function($routeProvider) {
 //tham số 2: function định nghĩa controller
 // cách viết tắt
 
-//login.html -> controller = LoginCtrl
+//home.html -> controller = LoginCtrl
 app.controller('LoginCtrl', ['$scope', '$resource', '$location',
 	
 

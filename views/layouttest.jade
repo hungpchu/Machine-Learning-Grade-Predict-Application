@@ -1,9 +1,26 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @hungpchu Sign out
+0
+0 0 hungpchu/Grade-Predict-Application
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+Grade-Predict-Application/views/layout.jade
+0f0deb4  9 days ago
+@hungpchu hungpchu 1 click upload button
+    
+67 lines (58 sloc)  2.36 KB
 doctype html
 html(ng-app='Grade')
   head
     title= title
-    //- link(rel='stylesheet', href='/stylesheets/style.css')
-    //- link(rel='stylesheet',href='/css/main.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet',href='/css/main.css')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-resource.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js')
@@ -12,27 +29,55 @@ html(ng-app='Grade')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
   body
     block content
+    div
+      canvas#mpcanvas
+    #mplogs
+      #status.emscripten
+      .emscripten
+        progress#progress(value='0', max='100', hidden='1')
+#mpfooter
+  #tabs
+    ul
+      li
+        a(href='#tabs-1') Avatar
+    #tabs-1
+      #avatar
+        div
+          a#avatarChange.btn.btn--blue(href='#', style='margin-bottom: 30px;') ChangeAvatar
+        //- label#lblfilesavtr.btn.btn-default.btn-file
+        //-   | Browse File... 
+        //-   input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')
+        //- .loadingbar
+        //-   #loadingbar.bar
+        //-     i.sphere
+        form(action='/', enctype='multipart/form-data', method='post')
+          label#lblfilesavtr.btn.btn-default.btn-file
+            | Browse File... 
+            input#filesavtr(type='file', name='upload', multiple='', style='display: none;', accept='image/jpg,image/jpeg,image/png')
+          input(type='submit', value='Upload')
+
+
+
+
+
     //- div
-    //-   canvas#mpcanvas
-    //- #mplogs
-    //-   #status.emscripten
-    //-   .emscripten
-    //-     progress#progress(value='0', max='100', hidden='1')
-    //- //- div
-    //- //-   input#text.txt(type='text')
-    //- button#voiceStart Speak
-    //- script(src="https://code.jquery.com/jquery-latest.min.js")
-    //- script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
-    //- script(src='/js/mp_config.js')
-    //- //- script(src='js/mp_fileio.js')
-    //- //- script(src='/js1/mplib.js')
-    //- script(src='/js/mp_demo.js')
+    //-   input#text.txt(type='text')
+button#voiceStart Speak
+    script(src="https://code.jquery.com/jquery-latest.min.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    script(src='/js/mp_config.js')
     //- script(src='js/mp_fileio.js')
-    //- //- script(src='/js1/mplib.js')
-    //- script(src='/lib/jszip/jszip.min.js')
-    //- script(src='js/resizecanvas.js')
     //- script(src='/js1/mplib.js')
+    script(src='/js/mp_demo.js')
+    script(src='js/mp_fileio.js')
+    //- script(src='/js1/mplib.js')
+    script(src='/lib/jszip/jszip.min.js')
+    script(src='js/resizecanvas.js')
+    script(src='/js1/mplib.js')
 
 
 
-  
+  //- form(action='/', enctype='multipart/form-data', method='post')
+  //- label#lblfilesavtr.btn.btn-default.btn-file
+  //-   | Browse File... 
+  //-   input#filesavtr(type='file', style='display: none;', accept='image/jpg,image/jpeg,image/png')

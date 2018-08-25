@@ -17,8 +17,10 @@ router.get('/', function(req, res, next) {
   // name title for all page to be Express 
   // 1st argue: render the index view, which is defined in views > index.jade.
   // 
-
+console.log("req.body.name = ",req.body.name);
   res.render('index', { title: 'HungCHU2' });
+
+  
 
 });
 

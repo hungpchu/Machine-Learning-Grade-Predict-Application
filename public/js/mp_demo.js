@@ -110,9 +110,27 @@ function onVoiceStart() {
         return;
     }
 
-    var name = "good4";
-    var name1 = "OK";
-    
+    // var first = true;
+    // var first1 = localStorage.getItem('first');
+
+    // console.log('first1 = ',first1);
+
+    // if ( first == true && first1 != null ){
+    //     var voiceFiles = localStorage.getItem('voice');
+    // }
+//     console.log("voiceFiles ban dau  = ", voiceFiles);
+//   if (voiceFiles == null){
+
+//     console.log("voiceFiles trong = ", voiceFiles);
+//       var voiceFiles = localStorage.getItem('voice');
+//   }else{
+//     // var voiceFiles = localStorage.getItem('voice');
+//     console.log("voiceFiles trong view = ", voiceFiles);
+//   }
+
+  console.log("voiceFiles ngoai = ", voiceFiles);
+// var voice = localStorage.getItem('voice');
+//     console.log("voice save = ", voice);
     // console.log("name = ", name);
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
     //console.log("mpwebgl.instance = ", mpwebgl.instance);
@@ -123,9 +141,13 @@ function onVoiceStart() {
 
     // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
     if(voiceId > 0){
+        first = false;
+        localStorage.setItem('first',first);
         console.log(" voiceId > 0  trong demo = ",voiceId);
         if (++voiceIndex == voiceFiles.length)
             voiceIndex = 0;
+
+            
     }
     else{
         console.log("voiceId = ", voiceId);
@@ -259,7 +281,7 @@ function onloading(argument) {
     $(inputbar).hide();
 }
 function offloading(argument) {
-    $("#filesavtr")[0].value = "";
+    // $("#filesavtr")[0].value = "";
       $(loadingbar).hide();
     $(inputbar).show();
 }

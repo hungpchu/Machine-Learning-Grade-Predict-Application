@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="Grade">
+  <head>
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/javascripts/gradeTest.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <style>
+            table, th, td {
+                border: 1px solid grey;
+                border-collapse: collapse;
+                padding: 5px;
+            }
+            
+            tr:nth-child(odd) {
+                background-color: #f2f2f2;
+            }
+        
+            .back-button {
+                background-color: #8f8f8f;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                cursor: pointer;
+                text-decoration: none;
+                width:80%;
+            }
+            .back-button:hover {
+                background-color: #4b4b4b;
+                color: white;
+            }
+        </style>
+        
+  </head>
+  <body>
+
+        <div> -
+            
+                <canvas id="mpcanvas" ></canvas>
+              
+              </div>
+              
+              <div id="mplogs">
+              
+                <div class="emscripten" id="status"></div>
+                <div class="emscripten">
+                  <progress value="0" max="100" id="progress" hidden=1></progress>
+                </div>
+              </div>   
+              
+              <button id="voiceStart">Speak</button>
+
+
+        <div ng-app = "Grade" ng-controller = "ViewCtrl" style = "margin:auto;max-width:600px;width:80%;text-align:center;">
+                <h1 style = "width:100%;margin:auto;text-align:center;background-color:#8f8f8f;color:white;padding:10px">{{account["Full name"]}}</h1>
+                   <a href = "/#/">Logout</a>
+                   <div style = "border:grey 2px solid;margin-top:10px;border-radius:5px">
+                    <h2>{{course}}</h2>
+                    <table border = "0" id = "profileTable" style = "margin:auto">
+                    </table>
+                    <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid grey;border-radius:5px;font-size:16px">
+                        Predicted Group: <strong><font id = "predict"></font></strong><br>
+                    </div>
+                    <button class = "back-button" ng-click = "back()" style = "margin:0px auto 10px auto">Back</button>
+                </div>
+            </div>
+     
+
+
+        
+            <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src='../js/mp_config.js'></script>
+            <script type="text/javascript" src="../js/mp_fileio.js"></script>
+            <script type="text/javascript" src='../js1/mplib.js'></script>
+            <script type="text/javascript" src='../js/mp_demo.js'></script>
+            <script type="text/javascript" src='../lib/jszip/jszip.min.js'></script>
+            <script type="text/javascript" src='../js/resizecanvas.js'></script>
+
+    
+  </body>
+</html>

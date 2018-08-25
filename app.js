@@ -38,8 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //use the index module for any routes starting with “/”
 app.use('/', index);
+
 app.use('/users', users);
+
 app.use('/api/accounts', accounts);
+
 app.use('/api/grades', grades);
 app.use('/api/models', models);
 app.use('/api/multipp', multipp);
