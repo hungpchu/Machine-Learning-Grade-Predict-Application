@@ -114,6 +114,7 @@ function onVoiceStart() {
     console.log('first = ',first);
 
     if ( first == false ){
+        sessionStorage.setItem("first",false);
         voiceFiles = JSON.parse(localStorage.getItem("array"));
         console.log(" voiceFiles  = ",  voiceFiles);
     }
@@ -318,7 +319,13 @@ jQuery(document).ready(function() {
         console.log("file = ",file);
         genMode = "avatar";
         mpwebgl.instance.requestAvatar(file, genMode);
+        if(sessionStorage.getItem("first") != null){
+            first = sessionStorage.getItem("first");
+            console.log("trong null, first = ", first);
+        }
+        if (first == true){
         setTimeout(onVoiceStart,15000);
+        }
         console.log("change = ",change);
     }
 

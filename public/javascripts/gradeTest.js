@@ -725,7 +725,8 @@ var voice = {
   
 		  
 		  $scope.back = function() {
-			  $location.path("/student/" + $routeParams.username);
+			//   $location.path("/student/" + $routeParams.username);
+			  window.location.href = 'student2.html';
 		  }
           $scope.course = 'csce235';
   
