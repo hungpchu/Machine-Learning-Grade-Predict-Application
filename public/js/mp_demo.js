@@ -124,6 +124,7 @@ function onVoiceStart() {
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
    
     if(voiceId > 0){
+        document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
         first = false;
         localStorage.setItem('first',first);
         console.log(" voiceId > 0  trong demo = ",voiceId);

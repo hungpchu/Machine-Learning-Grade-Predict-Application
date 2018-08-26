@@ -38,6 +38,98 @@
                 background-color: #4b4b4b;
                 color: white;
             }
+            .bubble-wrapper {
+            display: inline-block;
+            position: absolute;
+            top: 260px;
+            right: 26px;
+            margin: 4em;
+          }
+          .bubble {
+            padding: 1.6em;
+            background-color: #000080;
+            color: #d3d3d3;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+          }
+      
+          .bubble.right {
+            padding-right: 0;
+            display: inline-block;
+          }
+          .bubble.right:after {
+            content: '';
+            height: 0;
+            width: 0;
+            left: 2em;
+            top: -0.75em;
+            position: relative;
+            font-size: 10px;
+            display: inline-block;
+            border-right: 2em solid transparent;
+            border-bottom: 2em solid #000080;
+          }
+          .bubble.right.reverse:after {
+            border-bottom: 0;
+            border-right: 2em solid transparent;
+            border-top: 2em solid #000080;
+            top: 0.75em;
+          }
+          .bubble.left {
+            float: left;
+            margin-left: 1.5em;
+            padding-left: 0;
+          }
+          .bubble.left:before {
+            content: '';
+            height: 0;
+            width: 0;
+            left: -2em;
+            position: relative;
+            font-size: 10px;
+            display: inline-block;
+            border-left: 2em solid transparent;
+            border-top: 2em solid #000080;
+          }
+        
+          .anchor.left {
+            float: left;
+          }
+          .anchor.left.reverse {
+            position: relative;
+            display: inline-block;
+            bottom: -2em;
+          }
+          .anchor.top:after {
+            left: -40%;
+            position: relative;
+            content: '';
+            height: 0;
+            width: 0;
+            font-size: 10px;
+            display: inline-block;
+            margin-bottom: -2.4em;
+            border-left: 2em solid #000080; 
+            border-top: 2em solid #FFF;
+            border-top: 2em solid transparent;
+          }
+          .anchor.top.reverse:after {
+            border-left: 0;
+            left: -60%;
+            border-right: 2em solid #000080; 
+            border-top: 2em solid #FFF;
+            border-top: 2em solid transparent;
+          }
+          .bubble.top.reverse.big {
+            width: 30em;
+            margin-left: 3em;
+          }
+      
+          .anchor.top {
+            margin-bottom: 1.1em;
+            display: inline-block;
+          }
         </style>
         
   </head>
@@ -56,6 +148,11 @@
                   <progress value="0" max="100" id="progress" hidden=1></progress>
                 </div>
               </div>   
+
+              <div class="bubble-wrapper">
+                    <div class="anchor top reverse"></div>
+                    <div class="bubble top reverse" id ="speak" ></div>
+                  </div>
               
               <button id="voiceStart">Speak</button>
 
