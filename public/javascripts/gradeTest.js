@@ -1,8 +1,5 @@
 
-// 
-// 
-// 
-// 
+
 // có 2 tham số: tham số 1 = tên module ta cần tạo; 
 // tham số 2: danh sách các dependencies, các modules khác ta cần
 // ngResource' + ngRoute = module depend
@@ -12,24 +9,17 @@ var voice = {
   
   };
   
-  // var voiceFiles = ["good1"];
   
-  
-//   var voiceFiles = [];
   
   var app = angular.module('Grade', ['ngResource', 'ngRoute']);
   
-  
-  // voiceFiles.push("high-risk");
   
   
   var hung = "hung1";
   
   var course = "hun";
-  
-  
-  
-  //console.log("hello = " + angular.element(document.querySelector("#hello")));
+
+
   
   
   app.config(['$routeProvider', function($routeProvider) {
@@ -495,8 +485,6 @@ var voice = {
   function($scope, $resource, $routeParams, $location) {
   
   
-	  // voiceFiles.push("high-risk");
-  
   
 		  var Predicts = $resource('/api/grades/csce235/:nuid');
   
@@ -557,7 +545,7 @@ var voice = {
 			  console.log("unique voice1 = ");
 			  console.log(removeDuplicateUsingFilter(voice1));
 		  
-  
+			  var array = [];
 			  Predicts.get({nuid: account.NUID}, function(data) {
   
 				  //console.log(" $scope.account.NUID = " + $scope.account.NUID);
@@ -567,6 +555,7 @@ var voice = {
 				  if (data.Predict == "Good") {
 					  console.log("good");
 					  voiceFiles.push(data.Predict);
+					  array.push(data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					  predict = "You are good";
 	  
@@ -575,21 +564,21 @@ var voice = {
 				  
 					  console.log("ok");
 					  voiceFiles.push(data.Predict);
+					  array.push(data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					  predict = "You are ok";
 	  
 				  } else {
 					  console.log("High-risk");
-					  // voice.file.push("high-risk");
-					  // if (voiceFiles.length == 1){
-					  // 	voiceFiles.pop();
-					  // }
+					  array.push(data.Predict);
 					  voiceFiles.push(data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
-					  // voiceFiles = ["high-risk"];
 					  predict = "You are high risk";
 					  
-                  }	
+				  }	
+				  
+				  console.log(" array = " ,array);
+                  localStorage.setItem("array", JSON.stringify(array));
                   
                   localStorage.setItem('voice',voiceFiles);
 				//   console.log(" voiceFiles trong predict = " + voiceFiles);
@@ -617,16 +606,10 @@ var voice = {
 				  // tìm id của bảng 
 				  var table = document.getElementById("profileTable");
   
-				  //console.log("table.1child ngoai");
-				  //console.log(table.firstChild);
+		
   
 				  while (table.firstChild) {
 					   
-					  //count++;
-					  //console.log("count = "+ count);
-  
-					  //console.log("table.1child trong");
-				  //console.log(table.firstChild);
 					  
 					  table.removeChild(table.firstChild);
   
@@ -643,18 +626,6 @@ var voice = {
 					  var val = document.createTextNode(account[data.list[prop]]);
 					  var b = document.createElement("B");
   
-				  
-					  //console.log("name");
-					  //console.log( name);
-  
-					  //console.log("val");
-					  //console.log( val);
-  
-					  //console.log("b");
-					  //console.log( b);
-  
-  
-  
   
 					  b.appendChild(name);
 					  td_name.appendChild(b);
@@ -666,7 +637,7 @@ var voice = {
   
 					  
 				  }
-				  //console.log("ene");
+			
 				  
 			  
 			  });
@@ -717,26 +688,7 @@ var voice = {
 			
 				var move = true;
 			
-		  //   hello.addEventListener("click",function(){
-			
-		  // 	  if (move){
 	
-		  // 	  speak();
-		  // 	  hello.style.animation = "move 2s steps(3) infinite";
-			
-		  // 	  move = false;
-			
-		  // 	  }else{
-			
-				
-			
-		  //   hello.style.animation = "";
-			
-		  //   move = true;
-		  // 	  }
-			
-			
-		  //   });
 		  
 		  
   
@@ -768,9 +720,7 @@ var voice = {
   
   //quan tam den cai nay
   app.controller('ViewCtrl', ['$scope', '$resource', '$location', '$routeParams',
-  // location = 
-  // 
-  // 
+ 
 	  function($scope, $resource, $location, $routeParams) {
   
 		  
@@ -786,16 +736,25 @@ var voice = {
 		  var Properties = $resource('/api/multipp/properties');
   
           var voiceFiles = localStorage.getItem('voice');
-         console.log('voiceFile trong view =', voiceFiles);
+		 console.log('voiceFile trong view =', voiceFiles);
+		 first = false;
   
   
 		  Account.get({username: 'hchu4'}, function(account) {
   
 			  console.log("account123");
               console.log(account);
-            //   console.log(" course = ", course);
+     
             var course = localStorage.getItem('course');
-            console.log(" course = ", course);
+			console.log(" course = ", course);
+			
+			var array1 = JSON.parse(localStorage.getItem("array"));
+
+			voiceFiles = array1;
+
+
+console.log(typeof array1); 
+console.log("array1 = ", array1); 
 
   
 			  $scope.account = account;
@@ -892,8 +851,7 @@ var voice = {
   
 					  } else {
 						  document.getElementById("predict").setAttribute("color", "red");
-						  //console.log("hung = hung2");
-						  //hung = "hung2";
+					
 					  }			
 					  
 					  

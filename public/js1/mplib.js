@@ -4,10 +4,16 @@ var Module = {
         console.log("prerun");
         console.log("MpFS in mplib");
         console.log('voiceFiles trong mplib = ', voiceFiles);
-        // console.log(MpFS.prepareResource());
+        if ( first == false ){
+            voiceFiles = JSON.parse(localStorage.getItem("array"));
+            console.log(" voiceFiles  = ",  voiceFiles);
+        }
+
         MpFS.prepareResource();
     }),
     postRun: (function() {
+
+        console.log("post run");
         $.mpwebgl.instance.init_mp_param();
     }),
     print: (function() {

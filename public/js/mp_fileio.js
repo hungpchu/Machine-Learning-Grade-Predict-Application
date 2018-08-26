@@ -7,6 +7,8 @@ var cosmeLips = ["000","001","002","003","004"];
 var beardDirs = ["beard0.bin", "beard1.bin", "beard2.bin", "beard3.bin"];
 var glassesDirs = ["glasses0.bin", "glasses1.bin", "glasses2.bin", "glasses3.bin", "glasses4.bin"];
 var animDirs  = ["anim0", "anim1"];
+var first = true;
+console.log("voiceFiles trong lib = ", voiceFiles);
 
 var MpFS = {
   prepareResource : (function(dir){

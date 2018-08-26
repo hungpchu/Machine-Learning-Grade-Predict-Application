@@ -110,36 +110,19 @@ function onVoiceStart() {
         return;
     }
 
-    // var first = true;
-    // var first1 = localStorage.getItem('first');
 
-    // console.log('first1 = ',first1);
+    console.log('first = ',first);
 
-    // if ( first == true && first1 != null ){
-    //     var voiceFiles = localStorage.getItem('voice');
-    // }
-//     console.log("voiceFiles ban dau  = ", voiceFiles);
-//   if (voiceFiles == null){
+    if ( first == false ){
+        voiceFiles = JSON.parse(localStorage.getItem("array"));
+        console.log(" voiceFiles  = ",  voiceFiles);
+    }
 
-//     console.log("voiceFiles trong = ", voiceFiles);
-//       var voiceFiles = localStorage.getItem('voice');
-//   }else{
-//     // var voiceFiles = localStorage.getItem('voice');
-//     console.log("voiceFiles trong view = ", voiceFiles);
-//   }
 
   console.log("voiceFiles ngoai = ", voiceFiles);
-// var voice = localStorage.getItem('voice');
-//     console.log("voice save = ", voice);
-    // console.log("name = ", name);
+
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
-    //console.log("mpwebgl.instance = ", mpwebgl.instance);
-
-    // voiceFiles.pop();
-    // MpFS.prepareResource();
-   // console.log(" MPFS trong demo = ", MpFS);
-
-    // var voiceId = mpwebgl.instance.loadvoice('items/voice/' + name1);
+   
     if(voiceId > 0){
         first = false;
         localStorage.setItem('first',first);
