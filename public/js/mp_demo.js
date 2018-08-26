@@ -109,7 +109,7 @@ function onVoiceStart() {
         mpwebgl.instance.destroyvoice();
         return;
     }
-
+    console.log('onvoice = ');
 
     console.log('first = ',first);
 
@@ -317,6 +317,7 @@ jQuery(document).ready(function() {
         console.log("file = ",file);
         genMode = "avatar";
         mpwebgl.instance.requestAvatar(file, genMode);
+        setTimeout(onVoiceStart,15000);
         console.log("change = ",change);
     }
 
