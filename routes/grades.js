@@ -113,7 +113,36 @@ router.get('/csce235/:nuid', function(req, res) {
 					console.log("Text to long, split in text of 200 characters")
 				}
 		
-				texttomp3.getMp3(text, function(err, data){
+				// texttomp3.getMp3(text, function(err, data){
+				// 	if(err){
+				// 		console.log(err);
+				// 		return;
+				// }
+		
+				// if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+				// 			fn+=".mp3";
+				// }
+				
+				// var file = fs.createWriteStream(fn); // write it down the file
+				// 		file.write(data);
+				// 		file.end();
+				// 	console.log("MP3 SAVED!");
+				// });
+		
+		
+					ffmpeg(track).toFormat('wav').on('error', (err) => {
+						console.log('An error occurred: ' + err.message);
+					}).on('progress', (progress) => {
+			// console.log(JSON.stringify(progress));
+			console.log('Processing: ' + progress.targetSize + ' KB converted');
+		})
+		.on('end', () => {
+			console.log('Processing WAV file finished !');
+		})
+		.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
+
+
+			texttomp3.getMp3(text, function(err, data){
 					if(err){
 						console.log(err);
 						return;
@@ -128,18 +157,6 @@ router.get('/csce235/:nuid', function(req, res) {
 						file.end();
 					console.log("MP3 SAVED!");
 				});
-		
-		
-					ffmpeg(track).toFormat('wav').on('error', (err) => {
-						console.log('An error occurred: ' + err.message);
-					}).on('progress', (progress) => {
-			// console.log(JSON.stringify(progress));
-			console.log('Processing: ' + progress.targetSize + ' KB converted');
-		})
-		.on('end', () => {
-			console.log('Processing finished !');
-		})
-		.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
 			
 		return res.json(account);
     });

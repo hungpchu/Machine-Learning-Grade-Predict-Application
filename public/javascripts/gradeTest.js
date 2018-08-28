@@ -1,4 +1,4 @@
-
+// HUng Chu 
 
 // có 2 tham số: tham số 1 = tên module ta cần tạo; 
 // tham số 2: danh sách các dependencies, các modules khác ta cần
@@ -99,7 +99,20 @@ var voice = {
 					  }
 					  else {
                         console.log(" scope user = ", $scope.username);
-                        localStorage.setItem('hung', $scope.username);
+						localStorage.setItem('hung', $scope.username);
+						var Account = $resource('/api/accounts/:username');
+						var Predicts = $resource('/api/grades/csce235/:nuid');
+						Account.get({username: $scope.username}, function(account) {
+			 
+							Predicts.get({nuid: account.NUID}, function(data) {
+				
+						  
+									console.log("chay file WAV trc");
+								
+							
+							});
+				
+						});
 
 						// window.location.href = '../partials/action.html';
 						window.location.href = 'student2.html';
