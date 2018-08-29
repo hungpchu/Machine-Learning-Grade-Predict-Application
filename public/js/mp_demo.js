@@ -324,7 +324,7 @@ jQuery(document).ready(function() {
             console.log("trong null, first = ", first);
         }
         if (first == true){
-        setTimeout(onVoiceStart,15000);
+        setTimeout(onVoiceStart,10000);
         }
         console.log("change = ",change);
     }

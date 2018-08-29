@@ -99,7 +99,7 @@ var voice = {
 					  }
 					  else {
                         console.log(" scope user = ", $scope.username);
-						localStorage.setItem('hung', $scope.username);
+						sessionStorage.setItem('hung', $scope.username);
 						var Account = $resource('/api/accounts/:username');
 						var Predicts = $resource('/api/grades/csce235/:nuid');
 						Account.get({username: $scope.username}, function(account) {
@@ -526,7 +526,7 @@ var voice = {
   
 			  // route den file accounts.js 
               var Account = $resource('/api/accounts/:username');
-              var stud = localStorage.getItem('hung');
+              var stud = sessionStorage.getItem('hung');
 
   
 			  console.log("stud =" + stud);
@@ -749,12 +749,13 @@ var voice = {
 		  var Grade = $resource('/api/grades/:nuid');
 		  var Properties = $resource('/api/multipp/properties');
   
-          var voiceFiles = localStorage.getItem('voice');
+		  var voiceFiles = localStorage.getItem('voice');
+		  var stud = sessionStorage.getItem('hung');
 		 console.log('voiceFile trong view =', voiceFiles);
 		 first = false;
   
   
-		  Account.get({username: 'hchu4'}, function(account) {
+		  Account.get({username: stud}, function(account) {
   
 			  console.log("account123");
               console.log(account);
