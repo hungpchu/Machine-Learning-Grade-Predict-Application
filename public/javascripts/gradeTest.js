@@ -358,7 +358,7 @@ var voice = {
 			  console.log("NUID CHECK = ", NUIDChecked);
 			  
 			  var account = {
-				  "Full name": $scope.firstname + " " + $scope.lastname ,
+				  "FullName": $scope.firstname + " " + $scope.lastname ,
 				  "Role": "Student",
 				  "NUID": $scope.nuid,
 				  "Email": $scope.email,
@@ -649,7 +649,7 @@ var voice = {
 			  Params.get(function(data) {
 				  console.log(data.params.split(","));
 			  });*/
-  
+			  document.getElementById("header").innerHTML = "Welcome " + account.FullName;
 		  
 			  // console.log(" voice file ban dau = " + voice.file);
 			  // console.log(" account.NUID = " + account.NUID);
@@ -877,6 +877,8 @@ var voice = {
   
   
 		  Account.get({username: stud}, function(account) {
+
+			document.getElementById("header").innerHTML = "Grade for " + account.FullName;
   
 			  console.log("account123");
               console.log(account);

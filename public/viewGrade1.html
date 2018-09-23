@@ -43,7 +43,7 @@
             .bubble-wrapper {
             display: inline-block;
             position: absolute;
-            top: 260px;
+            top: 300px;
             right: 26px;
             margin: 4em;
           }
@@ -132,6 +132,11 @@
             margin-bottom: 1.1em;
             display: inline-block;
           }
+          .header{
+            top:10px;
+
+          }
+          
         </style>
         
   </head>
@@ -160,7 +165,7 @@
 
 
         <div ng-app = "Grade" ng-controller = "ViewCtrl" style = "margin:auto;max-width:600px;width:80%;text-align:center;">
-                <h1 style = "width:100%;margin:auto;text-align:center;background-color:#8f8f8f;color:white;padding:10px">{{account["Full name"]}}</h1>
+                <h1 id = "header" style = "width:100%;margin:auto;text-align:center;background-color:#8f8f8f;color:white;padding:10px"></h1>
                    <a href = "/#/">Logout</a>
                    <div style = "border:grey 2px solid;margin-top:10px;border-radius:5px">
                     <h2>{{course}}</h2>
