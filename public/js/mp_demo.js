@@ -125,7 +125,11 @@ function onVoiceStart() {
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
    
     if(voiceId > 0){
-        document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
+        if ( voiceFiles[0] == "High-risk"){
+        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[0];
+        }else{
+            document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
+        }
         first = false;
         localStorage.setItem('first',first);
         console.log(" voiceId > 0  trong demo = ",voiceId);
@@ -255,7 +259,7 @@ function handleFileSelectAvtr(evt) {
     genMode = "avatar";
     mpwebgl.instance.requestAvatar(files[0], genMode);
     onloading();
-}, 2400);
+}, 3200);
 
 }
 
@@ -297,6 +301,9 @@ jQuery(document).ready(function() {
 
         // console.log("file = ", fileLo);
     
+        studentName = sessionStorage.getItem('hung');
+    
+    console.log("studentName = ", studentName);
 
         if (localStorage.getItem("rhino1") != null){
 
@@ -318,14 +325,17 @@ jQuery(document).ready(function() {
         var file = new File([blob], "image.jpg");
         console.log("file = ",file);
         genMode = "avatar";
+
         mpwebgl.instance.requestAvatar(file, genMode);
+
         if(sessionStorage.getItem("first") != null){
             first = sessionStorage.getItem("first");
             console.log("trong null, first = ", first);
         }
-        if (first == true){
-        setTimeout(onVoiceStart,10000);
-        }
+        
+        // if (first == true){
+        setTimeout(onVoiceStart,15000);
+        // }
         console.log("change = ",change);
     }
 

@@ -16,7 +16,7 @@ var TextToMp3 = function () { }
   TextToMp3.prototype.attributes = {
     ie: "UTF-8",
     client : "tw-ob",
-    tl : "en-GB"
+    tl : "en-US"
   };
 
   var _parseURL = function(path, text){

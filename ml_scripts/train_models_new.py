@@ -9,6 +9,10 @@ from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler, Normalizer
 import re
 import sys
 
@@ -76,54 +80,105 @@ inpgrade1 = inpgrade[inpgrade.columns.difference(['Student', 'SIS User ID', 'SIS
 #fileO.write(inpgrade.to_json(orient="records"))
 #fileO.close() 
 
+chosenModels = [None]
 
 if ( len(inpgrade1.columns) == 4 ):
-	grade = load_data("ml_scripts/data/" + course + "/full-grade-week11.csv")
-    
-elif ( len(inpgrade1.columns) == 9 ):   
-	grade = load_data("ml_scripts/data/" + course + "/full-grade-week2.csv")
-elif ( len(inpgrade1.columns) == 18 ):
-	grade = load_data("ml_scripts/data/" + course + "/full-grade-week3.csv")
-    
-elif ( len(inpgrade1.columns) == 22 ): 
-	grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
+	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData1new.csv")
+	#grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
+	X = grade[['Lab 1 ', 'Lab 2 ', 'Lab 3 ', 'Assignment 1']].values
+	y = grade[["Grade"]].values.ravel()
+	y1 = []
+	for label in y:
+		if label == "Good":
+			y1.append(0)
+		if label == "OK":
+			y1.append(1)
+		if label == "High-risk":
+			y1.append(2)
+	model = MLPClassifier(random_state=0, hidden_layer_sizes=(5, 20), alpha=0.001, solver='lbfgs',max_iter=1000, learning_rate = 'adaptive')
+	model.fit(X, y1)
+	chosenModels[0] = model
+	
+elif ( len(inpgrade1.columns) == 8 ):   
+	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData2new.csv")
+	X = grade[['Lab 1 ', 'Lab 2 ', 'Lab 3 ', 'Lab 4 ', 'Lab 5 ', 'Lab 6', 'Assignment 1', 'Assignment 2 ']].values
+	y = grade[["Grade"]].values.ravel()
+	y1 = []
+	for label in y:
+		if label == "Good":
+			y1.append(0)
+		if label == "OK":
+			y1.append(1)
+		if label == "High-risk":
+			y1.append(2)
+	model = MLPClassifier(random_state=0, hidden_layer_sizes=(10, 30), alpha=0.0001, solver='lbfgs',max_iter=800, learning_rate = 'adaptive')
+	model.fit(X, y1)
+	chosenModels[0] = model
 
+elif ( len(inpgrade1.columns) == 13 ):
+	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData3new.csv")
+	X = grade[['Lab 1 ', 'Lab 2 ', 'Lab 3 ','Lab 4 ','Lab 5 ','Lab 6','Lab 7 ','Lab 8 ','Lab 9 ', 'Assignment 1', 
+			   'Assignment 2 ', 'Assignment 3 ', 'Midterm']].values
+	scaler = StandardScaler().fit(X)
+	X = scaler.transform(X) 
+	y = grade[["Grade"]].values.ravel()
+	y1 = []
+	for label in y:
+		if label == "Good":
+			y1.append(0)
+		if label == "OK":
+			y1.append(1)
+		if label == "High-risk":
+			y1.append(2)		   
+	model = MLPClassifier(random_state=0, hidden_layer_sizes=(7, 20), alpha=0.0001, solver='lbfgs',max_iter=400, learning_rate = 'adaptive')
+	model.fit(X, y1)
+	chosenModels[0] = model
 
+elif ( len(inpgrade1.columns) == 17 ): 
+	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData4new.csv")
+	X = grade[['Lab 1 ', 'Lab 2 ', 'Lab 3 ','Lab 4 ','Lab 5 ','Lab 6','Lab 7 ','Lab 8 ','Lab 9 ', 'Lab 10 ','Lab 11 ','Lab 12 ',
+           'Assignment 1', 'Assignment 2 ', 'Assignment 3 ', 'Assignment 4 ', 'Midterm']].values
+	y = grade[["Grade"]].values.ravel()
+	y1 = []
+	for label in y:
+		if label == "Good":
+			y1.append(0)
+		if label == "OK":
+			y1.append(1)
+		if label == "High-risk":
+			y1.append(2)	   
+	model = MLPClassifier(random_state=0, hidden_layer_sizes=(5, 20), alpha=0.001, solver='lbfgs',max_iter=1000, learning_rate = 'adaptive')
+	model.fit(X, y1)
+	chosenModels[0] = model
 
 #Load data
 #  grade = data for training
-# grade = load_data("ml_scripts/data/" + course + "/full-grade.csv")
+
+
 # intersect = ['Homework 1', 'Homework 2', 'Homework 3', ..]
 # intersect = [val for val in chosen if val in grade.columns.values]
 intersect = [val for val in inpgrade1]
 # X = all value of ['Homework 1', 'Homework 2', 'Homework 3', ..]
 # X = grade[intersect]
-X = grade[intersect]
-# print("X = ", X.head())
-# y = Good, OK or highrisk
-# y will be predct based on X
-y = grade[["Grade"]].values.ravel()
-y1 = []
-for label in y:
-	if label == "Good":
-		y1.append(0)
-	if label == "OK":
-		y1.append(1)
-	if label == "High-risk":
-		y1.append(2)
-# print('data = ', y1)
+# print(intersect)
+#X = grade[intersect]full-grade-week2new
+
+#scaler = StandardScaler().fit(X)
+#X = scaler.transform(X) 
+
+
 
 #Create models
 models = []
-models.append(sklearn.linear_model.LogisticRegression(solver='newton-cg',multi_class='multinomial')) # Logistic Regression ( supervise algo)
+models.append(sklearn.linear_model.LogisticRegression(C = 59.9, penalty = 'l1')) # Logistic Regression ( supervise algo)
 models.append(sklearn.naive_bayes.GaussianNB()) # Naive Bayes 
-models.append(sklearn.neighbors.KNeighborsRegressor(n_neighbors=3)) # k Nearest Neighbors ( supervise algo)
+models.append(sklearn.neighbors.KNeighborsClassifier(n_neighbors = 3, p = 2)) # k Nearest Neighbors
 models.append(svm.SVR()) # Support Vector Machine
-#models.append(MLPRegressor(hidden_layer_sizes=(60,),activation='logistic',solver='lbfgs',learning_rate='adaptive',max_iter=1000,learning_rate_init=0.01,alpha=0.01)) # Neuron network
-models.append(DecisionTreeRegressor()) # Decision Tree ( supervise algo)
-models.append(RandomForestRegressor()) # Random Forest ( supervise algo)
+models.append(MLPClassifier(random_state=0, hidden_layer_sizes=(5, 20), alpha=0.001, solver='lbfgs',max_iter=800, learning_rate = 'adaptive')) # Neuron network
+models.append(DecisionTreeRegressor(max_depth = 7.742636826811269)) # Decision Tree ( supervise algo)
+models.append(RandomForestClassifier(max_depth = 11, n_estimators = 3)) # Random Forest
 
-chosenModels = [None]
+
 minRMSE = float("inf")
 #rmse = get_rmse(models[0], X, y1)
 #rmse = get_rmse(models[1], X, y1)
@@ -169,8 +224,9 @@ if (rmse <= minRMSE):
 	chosenModels[0] = models[0]
 	chosenModels.append(models[1])
 
-
-chosenModels[0] = models[2]
+    
+#models[4].fit(X, y1)
+#chosenModels[0] = models[4]
 
 
 
@@ -190,3 +246,32 @@ for feature in intersect:
 res = res[:-1] + ";"
 res += inpgrade.to_json(orient="records")
 print(res, end='', flush=True)
+
+# print = 
+# 1;Homework 1,Homework 2,Homework 3,Homework 4,Quiz 1,Quiz 2,Quiz 3,Quiz 4,Midterm,Quiz 5;
+# [{"SIS User ID":50018756.0,"SIS Login ID":"madamec2","Homework 1":98.0,"Homework 2":101.0,"Homework 3":106.5,
+# "Homework 4":0.0,"Quiz 1":9.5,"Quiz 2":10.0,"Quiz 3":9.0,"Quiz 4":10.0,"Midterm":35.0,"Quiz 5":8.0,"Assignments Current Points":"387",
+# "Assignments Final Points":"387","Assignments Current Score":"100.52","Assignments Final Score":"79.63","Current Points":"387",
+# "Final Points":"387","Current Score":"100.52","Final Score":"79.63","Full name":"Matous Adamec"},{"SIS User ID":8558403.0,
+# "SIS Login ID":"aalawfi2","Homework 1":55.0,"Homework 2":0.0,"Homework 3":0.0,"Homework 4":0.0,"Quiz 1":7.0,"Quiz 2":0.0,
+# "Quiz 3":0.0,"Quiz 4":0.0,"Midterm":0.0,"Quiz 5":0.0,"Assignments Current Points":"62","Assignments Final Points":"62",
+# "Assignments Current Score":"21.75","Assignments Final Score":"12.76","Current Points":"62","Final Points":"62",
+# "Current Score":"21.75","Final Score":"12.76","Full name":"Abdullah Al Awfi"}]
+
+
+#Testing
+#some_rows = inpgrade
+#some_data = some_rows[intersect]
+#lr_predict = lr_model.predict(some_data)
+#nb_predict = nb_model.predict(some_data)
+#predict = [""] * len(lr_predict)
+#for i in range(len(lr_predict)):
+#    if (lr_predict[i] == "High-risk" or nb_predict[i] == "High-risk"):
+#        predict[i] = "High-risk"
+#    elif (lr_predict[i] == "OK" or nb_predict[i] == "OK"):
+#        predict[i] = "OK"
+#    else:
+#        predict[i] = "Good"
+#print("Data:", some_data)
+#nuid = list(map(int, inpgrade['SIS User ID'].values))
+#print("Predictions:", np.column_stack((nuid, predict)))

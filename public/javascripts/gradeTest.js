@@ -19,6 +19,8 @@ var voice = {
   
   var course = "hun";
 
+  var studentName = "hchu3";
+
 
   
   
@@ -139,6 +141,9 @@ var voice = {
 		  correctCode = "";
 		  confirmed = false;
 		  usernameChecked = false;
+		  NUIDChecked = false;
+
+		  // checkUser
 		  $scope.checkUsername = function() {
 			  $scope.message = "";
 			  $scope.username = format($scope.username);
@@ -153,7 +158,7 @@ var voice = {
 			  // check user exist or not
 			  Account.get({username: $scope.username}, function(account) {
 				  if (account.Username != undefined) {
-					  $scope.message = "Username has already existed!";
+					  $scope.message = "Username has already exists!";
 					  return;
 				  }
 				  else {
@@ -162,6 +167,42 @@ var voice = {
 				  }
 			  });
 		  }
+
+
+
+
+
+
+		  $scope.checkNUID = function() {
+			  console.log("NUID checked = ", $scope.nuid);
+			  
+			$scope.message = "";
+			// $scope.nuid = format($scope.nuid);
+			if ($scope.nuid == "") {
+				$scope.message = "NUID cannot be empty!";
+				return;
+			}
+
+			var Account1 = $resource("/api/accounts/hung/:nuid");
+			Account1.get({nuid: $scope.nuid}, function(account) {
+				console.log("$scope.nuid = ", $scope.nuid);
+			  console.log("exist NUID 2");
+			  console.log("account.Email trong NUID 2 = ", account.Email);
+				if (account.Username != undefined) {
+				  console.log("account.Username trong NUID 3 = ", account.Username);
+				  console.log("empty NUID 3");
+					$scope.message = "NUID has already exists!";
+					return;
+				}else{
+					$scope.message = "You can use this NUID";
+					NUIDChecked = true;
+
+				}
+			});
+
+
+
+		}
   
 		  
   
@@ -171,7 +212,7 @@ var voice = {
 			  $scope.email = format($scope.email);
 			  
 			  if (($scope.email).trim() == "") {
-				  $scope.message = "You have to enter your email to receive confirmation code.";
+				  $scope.message = "You have to enter your email.";
 				  return;
 			  }
 			  
@@ -184,21 +225,21 @@ var voice = {
 		  }
 		  
 		  // verify
-		  $scope.verify = function() {
-			  $scope.message = "";
-			  if (correctCode == "") {
-				  $scope.message = "The confirmation code has not been generated.";
-				  return;
-			  }
+		//   $scope.verify = function() {
+		// 	  $scope.message = "";
+		// 	  if (correctCode == "") {
+		// 		  $scope.message = "The confirmation code has not been generated.";
+		// 		  return;
+		// 	  }
 			  
-			  // press verify
-			  if (($scope.confirmCode).trim() == correctCode) {
-				  confirmed = true;
-				  $scope.message = "Email confirmed!";
-			  } else {
-				  $scope.message = "Incorrect code!";
-			  }
-		  }
+		// 	  // press verify
+		// 	  if (($scope.confirmCode).trim() == correctCode) {
+		// 		  confirmed = true;
+		// 		  $scope.message = "Email confirmed!";
+		// 	  } else {
+		// 		  $scope.message = "Incorrect code!";
+		// 	  }
+		 // }
 		  
   
 		  $scope.reset = function() {
@@ -209,64 +250,123 @@ var voice = {
   
 		  $scope.regist = function() {
   
-			  var roles = document.getElementsByName("optradio");
-			  var role = "";
-			  for(var i = 0; i < roles.length; i++) {
-				  if (roles[i].checked) {
-					  role = roles[i].value;
-				  }
-			  }
+			//   var roles = document.getElementsByName("optradio");
+			//   var role = "";
+			//   for(var i = 0; i < roles.length; i++) {
+			// 	  if (roles[i].checked) {
+			// 		  role = roles[i].value;
+			// 	  }
+			//   }
   
-			  if (role == "") {
-				  $scope.message = "You need to select your role.";
-				  return;
-			  }
+			//   if (role == "") {
+			// 	  $scope.message = "You need to select your role.";
+			// 	  return;
+			//   }
+
+			var genders = document.getElementsByName("optradio");
+			var gender = "";
+			for(var i = 0; i < genders.length; i++) {
+				if (genders[i].checked) {
+					gender = genders[i].value;
+				}
+			}
+
+			if (gender == "") {
+				$scope.message = "You forget to select your gender!";
+				return ;
+			}
   
 			  $scope.nuid = format($scope.nuid);
+
+			  if ($scope.firstname == "") {
+				$scope.message = "First Name required!";
+				return ;
+			}
+
+
+			if ($scope.lastname == "") {
+				$scope.message = "Last Name required!";
+				return ;
+			}
+
+			if ($scope.email == "") {
+				$scope.message = "Email required!";
+				return ;
+			}
+
+			if (!usernameChecked) {
+				$scope.message = "Please enter and check username!";
+				return ;
+			}
+			if (NUIDChecked != true) {
+				$scope.message = "Please enter and check NUID!";
+				return ;
+			}
+			// if ($scope.username == "") {
+			// 	$scope.message = "Username required!";
+			// 	console.log("empty NUID");
+			// 	return  ;
+			// }
+			// else {
+			//   console.log("exist username");
+			//   var Account = $resource('/api/accounts/:username');
+			//   // check user exist or not
+			//   Account.get({username: $scope.username}, function(account) {
+			// 	  if (account.Username != undefined) {
+			// 		  $scope.message = "Username has already existed!";
+			// 		  break;
+			// 	  }
+			//   });
+			// }
   
-			  if ($scope.nuid == "") {
-				  $scope.message = "NUID cannot be empty!";
-				  return;
-			  }
-			  else {
-				  var Account = $resource("/api/accounts/:nuid");
-				  Account.get({nuid: $scope.nuid}, function(account) {
-					  if (account.username != undefined) {
-						  $scope.message = "NUID has already existed!"
-						  return;
-					  }
-				  });
-			  }
+			//   if ($scope.nuid == "") {
+			// 	  $scope.message = "NUID required!";
+			// 	  console.log("empty NUID");
+			// 	  return;
+			//   }
+			//   else {
+			// 	console.log("exist NUID 1");
+			// 	  var Account = $resource("/api/accounts/hung/:nuid");
+			// 	  Account.get({nuid: $scope.nuid}, function(account) {
+			// 		console.log("exist NUID 2");
+			// 		console.log("account.username trong NUID 2 = ", account.Username);
+			// 		  if (account.Username != undefined) {
+			// 			console.log("account.username trong NUID 3 = ", account.Username);
+			// 			  $scope.message = "NUID has already existed!"
+			// 			  break ;
+			// 		  }
+			// 	  });
+			//   }
   
-  
-			  if (!usernameChecked) {
-				  $scope.message = "Your username has not been checked yet!";
-				  return;
-			  }
-  
-			  if (!confirmed) {
-				  $scope.message = "Your email has not been confirmed yet!";
-				  return;
-			  }
+
+			//   if (!confirmed) {
+			// 	  $scope.message = "Your email has not been confirmed yet!";
+			// 	  return;
+			//   }
 			  
 			  if ($scope.password == undefined || $scope.password == "") {
 				  $scope.message = "Password cannot be empty!";
-				  return;
+				  return ;
 			  }
   
   
 			  if ($scope.password != $scope.rpassword) {
 				  $scope.message = "Password does not match!";
-				  return;
+				  return ;
 			  }
+
+			  console.log("NUID CHECK = ", NUIDChecked);
 			  
 			  var account = {
-				  "Full name": $scope.fullname,
-				  "Role": role,
+				  "Full name": $scope.firstname + " " + $scope.lastname ,
+				  "Role": "Student",
 				  "NUID": $scope.nuid,
 				  "Email": $scope.email,
 				  "Username": $scope.username,
-				  "Password": $scope.password
+				  "Password": $scope.password,
+				  "Gender": gender,
+				  "imageURL":"billGate.jpg",
+				  "URL": ""
 			  };
   
   
@@ -496,12 +596,18 @@ var voice = {
 	 
   //dependency inject
   function($scope, $resource, $routeParams, $location) {
+	    
+		  $scope.back = function() {
+			//   $location.path("/student/" + $routeParams.username);
+			  window.location.href = '/#/';
+		  }
   
   
-  
+		  var Predict1 = $resource('/api/grades/csce156/:nuid');
 		  var Predicts = $resource('/api/grades/csce235/:nuid');
   
-		  
+		  var course1 = "";
+		  var course2 = "";
   
 		  var synth = window.speechSynthesis;
   
@@ -559,12 +665,61 @@ var voice = {
 			  console.log(removeDuplicateUsingFilter(voice1));
 		  
 			  var array = [];
+			  Predict1.get({nuid: account.NUID}, function(data) {
+
+				if (data.Predict == undefined){
+					return;
+				}
+
+				course1 = "csce156";
+  
+				console.log(" account.NUID = " + account.NUID);
+	
+				console.log("vao predict");
+				
+	
+				if (data.Predict == "Good") {
+					console.log("good");
+					voiceFiles.push(data.Predict);
+					array.push(data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					predict = "You are good";
+	
+	
+				} else if (data.Predict == "OK") {
+				
+					console.log("ok");
+					voiceFiles.push(data.Predict);
+					array.push(data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					predict = "You are ok";
+	
+				} else {
+					console.log("High-risk");
+					array.push(data.Predict);
+					voiceFiles.push(data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					predict = "You are high risk";
+					
+				}	
+				
+				console.log(" array = " ,array);
+				localStorage.setItem("array", JSON.stringify(array));
+				
+				localStorage.setItem('voice',voiceFiles);
+			  //   console.log(" voiceFiles trong predict = " + voiceFiles);
+				
+			});
 			  Predicts.get({nuid: account.NUID}, function(data) {
   
-				  //console.log(" $scope.account.NUID = " + $scope.account.NUID);
+				  console.log(" account.NUID = " + account.NUID);
 	  
-				  // console.log("vao predict");
-	  
+				  console.log("vao predict");
+
+				  if (data.Predict == undefined){
+					  return;
+				  }
+				  course2 = "csce235";
 				  if (data.Predict == "Good") {
 					  console.log("good");
 					  voiceFiles.push(data.Predict);
@@ -619,8 +774,6 @@ var voice = {
 				  // tìm id của bảng 
 				  var table = document.getElementById("profileTable");
   
-		
-  
 				  while (table.firstChild) {
 					   
 					  
@@ -646,64 +799,14 @@ var voice = {
   
 					  tr.appendChild(td_name);
 					  tr.appendChild(td_val);
-					  table.appendChild(tr);
-  
-					  
-				  }
-			
-				  
+					  table.appendChild(tr);		  
+				  }		  
 			  
 			  });
   
 		  });
   
-		  var done = false;
   
-		  function speak(){
-  
-			  console.log('synth.speaking ban dau = ' + synth.speaking);
-  
-  
-			  console.log('done ban dau = ' + done);
-		  
-  
-			  //synth.speaking &&
-			  if ( synth.speaking  ) {
-				  
-				  console.log("bi lap");
-				  console.error('speechSynthesis.speaking');
-				  return;
-			  }
-			
-			  var utterThis = new SpeechSynthesisUtterance(predict);
-			  
-	
-			  //var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
-			  
-			  utterThis.onend = function (event) {
-				 
-				  console.log('SAY');
-			  }
-			  
-			  utterThis.onerror = function (event) {
-				  console.error('SAY.onerror');
-			  }
-			  
-			  console.log('Speak');
-			  done = true;
-			  synth.speak(utterThis);
-			  
-			  console.log('synth.speaking luc sau = ' + synth.speaking);
-			  console.log('done luc sau = ' + done);
-		  
-			
-			}
-			
-				var move = true;
-			
-	
-		  
-		  
   
           console.log("scope course = ", $scope.course);
 		  
@@ -713,6 +816,21 @@ var voice = {
 			  if ($scope.course == undefined) {
 				  $scope.message = "No course is chosen.";
 				  return;
+			  }
+			  if (course1 == "" && $scope.course == "csce156"){
+				$scope.message = "You not enrolled in csce156";
+				return;
+			  }
+			  if (course2 == "" && $scope.course == "csce235"){
+				$scope.message = "You not enrolled in csce235";
+				return;
+			  }
+			  if ($scope.course == "csce235"){
+					course = "csce235";
+					localStorage.setItem("course1", course);
+			  }else{
+				course = "csce156";
+				localStorage.setItem("course1", course);
 			  }
               console.log('/student/' + $routeParams.username + "/viewGrade/" + $scope.course);
               localStorage.setItem('course', $scope.course);
@@ -741,9 +859,12 @@ var voice = {
 			//   $location.path("/student/" + $routeParams.username);
 			  window.location.href = 'student2.html';
 		  }
-          $scope.course = 'csce235';
+		var course = localStorage.getItem("course1");
+		// var course = "csce156";
+		  console.log(" course trong view = " + course);
+          $scope.course = course;
   
-		//   $scope.course = $routeParams.course.toUpperCase();
+
   
 		  var Account = $resource('/api/accounts/:username');
 		  var Grade = $resource('/api/grades/:nuid');
@@ -760,24 +881,24 @@ var voice = {
 			  console.log("account123");
               console.log(account);
      
-            var course = localStorage.getItem('course');
-			console.log(" course = ", course);
+         
 			
 			var array1 = JSON.parse(localStorage.getItem("array"));
 
 			voiceFiles = array1;
 
 
-console.log(typeof array1); 
-console.log("array1 = ", array1); 
 
   
 			  $scope.account = account;
   
-			//   var wrapObj = {
-			// 	  course: $routeParams.course,
-			// 	  nuid: $scope.account.NUID
-            //   };
+			  var wrapObj = {
+				  course: course,
+				  nuid: $scope.account.NUID
+			  };
+			
+			console.log(" $scope.account.NUID trong view = " );
+				console.log($scope.account.NUID);
               
               var wrapObj = {
                 course: course,
@@ -792,65 +913,47 @@ console.log("array1 = ", array1);
 				  var fullGrade = JSON.parse(data.grades);
 				  var thisGrade = null;
   
-				  // console.log(" fullGrade = ");
-				  // console.log(data.grades);
+				  console.log(" fullGrade = ");
+				  console.log(data.grades);
   
 			  
   
 				  for(var index in fullGrade) {
+
   
 					  if (fullGrade[index]["SIS User ID"] == $scope.account.NUID) {
+
 						  thisGrade = fullGrade[index];
   
-						  //console.log("thisGrade = ");
-						  //console.log(thisGrade);
+						  console.log("thisGrade = ");
+						  console.log(thisGrade);
   
 						  break;
 					  }
   
 				  }
-  
+  console.log("this Grade = ");
+  console.log(thisGrade);
   
 				  if (thisGrade == null) {
+					  console.log(" this grade = null");
 					  $scope.message = "Cannot find your grade!";
 					  return;
 				  }
-				  /*Properties.save({filename: wrapObj.course}, function(data) {
-					  var validGrade = {};
-					  for(var prop in data.list) {
-						  if (thisGrade[data.list[prop]] != undefined) {
-							  validGrade[data.list[prop]] = thisGrade[data.list[prop]];
-						  }
-						  else {
-							  validGrade[data.list[prop]] = -1;
-						  }
-					  }
-					  validGrade["NUID"] = wrapObj.nuid;
-					  Grades.save({nuid: wrapObj.nuid, grades: validGrade}, function(data) {
-						  document.getElementById("predict").innerHTML = data.predict;
-						  validGrade["Predict"] = data.predict;
-						  if (data.predict == "Good") {
-							  document.getElementById("predict").setAttribute("color", "green");
-						  } else if (data.predict == "OK") {
-							  document.getElementById("predict").setAttribute("color", "#ecc400");
-						  } else {
-							  document.getElementById("predict").setAttribute("color", "red");
-						  }								
-						  var Predicts = $resource('/api/grades/' + $routeParams.course + "/predict");
-						  Predicts.save({nuid: wrapObj.nuid, grades: validGrade}, function(data) {
-							  console.log("Prediction is saved!");
-						  });	
-					  });
-				  });*/
+			
   
 				  //console.log(" $scope.account.NUID ngoai = " + $scope.account.NUID);
 				  // lay cai predict ra, call back function chay xong moi chay cai nay
 				//   var Predicts = $resource('/api/grades/' + $routeParams.course + '/:nuid');
-				  var Predicts = $resource('/api/grades/csce235/:nuid');
+				//   var Predicts = $resource('/api/grades/csce235/:nuid');
+
+		
+				  var Predicts = $resource('/api/grades/' + course  + '/:nuid');
   
 				  Predicts.get({nuid: $scope.account.NUID}, function(data) {
   
-					  //console.log(" $scope.account.NUID = " + $scope.account.NUID);
+
+					  console.log(" data.Predict = " + data.Predict);
   
 					  document.getElementById("predict").innerHTML = data.Predict;
   
@@ -893,6 +996,16 @@ console.log("array1 = ", array1);
 						  var name = document.createTextNode(data.list[prop]);
 						  var val = document.createTextNode(grade[data.list[prop]]);
 						  var b = document.createElement("B");
+						
+						  if (val.nodeValue == "undefined"){
+							  val.nodeValue = "N/A";
+
+			
+							
+						  }
+
+						
+						  console.log("val = ", typeof(val.nodeValue));
   
   
 						  b.appendChild(name);
@@ -922,4 +1035,30 @@ console.log("array1 = ", array1);
 	  }
   ]);*/
   
-  
+  	  /*Properties.save({filename: wrapObj.course}, function(data) {
+					  var validGrade = {};
+					  for(var prop in data.list) {
+						  if (thisGrade[data.list[prop]] != undefined) {
+							  validGrade[data.list[prop]] = thisGrade[data.list[prop]];
+						  }
+						  else {
+							  validGrade[data.list[prop]] = -1;
+						  }
+					  }
+					  validGrade["NUID"] = wrapObj.nuid;
+					  Grades.save({nuid: wrapObj.nuid, grades: validGrade}, function(data) {
+						  document.getElementById("predict").innerHTML = data.predict;
+						  validGrade["Predict"] = data.predict;
+						  if (data.predict == "Good") {
+							  document.getElementById("predict").setAttribute("color", "green");
+						  } else if (data.predict == "OK") {
+							  document.getElementById("predict").setAttribute("color", "#ecc400");
+						  } else {
+							  document.getElementById("predict").setAttribute("color", "red");
+						  }								
+						  var Predicts = $resource('/api/grades/' + $routeParams.course + "/predict");
+						  Predicts.save({nuid: wrapObj.nuid, grades: validGrade}, function(data) {
+							  console.log("Prediction is saved!");
+						  });	
+					  });
+				  });*/

@@ -149,7 +149,7 @@ var MpFS = {
       FS.createPreloadedFile(
         '/items/voice',
         arg+'.env',
-        MpConfig["documentPath"] + '/items/voice/'+arg+'.env',
+        MpConfig["documentPath"] + 'items/voice/'+arg+'.env',
         true,
         false
       );

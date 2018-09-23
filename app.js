@@ -72,6 +72,14 @@ app.post('/', function (req, res){
      
   });
 
+//   var studentName = sessionStorage.getItem('hung');
+// console.log(" studName = ", studentName);
+
+//   var fs = require('fs');
+// fs.rename('/public/images/' + file.name,'/public/images/' + studentName, function(err) {
+//     if ( err ) console.log('ERROR: ' + err);
+// });
+
   form.on('file', function (name, file){
       console.log('Uploaded ' + file.name);
   });
@@ -79,8 +87,10 @@ app.post('/', function (req, res){
   // res.send('Thank for uploading');
   setTimeout(function() {
     // res.end(' World\n');
-    res.json('success');
-}, 3400);
+    // res.status(200);
+    //res.json('success');
+    res.sendFile(  __dirname + '/public/student2.html');
+}, 4000);
  
   // res.render('index', { title: 'HungCHU2' });
 });

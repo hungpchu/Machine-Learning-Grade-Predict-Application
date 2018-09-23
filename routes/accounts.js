@@ -32,58 +32,7 @@ router.get('/students', function(req, res) {
 router.get('/:username', function(req, res) {
     var collection = db.get('accounts');
 
-    
-
-//     var texttomp3 = require("./index1");
-// var fs = require('fs');
-// const ffmpeg = require('fluent-ffmpeg');
-
-// var text = "You are high-risk";
-//     var fn = "high-risk";
-
-//     console.log("text = ",text);
-//     console.log("fn = ",fn);
-
-//     let track = fn + '.mp3';//your path to source file
-
-//     if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
-//             console.log("missing required params, check out the help with -?");
-//         }
-    
-//     if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
-//             console.log("Text to long, split in text of 200 characters")
-//         }
-
-//         texttomp3.getMp3(text, function(err, data){
-//             if(err){
-//                 console.log(err);
-//                 return;
-//         }
-
-//         if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-//                     fn+=".mp3";
-//         }
-        
-//         var file = fs.createWriteStream(fn); // write it down the file
-//                 file.write(data);
-//                 file.end();
-//             console.log("MP3 SAVED!");
-//         });
-
-
-//             ffmpeg(track).toFormat('wav').on('error', (err) => {
-//                 console.log('An error occurred: ' + err.message);
-//             }).on('progress', (progress) => {
-//     // console.log(JSON.stringify(progress));
-//     console.log('Processing: ' + progress.targetSize + ' KB converted');
-// })
-// .on('end', () => {
-//     console.log('Processing finished !');
-// })
-// .save('./public/items/voice/' + fn + '.env');//path where you want to save your file
-    
-    //texttomp3();
-     //console.log(" trong account.js, router.get('/:username', function(req, res)");
+    console.log(" co account trong user ");
 
 
     collection.findOne({ Username: req.params.username }, function(err, account) {
@@ -128,10 +77,83 @@ router.get('/:username', function(req, res) {
     });
 });
 
+// router.get('/:nuid1', function(req, res) {
+//     var collection = db.get('accounts');
+
+  
+
+
+//     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+
+//         if (err) return console.log(err);
+//         if (account == null) {
+//             //console.log("account null  ");
+// 			return res.json({});
+//         }
+        
+//         console.log(" co account trong NUID ");
+//         console.log(account );
+        
+// 		res.json(account);
+// 		/*
+// 		var uint8arrayToString = function(data) {
+//             return String.fromCharCode.apply(null, data);
+//         };
+//         const spawn = require('child_process').spawn;
+// 		const ls = spawn('python3', ['ml_scripts/predict.py', 
+// 			account.q1,
+// 			account.q2,
+// 			account.q3,
+// 			account.hw1,
+// 			account.hw2,
+// 			account.hw3,
+// 			account.midterm,
+// 		]);
+
+// 		ls.stdout.on('data', (data) => {
+// 			account.predict = uint8arrayToString(data);
+//             return res.json(account);
+// 		});
+
+// 		ls.stderr.on('data', (data) => {
+// 		  console.log("stderr: " + data);
+// 		});
+
+// 		ls.on('exit', (code) => {
+// 		  console.log("child process exited with code " + code);
+// 		});*/
+//     });
+// });
+
+
+
+router.get('/hung/:nuid', function(req, res) {
+    var collection = db.get('accounts');
+
+  
+    console.log(" co account trong NUID ");
+
+    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+
+        if (err) return console.log(err);
+        if (account == null) {
+            //console.log("account null  ");
+			return res.json({});
+        }
+        
+        console.log(" co account trong NUID ");
+        console.log(account);
+        
+		res.json(account);
+	
+    });
+});
+
 router.get('/:nuid', function(req, res) {
     var collection = db.get('accounts');
+    console.log(" o trong account.js, router.get('/:nuid', function(req, res) ");
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
-        console.log(" o trong account.js, router.get('/:nuid', function(req, res) ")
+        console.log(" o trong account.js, router.get('/:nuid', function(req, res) ");
         if (err) return console.log(err);
         if (account == null) {
 

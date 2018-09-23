@@ -83,22 +83,38 @@ router.get('/csce235/:nuid', function(req, res) {
 	var collection = db.get('csce235');
 	//texttomp3();
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+		
 		console.log("hung 235");
         if (err) return console.log(err);
         if (account == null) {
 			console.log("account1");
 			return res.json({});
 		}
+		if (account.Predict == null){
+			return;
+		}
 		console.log("account cua Hung la ");
+
 		console.log(account);
 		console.log("accout. pre = ", account.Predict);
 	
 		var texttomp3 = require("./index1");
 		var fs = require('fs');
+
 		const ffmpeg = require('fluent-ffmpeg');
+		const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+		ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 		
-		var text = "You are " + account.Predict;
+
 			var fn = account.Predict;
+
+			if (fn == "High-risk"){
+
+				var text = "You are at " + account.Predict;
+			}else{
+
+				var text = "You are " + account.Predict;
+			}	
 		
 			console.log("text = ",text);
 			console.log("fn = ",fn);
@@ -113,21 +129,21 @@ router.get('/csce235/:nuid', function(req, res) {
 					console.log("Text to long, split in text of 200 characters")
 				}
 		
-				// texttomp3.getMp3(text, function(err, data){
-				// 	if(err){
-				// 		console.log(err);
-				// 		return;
-				// }
+				texttomp3.getMp3(text, function(err, data){
+					if(err){
+						console.log(err);
+						return;
+				}
 		
-				// if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-				// 			fn+=".mp3";
-				// }
+				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+							fn+=".mp3";
+				}
 				
-				// var file = fs.createWriteStream(fn); // write it down the file
-				// 		file.write(data);
-				// 		file.end();
-				// 	console.log("MP3 SAVED!");
-				// });
+				var file = fs.createWriteStream(fn); // write it down the file
+						file.write(data);
+						file.end();
+					console.log("MP3 SAVED!");
+				});
 		
 		
 					ffmpeg(track).toFormat('wav').on('error', (err) => {
@@ -162,20 +178,6 @@ router.get('/csce235/:nuid', function(req, res) {
     });
 });
 
-router.get('/csce23/:nuid', function(req, res) {
-    var collection = db.get('csce23');
-    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
-		console.log("hung 23");
-        if (err) return console.log(err);
-        if (account == null) {
-			console.log("account1");
-			return res.json({});
-		}
-		console.log("account");
-		console.log(account);
-		return res.json(account);
-    });
-});
 
 // ấn vào grade generation step(2) -> POST /api/grades/csce235 
 // put data in the table 
@@ -262,85 +264,6 @@ router.post('/csce235', function(req, res) {
 });
 
 
-router.post('/csce23', function(req, res) {
-
-	var collection = db.get('csce23');
-
-	collection.remove({});
-
-
-	console.log("inside router.post('/csce23', function(req, res)");
-
-	// same initialize in multipp.js
-    var uint8ToString = function(data) {
-		return String.fromCharCode.apply(null, data);
-	};
-
-
-	var params = ['ml_scripts/predict.py', 'csce23'];
-		// req.body.fields = 20
-	params.push(req.body.students, req.body.fields);
-
-	// param = [ 'ml_scripts/predict.py', 'csce23', 2, 20 ]
-	console.log("params ban dau = ", params);
-
-	// 
-	console.log("req.body.students = ", req.body.students);
-
-	console.log("req.body.fields = ", req.body.fields);
-
-
-
-	for(var i in req.body.grade) {
-		var thisGrade = req.body.grade[i];
-		for(var prop in thisGrade) {
-			params.push(prop, thisGrade[prop]);
-		}
-	}
-
-	// console.log("params = ");
-	// console.log(params);
-
-	const spawn = require('child_process').spawn;
-	const ls = spawn('python3', params);
-
-	ls.stdout.on('data', (data) => {
-
-		console.log(`stdout in predict: ${data}`);
-
-	});
-
-	ls.stdout.on('data', (data) => {
-
-		var predict = uint8ToString(data).split(',');
-
-		for(var i in req.body.grade) {
-			var thisGrade = req.body.grade[i];
-			thisGrade.Predict = predict[i];
-
-			// console.log("database cua csce23: ");
-
-			// console.log(thisGrade);
-			
-			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
-				if (err) console.log(err);
-			});
-		}
-
-
-		console.log("update thanh cong");
-
-        return res.json({});
-	});
-	ls.stderr.on('data', (data) => {
-	  console.log("stderr: " + data);
-	});
-	ls.on('exit', (code) => {
-	  console.log("child process exited with code " + code);
-	});
-});
-
-
 
 
 router.get('/csce156', function(req, res) {
@@ -365,13 +288,93 @@ router.get('/csce156/db', function(req, res) {
     });
 });
 
+
 router.get('/csce156/:nuid', function(req, res) {
     var collection = db.get('csce156');
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+		
         if (err) return console.log(err);
         if (account == null) {
 			return res.json({});
 		}
+
+		if (account.Predict == null){
+			return;
+		}
+		var texttomp3 = require("./index1");
+		var fs = require('fs');
+		const ffmpeg = require('fluent-ffmpeg');
+		const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+		ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+		
+		
+			var fn = account.Predict;
+
+			if (fn == "High-risk"){
+
+				var text = "You are at " + account.Predict;
+			}else{
+
+				var text = "You are " + account.Predict;
+			}	
+		
+			console.log("text = ",text);
+			console.log("fn = ",fn);
+		
+			let track = fn + '.mp3';//your path to source file
+		
+			if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
+					console.log("missing required params, check out the help with -?");
+				}
+			
+			if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
+					console.log("Text to long, split in text of 200 characters")
+				}
+		
+				texttomp3.getMp3(text, function(err, data){
+					if(err){
+						console.log(err);
+						return;
+				}
+		
+				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+							fn+=".mp3";
+				}
+				
+				var file = fs.createWriteStream(fn); // write it down the file
+						file.write(data);
+						file.end();
+					console.log("MP3 SAVED!");
+				});
+		
+		
+					ffmpeg(track).toFormat('wav').on('error', (err) => {
+						console.log('An error occurred: ' + err.message);
+					}).on('progress', (progress) => {
+			// console.log(JSON.stringify(progress));
+			console.log('Processing: ' + progress.targetSize + ' KB converted');
+		})
+		.on('end', () => {
+			console.log('Processing WAV file finished !');
+		})
+		.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
+
+
+			texttomp3.getMp3(text, function(err, data){
+					if(err){
+						console.log(err);
+						return;
+				}
+		
+				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+							fn+=".mp3";
+				}
+				
+				var file = fs.createWriteStream(fn); // write it down the file
+						file.write(data);
+						file.end();
+					console.log("MP3 SAVED!");
+				});
 		return res.json(account);
     });
 });
@@ -390,7 +393,7 @@ router.post('/csce156', function(req, res) {
 
 
 	// 
-	console.log("req.body.students 156 = ", req.body.students);
+	console.log("req.body.students 156 trong post cs156= ", req.body.students);
 
 
 

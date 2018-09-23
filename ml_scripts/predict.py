@@ -4,6 +4,7 @@ import sklearn
 import sys, json
 from sklearn import datasets, linear_model, neighbors, svm
 from sklearn.externals import joblib
+from sklearn.preprocessing import StandardScaler, Normalizer
 
 
 def read_in():
@@ -45,23 +46,25 @@ def read_in():
 
 		
 def get_prediction(model, X):
-	# print("X = ",X)
-	pred = []
+	#print("X = ",X)
+	pred = []	
 	for val in model.predict(X):
-		if (val < 0.5):
-			pred.append(0)
-		elif (val < 1.5):
-			pred.append(1)
-		else:
-			pred.append(2)
-#	return pred[0]
+			if (val < 0.5):
+				pred.append(0)
+			elif (val < 1.5):
+				pred.append(1)
+			else:
+				pred.append(2)
+
 	return pred
 
 def main():
 	X = read_in()
-	# print("X = ", X)
-	# print(" sys.argv[1] trong main = ", sys.argv[1])
-	# rFile = open('ml_scripts/models/csce156/noOfModels.txt', 'r')	
+	if len(X[0]) == 13 :
+		scaler_test = StandardScaler().fit(X)
+		X = scaler_test.transform(X)
+	
+
 	rFile = open('ml_scripts/models/' + sys.argv[1] + '/noOfModels.txt', 'r')
 	noOfModels = int(rFile.read())
 	rFile.close()
@@ -76,9 +79,8 @@ def main():
 		newPred = get_prediction(model, X)
 		resnum = [max(resnum[i], newPred[i]) for i in range(len(X))]
 	res = []
-	print("model.predict(X) = ",model.predict(X))	
-	print("newPred = ", newPred)		
-	print("resnum = ", resnum)		
+	# print("model.predict(X) = ")	
+	# print(model.predict(X))	
 	for pred in resnum:
 		if (pred == 0): res += ["Good"]
 		elif (pred == 1): res += ["OK"]
