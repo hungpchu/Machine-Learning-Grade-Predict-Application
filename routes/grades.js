@@ -9,7 +9,104 @@ const ffmpeg = require('fluent-ffmpeg');
 var monk = require('monk');
 var db = monk('localhost:27017/grade');
 
+function textToMP3(fn, text){
+	var texttomp3 = require("./index1");
+	var fs = require('fs');
+	const ffmpeg = require('fluent-ffmpeg');
+	const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+	ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+	
+	
+	
+		console.log("text = ",text);
+		console.log("fn = ",fn);
+	
+		let track = fn + '.mp3';//your path to source file
+	
+		if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
+				console.log("missing required params, check out the help with -?");
+			}
+		
+		if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
+				console.log("Text to long, split in text of 200 characters")
+			}
+	
+			texttomp3.getMp3(text, function(err, data){
+				if(err){
+					console.log(err);
+					return;
+			}
+	
+			if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+						fn+=".mp3";
+			}
+			
+			var file = fs.createWriteStream(fn); // write it down the file
+					file.write(data);
+					file.end();
+				console.log( fn + ".MP3 SAVED!");
+			});
 
+}
+
+function textToWav(fn){
+
+	var texttomp3 = require("./index1");
+	var fs = require('fs');
+	const ffmpeg = require('fluent-ffmpeg');
+	const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+	ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+	
+	
+	
+		// console.log("text = ",text);
+		console.log("fn = ",fn);
+	
+		let track = fn + '.mp3';//your path to source file
+	
+		// if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
+		// 		console.log("missing required params, check out the help with -?");
+		// 	}
+		
+		// if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
+		// 		console.log("Text to long, split in text of 200 characters")
+		// 	}
+	
+		// 	texttomp3.getMp3(text, function(err, data){
+		// 		if(err){
+		// 			console.log(err);
+		// 			return;
+		// 	}
+	
+		// 	if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+		// 				fn+=".mp3";
+		// 	}
+			
+		// 	var file = fs.createWriteStream(fn); // write it down the file
+		// 			file.write(data);
+		// 			file.end();
+		// 		console.log("MP3 SAVED!");
+		// 	});
+	
+		// setTimeout(function(track){	
+		
+	// const ffmpeg = require('fluent-ffmpeg');
+	// const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+	ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+	
+			ffmpeg(track).toFormat('wav').on('error', (err) => {
+					console.log('An error occurred: ' + err.message);
+				}).on('progress', (progress) => {
+		// console.log(JSON.stringify(progress));
+		console.log('Processing: ' + progress.targetSize + ' KB converted');
+	})
+	.on('end', () => {
+		console.log('Processing' + fn + '.WAV file finished !');
+	})
+	.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
+		// },2000);
+
+}
 
 router.post('/', function(req, res) {
     var collection = db.get(req.body.course);
@@ -93,19 +190,40 @@ router.get('/csce235/:nuid', function(req, res) {
 		if (account.Predict == null){
 			return;
 		}
-		console.log("account cua Hung la ");
-
-		console.log(account);
-		console.log("accout. pre = ", account.Predict);
 	
-		var texttomp3 = require("./index1");
-		var fs = require('fs');
+		// var name = account.FullName;
+		// name = name.split(" ");
 
-		const ffmpeg = require('fluent-ffmpeg');
-		const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
-		ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+
+		// var text =  "Hello " + name[0] +", I am from your future. Click on the View Grade button to see future!";
 		
+		
+		// textToWav(name[0],text);
 
+		// 	var fn = account.Predict;
+
+		// 	if (fn == "High-risk"){
+
+		// 		var text = "You are at " + account.Predict;
+		// 	}else{
+
+		// 		var text = "You are " + account.Predict;
+		// 	}	
+		
+		// 	console.log("text = ",text);
+		// 	console.log("fn = ",fn);
+
+		// 	textToWav(fn,text);
+
+		var name = account.FullName;
+		name = name.split(" ");
+
+
+		var text1 =  "Hello " + name[0] +", I am from your future. Click on the View Grade button to see future!";
+		
+		textToMP3(name[0],text1);
+		
+		
 			var fn = account.Predict;
 
 			if (fn == "High-risk"){
@@ -118,61 +236,13 @@ router.get('/csce235/:nuid', function(req, res) {
 		
 			console.log("text = ",text);
 			console.log("fn = ",fn);
-		
-			let track = fn + '.mp3';//your path to source file
-		
-			if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
-					console.log("missing required params, check out the help with -?");
-				}
-			
-			if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
-					console.log("Text to long, split in text of 200 characters")
-				}
-		
-				texttomp3.getMp3(text, function(err, data){
-					if(err){
-						console.log(err);
-						return;
-				}
-		
-				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-							fn+=".mp3";
-				}
-				
-				var file = fs.createWriteStream(fn); // write it down the file
-						file.write(data);
-						file.end();
-					console.log("MP3 SAVED!");
-				});
-		
-		
-					ffmpeg(track).toFormat('wav').on('error', (err) => {
-						console.log('An error occurred: ' + err.message);
-					}).on('progress', (progress) => {
-			// console.log(JSON.stringify(progress));
-			console.log('Processing: ' + progress.targetSize + ' KB converted');
-		})
-		.on('end', () => {
-			console.log('Processing WAV file finished !');
-		})
-		.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
 
+			textToMP3(fn,text);
+			// textToWav(fn1,text);
 
-			texttomp3.getMp3(text, function(err, data){
-					if(err){
-						console.log(err);
-						return;
-				}
-		
-				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-							fn+=".mp3";
-				}
-				
-				var file = fs.createWriteStream(fn); // write it down the file
-						file.write(data);
-						file.end();
-					console.log("MP3 SAVED!");
-				});
+			textToWav(name[0]);
+			textToWav(fn);
+
 			
 		return res.json(account);
     });
@@ -289,6 +359,7 @@ router.get('/csce156/db', function(req, res) {
 });
 
 
+
 router.get('/csce156/:nuid', function(req, res) {
     var collection = db.get('csce156');
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
@@ -301,11 +372,14 @@ router.get('/csce156/:nuid', function(req, res) {
 		if (account.Predict == null){
 			return;
 		}
-		var texttomp3 = require("./index1");
-		var fs = require('fs');
-		const ffmpeg = require('fluent-ffmpeg');
-		const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
-		ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+
+		var name = account.FullName;
+		name = name.split(" ");
+
+
+		var text1 =  "Hello " + name[0] +", I am from your future. Click on the View Grade button to see future!";
+		
+		textToMP3(name[0],text1);
 		
 		
 			var fn = account.Predict;
@@ -320,61 +394,13 @@ router.get('/csce156/:nuid', function(req, res) {
 		
 			console.log("text = ",text);
 			console.log("fn = ",fn);
-		
-			let track = fn + '.mp3';//your path to source file
-		
-			if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
-					console.log("missing required params, check out the help with -?");
-				}
-			
-			if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
-					console.log("Text to long, split in text of 200 characters")
-				}
-		
-				texttomp3.getMp3(text, function(err, data){
-					if(err){
-						console.log(err);
-						return;
-				}
-		
-				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-							fn+=".mp3";
-				}
-				
-				var file = fs.createWriteStream(fn); // write it down the file
-						file.write(data);
-						file.end();
-					console.log("MP3 SAVED!");
-				});
-		
-		
-					ffmpeg(track).toFormat('wav').on('error', (err) => {
-						console.log('An error occurred: ' + err.message);
-					}).on('progress', (progress) => {
-			// console.log(JSON.stringify(progress));
-			console.log('Processing: ' + progress.targetSize + ' KB converted');
-		})
-		.on('end', () => {
-			console.log('Processing WAV file finished !');
-		})
-		.save('./public/items/voice/' + fn + '.env');//path where you want to save your file
 
+			textToMP3(fn,text);
+			// textToWav(fn,text);
 
-			texttomp3.getMp3(text, function(err, data){
-					if(err){
-						console.log(err);
-						return;
-				}
+			textToWav(name[0]);
+			textToWav(fn);
 		
-				if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-							fn+=".mp3";
-				}
-				
-				var file = fs.createWriteStream(fn); // write it down the file
-						file.write(data);
-						file.end();
-					console.log("MP3 SAVED!");
-				});
 		return res.json(account);
     });
 });

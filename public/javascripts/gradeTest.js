@@ -20,6 +20,7 @@ var voice = {
   var course = "hun";
 
   var studentName = "hchu3";
+  var nameArray = [];
 
 
   
@@ -104,6 +105,7 @@ var voice = {
 						sessionStorage.setItem('hung', $scope.username);
 						var Account = $resource('/api/accounts/:username');
 						var Predicts = $resource('/api/grades/csce235/:nuid');
+						var Predicts1 = $resource('/api/grades/csce156/:nuid');
 						Account.get({username: $scope.username}, function(account) {
 			 
 							Predicts.get({nuid: account.NUID}, function(data) {
@@ -113,6 +115,14 @@ var voice = {
 								
 							
 							});
+
+							Predicts1.get({nuid: account.NUID}, function(data) {
+				
+						  
+								console.log("chay file WAV trc");
+							
+						
+						});
 				
 						});
 
@@ -653,6 +663,11 @@ var voice = {
 		  
 			  // console.log(" voice file ban dau = " + voice.file);
 			  // console.log(" account.NUID = " + account.NUID);
+
+			  var name = account.FullName;
+			  nameArray = name.split(" ");
+			  voiceFiles.push(nameArray[0]);
+
 			 
 			  var voice1 = ["high","high"];
 			  function removeDuplicateUsingFilter(arr){
@@ -749,7 +764,7 @@ var voice = {
                   localStorage.setItem("array", JSON.stringify(array));
                   
                   localStorage.setItem('voice',voiceFiles);
-				//   console.log(" voiceFiles trong predict = " + voiceFiles);
+				  console.log(" voiceFiles trong predict = " + voiceFiles);
 				  
               });
               

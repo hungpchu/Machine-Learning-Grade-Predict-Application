@@ -43,8 +43,10 @@ router.get('/:username', function(req, res) {
 			return res.json({});
         }
         
-        console.log(" co account ");
-        console.log(account );
+        // console.log(" co account ");
+        // console.log(account );
+
+
         
 		res.json(account);
 		/*

@@ -111,13 +111,13 @@ function onVoiceStart() {
     }
     console.log('onvoice = ');
 
-    console.log('first = ',first);
+    // console.log('first = ',first);
 
-    if ( first == false ){
-        sessionStorage.setItem("first",false);
-        voiceFiles = JSON.parse(localStorage.getItem("array"));
-        console.log(" voiceFiles  = ",  voiceFiles);
-    }
+    // if ( first == false ){
+    //     sessionStorage.setItem("first",false);
+    //     voiceFiles = JSON.parse(localStorage.getItem("array"));
+    //     console.log(" voiceFiles  = ",  voiceFiles);
+    // }
 
 
   console.log("voiceFiles ngoai = ", voiceFiles);
@@ -125,10 +125,15 @@ function onVoiceStart() {
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
    
     if(voiceId > 0){
-        if ( voiceFiles[0] == "High-risk"){
-        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[0];
+
+        if ( voiceFiles[0] == nameArray[0]){
+            document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future. Click on the View Grade button to see future!";
+            }
+
+        if ( voiceFiles[1] == "High-risk"){
+        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[1];
         }else{
-            document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
+            document.getElementById("speak").innerHTML = "You are " + voiceFiles[1];
         }
         first = false;
         localStorage.setItem('first',first);
