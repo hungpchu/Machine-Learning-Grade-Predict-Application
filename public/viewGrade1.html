@@ -14,6 +14,66 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
     <style>
+
+      #text1 {
+        position: absolute;
+	left:480px;
+	top:140px;
+	padding: 8.5px 8px;
+	padding-left:20px;
+	width: 18%;
+	background-color: white;
+  border: 3px solid lightskyblue;
+  font-size: 20px;
+
+		}
+
+      #header{
+width:35%;
+position: absolute;
+top: 50px;
+left: 400px;
+
+}  
+
+   #table{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 250px;
+left: 450px;
+
+}
+
+
+           #predictGroup{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 820px;
+left: 450px;
+
+}   
+
+        #goBack{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 850px;
+left: 900px;
+
+}  
+
+#stimulateFuture {
+  position: absolute;
+  left: 830px;
+  top: 300px;
+  width: 10%;
+  
+  }
             table, th, td {
                 border: 1px solid grey;
                 border-collapse: collapse;
@@ -41,10 +101,10 @@
                 color: white;
             }
             .bubble-wrapper {
-            display: inline-block;
+              display: inline-block;
             position: absolute;
             top: 300px;
-            right: 26px;
+            left: 1200px;
             margin: 4em;
           }
           .bubble {
@@ -161,21 +221,30 @@
                     <div class="bubble top reverse" id ="speak" ></div>
                   </div>
               
-              <button id="voiceStart">Speak</button>
+              <button id="stimulateFuture">Stimulate Your Future</button>
 
 
         <div ng-app = "Grade" ng-controller = "ViewCtrl" style = "margin:auto;max-width:600px;width:80%;text-align:center;">
-                <h1 id = "header" style = "width:100%;margin:auto;text-align:center;background-color:#8f8f8f;color:white;padding:10px"></h1>
+                <h1 id = "header" style = "margin:auto;text-align:center;background-color:#286090;color:white;padding:10px"></h1>
                    <a href = "/#/">Logout</a>
-                   <div style = "border:grey 2px solid;margin-top:10px;border-radius:5px">
-                    <h2>{{course}}</h2>
-                    <table border = "0" id = "profileTable" style = "margin:auto">
+                
+          
+
+                    <div id = "text1" ></div>
+                    <div id = "table">
+                    <table border = "0" id = "profileTable" style = "max-width:300px;margin:auto; border:2px solid lightskyblue">
                     </table>
-                    <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid grey;border-radius:5px;font-size:16px">
+                  </div>
+                    <div id = "predictGroup" style = "background-color:#f3f3f3;max-width:300px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightskyblue;border-radius:5px;font-size:16px">
                         Predicted Group: <strong><font id = "predict"></font></strong><br>
                     </div>
-                    <button class = "back-button" ng-click = "back()" style = "margin:0px auto 10px auto">Back</button>
-                </div>
+                   
+
+                    <div id="goBack">
+                        <button><a href="/#/">Logout</a></button>
+                        <button ng-click = "back()">Back</button>
+                        </div>
+               
             </div>
      
 

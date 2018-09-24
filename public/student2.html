@@ -2,11 +2,63 @@
 <html ng-app="Grade">
   <head>
       <style>
+        #table{
+
+          max-height: 400px;
+  max-width: 400px;
+  position: absolute;
+top: 150px;
+left: 450px;
+
+        }
+
+           #chooseCourse{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 300px;
+left: 450px;
+
+}   
+
+#header{
+
+position: absolute;
+top: 50px;
+left: 400px;
+
+}   
+
+ #visitFuture{
+
+position: absolute;
+top: 330px;
+left: 750px;
+
+}  
+
+#uploadPicture{
+
+position: absolute;
+top: 200px;
+left: 860px;
+
+}  
+
+#message{
+
+position: absolute;
+top: 120px;
+left: 600px;
+
+}  
+
           .bubble-wrapper {
             display: inline-block;
             position: absolute;
             top: 300px;
-            right: 26px;
+            left: 1100px;
             margin: 4em;
           }
           .bubble {
@@ -139,47 +191,51 @@
 
               <button id="voiceStart">Speak</button>
 
-              <div id="mpfooter">
+              <div id="uploadPicture">
 
                         <form action="/" enctype="multipart/form-data" method="post">
-                          <label class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
+                          <label style="max-width:300px" class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
                             <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
                           </label>
-                          <input type="submit" value="Upload">
+                          <br></br>
+                          <input style="max-width:300px" type="submit" value="Upload Your Picture">
                         </form>
             
                 </div>
              
             
                 
-                <h1 id = "header" style = "max-width:600px;margin:auto;text-align:center;width:80%;background-color:#8f8f8f;color:white;padding:10px"></h1>
+                <h1 id = "header" style = "max-width:600px;margin:auto;text-align:center;width:80%;background-color:#286090;color:white;padding:10px"></h1>
                 
-                <a href = "/#/">Logout</a>
-                <p>
+                <p id = "message" >
                     {{message}}
                 </p>
-                <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
-                    <h4>Profile:</h4>
-                    <table border = "0" id = "profileTable" style = "margin:auto">
+                <div id = "table" style = "position:absolute;text-align:left;background-color:whitesmoke;max-width:300px;width:80%;margin:auto;padding:0 20px 20px 20px;border:2px solid lightblue;border-radius:5px">
+                    <!-- <h4>Profile:</h4> -->
+                    <table  border = "0" id = "profileTable" style = "margin:auto; width:120%">
                     </table>
                 </div>
             
             
-                <div style = "background-color:#f3f3f3;max-width:600px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid grey;border-radius:5px">
+                <div id = "chooseCourse" style = "background-color:whitesmoke;max-width:300px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightblue;border-radius:5px">
                     <label style = "margin-right:10px">Course:</label>
                     <select ng-model = "course" style = "width:150px;height:30px;">
                         <option disable selected value>Choose course...</option>
                         <option value = "csce156">CSCE156</option>
                         <option value = "csce235">CSCE235</option>
                     </select>
-                    <button class = "btn btn-primary" ng-click = "viewGrade()" style = "margin-left:10px">View grade</button>
+                   
                 </div>
+
+                <button id = "visitFuture" class = "btn btn-primary" ng-click = "viewGrade()" style = "margin-left:10px">Visit Future</button>
             
                 
               <!-- </div>
               <button class = "back-button" ng-click = "back()" style = "margin:0px auto 10px auto">Back</button>
           </div> -->
-          <button><a href="/#/">Back</a></button>
+          <div id="mpfooter">
+          <button><a href="/#/">Logout</a></button>
+          </div>
               
             </div>
 

@@ -659,7 +659,7 @@ var voice = {
 			  Params.get(function(data) {
 				  console.log(data.params.split(","));
 			  });*/
-			  document.getElementById("header").innerHTML = "Welcome " + account.FullName;
+			//   document.getElementById("header").innerHTML = "Your Future " + account.FullName;
 		  
 			  // console.log(" voice file ban dau = " + voice.file);
 			  // console.log(" account.NUID = " + account.NUID);
@@ -667,6 +667,8 @@ var voice = {
 			  var name = account.FullName;
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
+
+			  document.getElementById("header").innerHTML = "Your Future " + nameArray[0];
 
 			 
 			  var voice1 = ["high","high"];
@@ -803,18 +805,37 @@ var voice = {
 					  var td_name = document.createElement("td");
 					  var td_val = document.createElement("td");
   
-					  var name = document.createTextNode(data.list[prop]);
+					  var name = document.createTextNode( data.list[prop] + ":");
 					  var val = document.createTextNode(account[data.list[prop]]);
 					  var b = document.createElement("B");
+					  var line = document.createTextNode("  ");
+
+					//   b.nodeValue =  b.nodeValue + "   " ;
+
+					//   val.nodeValue = "   " + val.nodeValue;
   
-  
+					 console.log("name = ", name);
+					 console.log("val = ", val);
+					 console.log("b = ", b);
+					
 					  b.appendChild(name);
 					  td_name.appendChild(b);
+					  td_val.appendChild(line);
 					  td_val.appendChild(val);
-  
+
+					  console.log("td_val = ",td_val);
+
+
 					  tr.appendChild(td_name);
+					  tr.innerHTML += "  " ;
 					  tr.appendChild(td_val);
-					  table.appendChild(tr);		  
+
+
+					  console.log("tr = ",tr);
+
+					  table.appendChild(tr);	
+					  
+					  console.log("table = ",table);
 				  }		  
 			  
 			  });
@@ -890,10 +911,21 @@ var voice = {
 		 console.log('voiceFile trong view =', voiceFiles);
 		 first = false;
   
+		 if (course == "csce235"){
+			console.log(" trong cs245");
+			document.getElementById("text1").innerHTML = "Introduction to Discrete Structures (CSCE 235)";
+		 }else{
+			document.getElementById("text1").innerHTML = "Introduction to Computer Science II (CSCE 156)";
+		 }
   
 		  Account.get({username: stud}, function(account) {
 
-			document.getElementById("header").innerHTML = "Grade for " + account.FullName;
+			var name = account.FullName;
+			nameArray = name.split(" ");
+
+
+
+			document.getElementById("header").innerHTML = "Your future " + nameArray[0];
   
 			  console.log("account123");
               console.log(account);

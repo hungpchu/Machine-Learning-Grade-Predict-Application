@@ -18,7 +18,7 @@ body{
   max-width: 324px;
   position: absolute;
 top: 50px;
-right: 16px;
+left: 1150px;
   /* display:  none; */
 
 }
@@ -34,7 +34,7 @@ right: 16px;
 
 #voiceStart {
   position: absolute;
-  right: 67px;
+  left: 1230px;
   top: 480px;
   width: 10%;
   
