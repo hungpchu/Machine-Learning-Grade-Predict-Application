@@ -1,4 +1,6 @@
 <head>
+	<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		button, a {
 			background-color: #337ab7;
@@ -16,26 +18,130 @@
 			background-color: #286090;
 			color: white;
 		}
+
+		#text1 {
+	background-image: url('../images/username.jpg');
+	background-size: 34px;
+	background-position: 190px 5px; 
+	background-repeat: no-repeat;
+	right:100px;
+	top:100px;
+	padding: 8.5px 8px;
+	padding-left:20px;
+	max-width: 240px;
+	background-color: white;
+	border: 3px solid lightskyblue;
+
+		}
+
+		#text2 {
+			text-align: center;
+			
+
+	right:100px;
+	top:40px;
+	padding: 10px 8px;
+	padding-left:70px;
+	max-width: 200px;
+
+		}
+
+
+
+
+input[type=text]{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+  }
+  
+  input[type=text]:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+  }
+  
+  .inputWithIcon input[type=text]{
+    padding-left:10px;
+  }
+  
+  .inputWithIcon{
+    position:relative;
+  }
+  
+  .inputWithIcon i{
+	position:absolute;
+	padding-left:60px;
+    right:10px;
+    top:36px;
+    padding:8.5px 8px;
+    color:#aaa;
+    transition:.3s;
+  }
+  
+  .inputWithIcon input[type=text]:focus + i{
+    color:dodgerBlue;
+  }
+  
+  .inputWithIcon.inputIconBg i{
+    background-color:#aaa;
+    color:#fff;
+    padding:9px 4px;
+    border-radius:4px 0 0 4px;
+  }
+  
+  .inputWithIcon.inputIconBg input[type=text]:focus + i{
+    color:#fff;
+    background-color:dodgerBlue;
+  }
 	</style>
 </head>
 
 <body>
-	<h1 style = "margin:auto;max-width:500px;text-align:center;width:50%;background-color:#8f8f8f;color:white;padding:10px">Login to Meet you Future "You"....</h1>
-	<form style = "margin:auto;max-width:500px;width:50%;padding:10px 20px 60px 20px;text-align:center;border:#8f8f8f 1px solid;">
+	<h1 style = "margin:auto;max-width:700px;text-align:center;width:500%;background-color:#286090;color:white;padding:10px">Login to Meet you Future "You"....</h1>
+	<br></br>
+	<form style = "margin:auto;max-width:550px;width:200%;padding:10px 20px 60px 20px;text-align:left;border:#8f8f8f 1px solid;">
 		<p>
 			{{message}}
 		</p>
-		<div class = "form-group">
+
+		<div class="inputWithIcon">
+				<label>Username</label>
+			<input type="text" placeholder="Enter Username" ng-model = "username">
+			<i class="fa fa-user fa-lg fa-fw" aria-hidden="true" ></i>
+		  </div>
+
+		<!-- <div class = "form-group">
 			<label>Username</label>
-			<input class = "form-control" ng-model = "username" style = "text-align:center"></input>
-		</div>
-		<div class = "form-group">
+			<input id = "text1" placeholder="Enter Username" class = "form-control" ng-model = "username" style = "text-align:left"></input>
+		</div> -->
+
+		<div class="inputWithIcon">
+				<label>Password</label>
+			<input type="text" placeholder="Enter Password" ng-model = "password">
+			<i class="fa fa-key fa-lg fa-fw" aria-hidden="true" ></i>
+		  </div>
+	
+		<!-- <div class = "form-group">
 			<label>Password</label>
-			<input class = "form-control" type = "password" ng-model = "password" style = "text-align:center"></input>
-		</div>
-		<div style = "width:50%;float:left;padding-right:5px"><button ng-click = "validate()">Login</button></div>
-		<div style = "width:50%;float:right;padding-left:5px"><a style = "text-decoration:none" href = "/#/register">Register</a></div>
+			<input id = "text2" placeholder="Enter Password" class = "form-control" type = "password" ng-model = "password" style = "text-align:left"></input>
+		</div> -->
+		<div style = "width:30%;float:right;padding-right:5px"><button ng-click = "validate()">Login</button></div>
+		<!-- <div style = "width:50%;float:right;padding-left:5px"><a style = "text-decoration:none" href = "/#/register">Register</a></div> -->
 	</form>
+
+	<br></br>
+
+	<form style = "margin:auto;max-width:290px;width:200%;padding:10px 20px 60px 20px;text-align:left;border:#8f8f8f 1px solid;">
+			<div id = "text1" >Don't have an account yet?</div>
+		
+			
+			<div id = "text2" ><a style = "text-decoration:none" href = "/#/register">Register</a></div>
+		</form>
  <!-- <form action="/" enctype="multipart/form-data" method="post">
 		<input type="file" id= "name" name="upload1" multiple>
 		<input type="submit" value="Upload">

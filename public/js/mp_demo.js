@@ -101,6 +101,7 @@ function onVoiceStart() {
     //texttomp3();
     // if(voiceFiles == undefined || voiceFiles == null || voiceFiles.length <= 0)
     //     return;
+    var first = true;
     var typevoice = 2;
     var isPlaying = mpwebgl.instance.isanimplaying(typevoice);
     if(isPlaying == typevoice){
@@ -126,17 +127,24 @@ function onVoiceStart() {
    
     if(voiceId > 0){
 
-        if ( voiceFiles[0] == nameArray[0]){
-            document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future. Click on the View Grade button to see future!";
-            }
 
+        if ( voiceFiles[0] == nameArray[0]){
+            document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future.\n"+ 
+            "Click on the View Grade button to see future!\n";
+            voiceIndex = 0;
+             first = false;
+            }
+        else{
         if ( voiceFiles[1] == "High-risk"){
         document.getElementById("speak").innerHTML = "You are at " + voiceFiles[1];
+        // first = true;
         }else{
             document.getElementById("speak").innerHTML = "You are " + voiceFiles[1];
+            // first = true
         }
-        first = false;
-        localStorage.setItem('first',first);
+        }
+        // first = false;
+        // localStorage.setItem('first',first);
         console.log(" voiceId > 0  trong demo = ",voiceId);
         if (++voiceIndex == voiceFiles.length)
             voiceIndex = 0;
