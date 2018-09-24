@@ -22,6 +22,7 @@ var voice = {
   var studentName = "hchu3";
   var nameArray = [];
 
+  var imageContent = "";
 
   
   
@@ -667,6 +668,10 @@ var voice = {
 			  var name = account.FullName;
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
+
+			  imageContent = account.URL;
+
+			  console.log("URL trong gradetest = ",imageContent);
 
 			  document.getElementById("header").innerHTML = "Your Future " + nameArray[0];
 

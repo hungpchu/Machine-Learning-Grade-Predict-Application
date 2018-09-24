@@ -132,14 +132,15 @@ function onVoiceStart() {
             document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future.\n"+ 
             "Click on the View Grade button to see future!\n";
             voiceIndex = 0;
+            return;
              first = false;
             }
         else{
-        if ( voiceFiles[1] == "High-risk"){
-        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[1];
+        if ( voiceFiles[0] == "High-risk"){
+        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[0];
         // first = true;
         }else{
-            document.getElementById("speak").innerHTML = "You are " + voiceFiles[1];
+            document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
             // first = true
         }
         }
@@ -318,11 +319,13 @@ jQuery(document).ready(function() {
     
     console.log("studentName = ", studentName);
 
-        if (localStorage.getItem("rhino1") != null){
+        // if (localStorage.getItem("rhino1") != null){
 
         // console.log(" avatar file = ",localStorage.getItem("rhino1"));
-        // // var dataURI = localStorage.getItem("rhino");
-        var dataURI = localStorage.getItem("rhino1");
+        // var dataURI = localStorage.getItem("rhino1");
+
+        // console.log("URL = ", URL);
+        var dataURI = imageContent;
 
         console.log("url = ",dataURI);
         
@@ -350,7 +353,7 @@ jQuery(document).ready(function() {
         setTimeout(onVoiceStart,15000);
         // }
         console.log("change = ",change);
-    }
+    // }
 
         $("#mpcanvas").show();
         initEvt();
@@ -504,3 +507,63 @@ function initLookAt(){
         mpwebgl.instance.resetlookat();
     });
 }
+
+
+
+// $(document).on("mpLoadComplete", function() {
+
+        
+//     console.log("name = ", $('#name'));
+
+// //    var fileLo = new File("../images/avatar.png");
+
+// console.log("name1 = ", $('#filesavtr'));
+
+//     // console.log("file = ", fileLo);
+
+//     studentName = sessionStorage.getItem('hung');
+
+// console.log("studentName = ", studentName);
+
+//     if (localStorage.getItem("rhino1") != null){
+
+//     // console.log(" avatar file = ",localStorage.getItem("rhino1"));
+//     // // var dataURI = localStorage.getItem("rhino");
+//     var dataURI = localStorage.getItem("rhino1");
+
+//     console.log("url = ",dataURI);
+    
+//     var byteString = atob(dataURI.split(',')[1]);
+//     var ab = new ArrayBuffer(byteString.length);
+//     var ia = new Uint8Array(ab);
+//     for (var i = 0; i < byteString.length; i++) {
+//             ia[i] = byteString.charCodeAt(i);
+//     }
+//     var blob = new Blob([ia], {
+//      type: 'image/jpeg'
+//     });
+//     var file = new File([blob], "image.jpg");
+//     console.log("file = ",file);
+//     genMode = "avatar";
+
+//     mpwebgl.instance.requestAvatar(file, genMode);
+
+//     if(sessionStorage.getItem("first") != null){
+//         first = sessionStorage.getItem("first");
+//         console.log("trong null, first = ", first);
+//     }
+    
+//     // if (first == true){
+//     setTimeout(onVoiceStart,15000);
+//     // }
+//     console.log("change = ",change);
+// }
+
+//     $("#mpcanvas").show();
+//     initEvt();
+//     // if(faceFiles == undefined || faceFiles == null || faceFiles.length <= 0)
+//     //     return;
+//     // var faceId = mpwebgl.instance.loadnextface("items/face/" + faceFiles[0]);
+//     // if(faceId < 0)
+//     //     console.error("Load face error");
+// });
