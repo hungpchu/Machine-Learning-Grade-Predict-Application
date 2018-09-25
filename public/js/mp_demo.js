@@ -130,7 +130,7 @@ function onVoiceStart() {
 
         if ( voiceFiles[0] == nameArray[0]){
             document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future.\n"+ 
-            "Click on the View Grade button to see future!\n";
+            "Click on the Visit Future button to see future!\n";
             voiceIndex = 0;
             return;
              first = false;

@@ -669,11 +669,27 @@ var voice = {
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
 
+			//   if (localStorage.getItem("rhino1") != account.URL){
+
+
+
+			//   }
+
+			
+
 			  imageContent = account.URL;
 
 			  console.log("URL trong gradetest = ",imageContent);
 
-			  document.getElementById("header").innerHTML = "Your Future " + nameArray[0];
+			  document.getElementById("header").innerHTML = "Your Future 'You' "; 
+
+			  document.getElementById("name").innerHTML = account.Username;
+
+
+
+			
+
+
 
 			 
 			  var voice1 = ["high","high"];
@@ -810,14 +826,18 @@ var voice = {
 					  var td_name = document.createElement("td");
 					  var td_val = document.createElement("td");
   
-					  var name = document.createTextNode( data.list[prop] + ":");
+					  var name = document.createTextNode( data.list[prop]);
 					  var val = document.createTextNode(account[data.list[prop]]);
 					  var b = document.createElement("B");
-					  var line = document.createTextNode("  ");
+					 
 
 					//   b.nodeValue =  b.nodeValue + "   " ;
 
 					//   val.nodeValue = "   " + val.nodeValue;
+
+					if ( name.nodeValue ==  "FullName"){
+						name.nodeValue = "Full Name";
+					}
   
 					 console.log("name = ", name);
 					 console.log("val = ", val);
@@ -825,14 +845,12 @@ var voice = {
 					
 					  b.appendChild(name);
 					  td_name.appendChild(b);
-					  td_val.appendChild(line);
 					  td_val.appendChild(val);
 
 					  console.log("td_val = ",td_val);
 
 
 					  tr.appendChild(td_name);
-					  tr.innerHTML += "  " ;
 					  tr.appendChild(td_val);
 
 
@@ -925,12 +943,18 @@ var voice = {
   
 		  Account.get({username: stud}, function(account) {
 
+
+			imageContent = account.URL;
+
+			console.log("URL trong gradetest = ",imageContent);
+
+
 			var name = account.FullName;
 			nameArray = name.split(" ");
 
 
 
-			document.getElementById("header").innerHTML = "Your future " + nameArray[0];
+			document.getElementById("header").innerHTML = "Your Future 'You' ";
   
 			  console.log("account123");
               console.log(account);

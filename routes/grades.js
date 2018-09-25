@@ -1,4 +1,3 @@
-// lay data tu database 
 var express = require('express');
 var router = express.Router();
 
@@ -23,13 +22,13 @@ function textToMP3(fn, text){
 	
 		let track = fn + '.mp3';//your path to source file
 	
-		if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
-				console.log("missing required params, check out the help with -?");
-			}
+		// if(typeof text ===  "undefined" || text === ""  || typeof fn === "undefined" || fn === "") { // just if I have a text I'm gona parse
+		// 		console.log("missing required params, check out the help with -?");
+		// 	}
 		
-		if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
-				console.log("Text to long, split in text of 200 characters")
-			}
+		// if(text.length > 200){ // check longness of text, because otherways google translate will give me a empty file
+		// 		console.log("Text to long, split in text of 200 characters")
+		// 	}
 	
 			texttomp3.getMp3(text, function(err, data){
 				if(err){
@@ -37,11 +36,11 @@ function textToMP3(fn, text){
 					return;
 			}
 	
-			if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
-						fn+=".mp3";
-			}
+			// if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ // if name is not well formatted, I add the mp3 extention
+			// 			fn+=".mp3";
+			// }
 			
-			var file = fs.createWriteStream(fn); // write it down the file
+			var file = fs.createWriteStream(fn+=".mp3"); // write it down the file
 					file.write(data);
 					file.end();
 				console.log( fn + ".MP3 SAVED!");
@@ -88,6 +87,7 @@ function textToWav(fn){
 		// 		console.log("MP3 SAVED!");
 		// 	});
 	
+	
 		// setTimeout(function(track){	
 		
 	// const ffmpeg = require('fluent-ffmpeg');
@@ -98,6 +98,10 @@ function textToWav(fn){
 					console.log('An error occurred: ' + err.message);
 				}).on('progress', (progress) => {
 		// console.log(JSON.stringify(progress));
+		var i = 0;
+		while( i < 1000000000){
+			i++;
+		}
 		console.log('Processing: ' + progress.targetSize + ' KB converted');
 	})
 	.on('end', () => {
@@ -474,7 +478,6 @@ router.post('/csce156', function(req, res) {
     	var params = ['ml_scripts/predict.py', 'csce235'];
     	for(var index in req.body.grades) {
     		params.push(index, req.body.grades[index]);
-
     	}
 		const ls = spawn('python3', params);
     	ls.stdout.on('data', (data) => {
@@ -483,11 +486,9 @@ router.post('/csce156', function(req, res) {
 			};
             return res.json(wrapObj);
 		});
-
 		ls.stderr.on('data', (data) => {
 		  console.log("stderr: " + data);
 		});
-
 		ls.on('exit', (code) => {
 		  console.log("child process exited with code " + code);
 		});
@@ -521,7 +522,6 @@ router.post('/', function(req, res) {
     	res.json(account);
     });
 });
-
 router.post('/', function(req, res) {
 	var collection = db.get('accounts');
 	console.log(req.body);

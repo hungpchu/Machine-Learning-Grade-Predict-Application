@@ -189,11 +189,12 @@ left: 600px;
                   <div class="bubble top reverse" id ="speak" ></div>
                 </div>
 
-              <button id="voiceStart">Speak</button>
+              <button id="voiceStart">Talk to Me!</button>
 
               <div id="uploadPicture">
 
                         <form action="/" enctype="multipart/form-data" method="post">
+                          <input id="name" type="text" name="username">
                           <label style="max-width:300px" class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
                             <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
                           </label>
@@ -210,7 +211,7 @@ left: 600px;
                 <p id = "message" >
                     {{message}}
                 </p>
-                <div id = "table" style = "position:absolute;text-align:left;background-color:whitesmoke;max-width:300px;width:80%;margin:auto;padding:0 20px 20px 20px;border:2px solid lightblue;border-radius:5px">
+                <div id = "table" style = "position:absolute;text-align:left;background-color:whitesmoke;max-width:300px;width:80%;margin:auto;padding: 20px 20px 20px 20px;border:2px solid lightblue;border-radius:5px">
                     <!-- <h4>Profile:</h4> -->
                     <table  border = "0" id = "profileTable" style = "margin:auto; width:120%">
                     </table>

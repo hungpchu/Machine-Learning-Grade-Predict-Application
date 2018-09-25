@@ -64,7 +64,16 @@ app.post('/', function (req, res){
 
   form.parse(req);
 
+
+form.on('field', function(name, value) {
+  console.log('Text cua HUng = ' + value );
+  username = value;
+  console.log('username ben trong field = ' + username );
+});
+
   form.on('fileBegin', function (name, file){
+
+    console.log("name = ", name);
       file.path = __dirname + '/public/images/' + file.name;
       console.log("choose file HUng");
       console.log("file1 = ", file1);

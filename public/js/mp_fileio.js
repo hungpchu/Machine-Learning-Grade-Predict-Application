@@ -128,32 +128,32 @@ var MpFS = {
       );
     });
 
-    FS.createPath(
-        '/',
-        '/items/voice',
-         true,
-         false
-    );
-    voiceFiles.forEach(function (arg) {
-      // FS.createPreloadedFile(
-      //   '/items/voice',
-      //   arg+',mp3',
-      //   MpConfig["documentPath"] + 'items/voice/'+arg+'.mp3',
-      //   true,
-      //   false
-      // );
-      console.log("trong fileio");
-      // console.log("voce file trong fileIO = ", voice.file);
-      // console.log('arg = ', arg);
-      console.log('voiceFiles trong fileio = ', voiceFiles);
-      FS.createPreloadedFile(
-        '/items/voice',
-        arg+'.env',
-        MpConfig["documentPath"] + 'items/voice/'+arg+'.env',
-        true,
-        false
-      );
-    });
+    // FS.createPath(
+    //     '/',
+    //     '/items/voice',
+    //      true,
+    //      false
+    // );
+    // voiceFiles.forEach(function (arg) {
+    //   // FS.createPreloadedFile(
+    //   //   '/items/voice',
+    //   //   arg+',mp3',
+    //   //   MpConfig["documentPath"] + 'items/voice/'+arg+'.mp3',
+    //   //   true,
+    //   //   false
+    //   // );
+    //   console.log("trong fileio");
+    //   // console.log("voce file trong fileIO = ", voice.file);
+    //   // console.log('arg = ', arg);
+    //   console.log('voiceFiles trong fileio = ', voiceFiles);
+    //   FS.createPreloadedFile(
+    //     '/items/voice',
+    //     arg+'.env',
+    //     MpConfig["documentPath"] + 'items/voice/'+arg+'.env',
+    //     true,
+    //     false
+    //   );
+    // });
 
     cosmeCheeks.forEach(function (arg) {
         FS.createPath(
@@ -200,6 +200,33 @@ var MpFS = {
           false
         );
     });
+
+    FS.createPath(
+      '/',
+      '/items/voice',
+       true,
+       false
+  );
+  voiceFiles.forEach(function (arg) {
+    // FS.createPreloadedFile(
+    //   '/items/voice',
+    //   arg+',mp3',
+    //   MpConfig["documentPath"] + 'items/voice/'+arg+'.mp3',
+    //   true,
+    //   false
+    // );
+    console.log("trong fileio");
+    // console.log("voce file trong fileIO = ", voice.file);
+    // console.log('arg = ', arg);
+    console.log('voiceFiles trong fileio = ', voiceFiles);
+    FS.createPreloadedFile(
+      '/items/voice',
+      arg+'.env',
+      MpConfig["documentPath"] + 'items/voice/'+arg+'.env',
+      true,
+      false
+    );
+  });
 
   }),
 //  addVoice: function (var text){
