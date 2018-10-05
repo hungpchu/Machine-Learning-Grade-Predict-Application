@@ -9,7 +9,7 @@ var Module = {
             console.log(" voiceFiles  = ",  voiceFiles);
         }
 
-        setTimeout(MpFS.prepareResource(),6800);
+        setTimeout(MpFS.prepareResource(),8200);
     }),
     postRun: (function() {
 

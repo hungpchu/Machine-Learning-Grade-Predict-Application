@@ -24,6 +24,14 @@ var voice = {
 
   var imageContent = "";
 
+  var Role = "";
+
+  var predict = "";
+
+  var firstName = "";
+
+
+
   
   
   app.config(['$routeProvider', function($routeProvider) {
@@ -206,6 +214,13 @@ var voice = {
 					return;
 				}else{
 					$scope.message = "You can use this NUID";
+					if ($scope.nuid == "95060618"){
+
+						Role = "Professor";
+
+					}else{
+						Role = "Student";
+					}
 					NUIDChecked = true;
 
 				}
@@ -367,26 +382,58 @@ var voice = {
 			  }
 
 			  console.log("NUID CHECK = ", NUIDChecked);
+
+
+			  var readImageFile = $resource('/api/multipp/readImageFile');
 			  
-			  var account = {
-				  "FullName": $scope.firstname + " " + $scope.lastname ,
-				  "Role": "Student",
-				  "NUID": $scope.nuid,
-				  "Email": $scope.email,
-				  "Username": $scope.username,
-				  "Password": $scope.password,
-				  "Gender": gender,
-				  "imageURL":"billGate.jpg",
-				  "URL": ""
-			  };
-  
-  
-			  var Accounts = $resource('/api/accounts');
-  
-			  Accounts.save(account, function() {
-				  alert("You have successfully registered!\nYou will be redirected to the login page.");
-				  $location.path("/");
+			  readImageFile.save({filename: "imageURL"}, function(data) {
+
+				 image = data.String;
+				console.log("data trong register");
+				console.log("data trong imageFile=", image);
+				var account = {
+					"FullName": $scope.firstname + " " + $scope.lastname ,
+					"Role": Role,
+					"NUID": $scope.nuid,
+					"Email": $scope.email,
+					"Username": $scope.username,
+					"Password": $scope.password,
+					"Gender": gender,
+					"imageURL":"billGate.jpg",
+					"URL": data.String
+				};
+	
+	
+				var Accounts = $resource('/api/accounts');
+	
+				Accounts.save(account, function() {
+					alert("You have successfully registered!\nYou will be redirected to the login page.");
+					$location.path("/");
+				});
+				
+
+				
 			  });
+			  
+			//   var account = {
+			// 	  "FullName": $scope.firstname + " " + $scope.lastname ,
+			// 	  "Role": "Student",
+			// 	  "NUID": $scope.nuid,
+			// 	  "Email": $scope.email,
+			// 	  "Username": $scope.username,
+			// 	  "Password": $scope.password,
+			// 	  "Gender": gender,
+			// 	  "imageURL":"billGate.jpg",
+			// 	  "URL": image
+			//   };
+  
+  
+			//   var Accounts = $resource('/api/accounts');
+  
+			//   Accounts.save(account, function() {
+			// 	  alert("You have successfully registered!\nYou will be redirected to the login page.");
+			// 	  $location.path("/");
+			//   });
 		  }
 	  }
   ]);
@@ -475,15 +522,15 @@ var voice = {
 				  for(var i in data) {
 					  var student = data[i];
 					  if (student.Predict == "Good") {
-						  addRow(goodList, student["Full name"]);
+						  addRow(goodList, student["FullName"]);
 						  counter[0] += 1;
 					  }
 					  else if (student.Predict == "OK") {
-						  addRow(okList, student["Full name"]);
+						  addRow(okList, student["FullName"]);
 						  counter[1] += 1;
 					  }
 					  else if (student.Predict == "High-risk") {
-						  addRow(hrList, student["Full name"]);
+						  addRow(hrList, student["FullName"]);
 						  counter[2] += 1;
 						  hung = "hung3";
 					  }
@@ -499,15 +546,15 @@ var voice = {
 				  return;
 			  }
   
-			  if ($scope.weekToRun == "") {
-				  $scope.message = "No week is chosen.";
+			  if ($scope.predictionToRun == "") {
+				  $scope.message = "No Predict is chosen.";
 				  return;
 			  }
   
   
   
 			  var Model = $resource('/api/models');
-			  Model.save({course: $scope.courseToRun, week: $scope.weekToRun},  function (newdata) {
+			  Model.save({course: $scope.courseToRun, prediction: $scope.predictionToRun},  function (newdata) {
 				  var i;
 				  for (i = 0; i < 10000; i++) {console.log("done");}
 				  $scope.message = "Finished update course !";
@@ -539,7 +586,7 @@ var voice = {
 				  };
   
   
-				  Properties.save({filename: $scope.courseToRun, week: $scope.weekToRun}, function(data) {
+				  Properties.save({filename: $scope.courseToRun, prediction: $scope.predictionToRun}, function(data) {
 					  for(var i in fullGrade) {
 						  wrapObj.students++;
 						  wrapObj.fields = 0;
@@ -559,7 +606,7 @@ var voice = {
 						  wrapObj.fields++;
 						  validGrade.NUID = thisGrade["SIS User ID"].toString();
 						  wrapObj.fields++;
-						  validGrade["Full name"] = thisGrade["Full name"];
+						  validGrade["FullName"] = thisGrade["Full name"];
 						  wrapObj.grade.push(validGrade);
 					  }
   
@@ -616,6 +663,7 @@ var voice = {
   
 		  var Predict1 = $resource('/api/grades/csce156/:nuid');
 		  var Predicts = $resource('/api/grades/csce235/:nuid');
+		
   
 		  var course1 = "";
 		  var course2 = "";
@@ -668,22 +716,33 @@ var voice = {
 			  var name = account.FullName;
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
+			  firstName = 
 
 			//   if (localStorage.getItem("rhino1") != account.URL){
 
 
+			// var like = "lala.png";
 
-			//   }
-
+			// if ( localStorage.getItem("rhino1") != undefined){
+				
 			
+			//   var Image =  $resource('/api/accounts/image/:username/:image');
+
+			//   Image.get({username: stud,image: "hung"}, function(account) {
+			// 		console.log("update picture");
+
+			//   });
+			// }
+
 
 			  imageContent = account.URL;
 
-			  console.log("URL trong gradetest = ",imageContent);
+			//   console.log("URL trong gradetest = ",imageContent);
+
+			  console.log("URL trong gradetest = ",account.URL);
 
 			  document.getElementById("header").innerHTML = "Your Future 'You' "; 
 
-			  document.getElementById("name").innerHTML = account.Username;
 
 
 
@@ -789,9 +848,32 @@ var voice = {
                   localStorage.setItem('voice',voiceFiles);
 				  console.log(" voiceFiles trong predict = " + voiceFiles);
 				  
-              });
+			  });
+			  
+			//   console.log("truoc read image file");
               
-              
+			//   var readImageFile = $resource('/api/multipp/readImageFile');
+			  
+			//   readImageFile.save({filename: "imageURL"}, function(data) {
+
+			// 	var image = data.String;
+			// 	console.log("data trong Hung");
+			// 	console.log("data trong imageFile=", image);
+
+				
+
+				
+			//   });
+			  
+			//   var Properties = $resource('/api/multipp/properties');
+  
+  
+			//   // userInfo in the UserInfo.txt
+			//   Properties.save({filename: "imageURL1"}, function(data) {
+			  
+			// 	console.log("data trong imageFile= ");
+			// 	console.log(data);
+			//   });
 			  
   
 			  //$scope.account = account;
@@ -807,6 +889,8 @@ var voice = {
 			  Properties.save({filename: "UserInfo"}, function(data) {
   
 				  var count = 0;
+
+				  console.log("data = ", data);
 				  
 				  //console.log(data.list);
 				  // tìm id của bảng 
@@ -1010,8 +1094,8 @@ var voice = {
 					  }
   
 				  }
-  console.log("this Grade = ");
-  console.log(thisGrade);
+//   console.log("this Grade = ");
+//   console.log(thisGrade);
   
 				  if (thisGrade == null) {
 					  console.log(" this grade = null");
@@ -1019,6 +1103,7 @@ var voice = {
 					  return;
 				  }
 			
+				
   
 				  //console.log(" $scope.account.NUID ngoai = " + $scope.account.NUID);
 				  // lay cai predict ra, call back function chay xong moi chay cai nay
@@ -1029,9 +1114,12 @@ var voice = {
 				  var Predicts = $resource('/api/grades/' + course  + '/:nuid');
   
 				  Predicts.get({nuid: $scope.account.NUID}, function(data) {
-  
+					console.log(" data.Predict = " );
+					//   console.log(" data.Predict = " + data.Predict);
 
-					  console.log(" data.Predict = " + data.Predict);
+					predict = data.Predict;
+
+				console.log("data.Predict = ", data.Predict);
   
 					  document.getElementById("predict").innerHTML = data.Predict;
   

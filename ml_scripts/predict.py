@@ -60,11 +60,12 @@ def get_prediction(model, X):
 
 def main():
 	X = read_in()
-	if len(X[0]) == 13 :
+	if len(X[0]) == 2 :
 		scaler_test = StandardScaler().fit(X)
 		X = scaler_test.transform(X)
-	
-
+	elif len(X[0]) == 13 :
+		scaler_test = StandardScaler().fit(X)
+		X = scaler_test.transform(X)	
 	rFile = open('ml_scripts/models/' + sys.argv[1] + '/noOfModels.txt', 'r')
 	noOfModels = int(rFile.read())
 	rFile.close()

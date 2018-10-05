@@ -223,7 +223,7 @@ router.get('/csce235/:nuid', function(req, res) {
 		name = name.split(" ");
 
 
-		var text1 =  "Hello " + name[0] +", I am from your future. Click on the View Grade button to see future!";
+		var text1 =  "Hello " + name[0] +", I am from your future. Click on the Visit Future button to see future!";
 		
 		textToMP3(name[0],text1);
 		
@@ -281,9 +281,9 @@ router.post('/csce235', function(req, res) {
 
 	// 
 
-	console.log("req.body.students = ", req.body.students);
+	// console.log("req.body.students = ", req.body.students);
 
-	console.log("req.body.fields = ", req.body.fields);
+	// console.log("req.body.fields = ", req.body.fields);
 
 
 
@@ -317,7 +317,7 @@ router.post('/csce235', function(req, res) {
 
 			console.log("database cua csce235: ");
 
-			//console.log(thisGrade);
+			console.log(thisGrade);
 			
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
 				if (err) console.log(err);
@@ -378,10 +378,11 @@ router.get('/csce156/:nuid', function(req, res) {
 		}
 
 		var name = account.FullName;
+		console.log("name trong 156 = ", name);
 		name = name.split(" ");
 
 
-		var text1 =  "Hello " + name[0] +", I am from your future. Click on the View Grade button to see future!";
+		var text1 =  "Hello " + name[0] +", I am from your future. Click on the Visit Future button to see future!";
 		
 		textToMP3(name[0],text1);
 		
@@ -423,7 +424,7 @@ router.post('/csce156', function(req, res) {
 
 
 	// 
-	console.log("req.body.students 156 trong post cs156= ", req.body.students);
+	console.log("req.body.students 156 = ", req.body.students);
 
 
 
@@ -433,6 +434,8 @@ router.post('/csce156', function(req, res) {
 			params.push(prop, thisGrade[prop]);
 		}
 	}
+
+
 
 	//console.log("params 156 luc sau = ", params);
 
@@ -466,6 +469,8 @@ router.post('/csce156', function(req, res) {
 	  console.log("child process exited with code " + code);
 	});
 });
+
+
 
 /*router.post('/csce235', function(req, res) {
     var collection = db.get('csce235');

@@ -2,6 +2,16 @@
 <html ng-app="Grade">
   <head>
       <style>
+
+               #goBack{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 850px;
+left: 900px;
+
+}  
         #table{
 
           max-height: 400px;
@@ -194,7 +204,6 @@ left: 600px;
               <div id="uploadPicture">
 
                         <form action="/" enctype="multipart/form-data" method="post">
-                          <input id="name" type="text" name="username">
                           <label style="max-width:300px" class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
                             <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
                           </label>
@@ -235,8 +244,12 @@ left: 600px;
               <button class = "back-button" ng-click = "back()" style = "margin:0px auto 10px auto">Back</button>
           </div> -->
           <div id="mpfooter">
-          <button><a href="/#/">Logout</a></button>
+            <button><a href="student2.html/#/">Logout</a></button>
+
+            <!-- <button ng-click = "back()">Logout</button> -->
           </div>
+
+       
               
             </div>
 

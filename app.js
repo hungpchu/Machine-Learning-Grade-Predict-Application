@@ -1,6 +1,10 @@
 // entry point to your applicaiton
+// import alert from 'alert-node'
 
 var file1 = "Hung";
+
+
+var alert = require('alert-node');
 
 var express = require('express');
 var path = require('path');
@@ -65,16 +69,32 @@ app.post('/', function (req, res){
   form.parse(req);
 
 
-form.on('field', function(name, value) {
-  console.log('Text cua HUng = ' + value );
-  username = value;
-  console.log('username ben trong field = ' + username );
-});
+// form.on('field', function(name, value) {
+//   console.log('Text cua HUng = ' + value );
+//   username = value;
+//   console.log('username ben trong field = ' + username );
+// });
 
   form.on('fileBegin', function (name, file){
 
-    console.log("name = ", name);
+    // console.log("file.size trong undefined ngoai = ",file.size );
+
+    if (file.size == 0){
+
+      // import alert from 'alert-node'
+
+      // alert('File Empty.Please choose file from browse file button first. ');
+      console.log("filename = ", file.name);
+      // console.log("File empty");
+      // res.send('File Empty.Please choose file from browse file button first. Now please click go back ');
+
+      // JSAlert.alert("This is an alert.");
+      return;
+    }
+
+    // console.log("name = ", name);
       file.path = __dirname + '/public/images/' + file.name;
+      // file.path = __dirname + file.name;
       console.log("choose file HUng");
       console.log("file1 = ", file1);
       console.log("filename = ", file.name);
@@ -90,16 +110,39 @@ form.on('field', function(name, value) {
 // });
 
   form.on('file', function (name, file){
+
+    // console.log("file.size trong undefined ngoai = ",file.size );
+
+    if (file.size == 0){
+
+      // import alert from 'alert-node'
+
+      alert('File Empty.Please choose file from browse file button first. ');
+     
+      console.log("File empty");
+
+      res.sendFile(  __dirname + '/public/student2.html');
+      // res.send('File Empty.Please choose file from browse file button first. Now please click go back ');
+
+      // JSAlert.alert("This is an alert.");
+      return;
+    }else{
+
+      alert('Thank for uploading. Please wait a few second for uploading the image');
+
+      setTimeout(function() {
+        // res.end(' World\n');
+        // res.status(200);
+        //res.json('success');
+        res.sendFile(  __dirname + '/public/student2.html');
+    }, 4000);
+     
+    }
+
       console.log('Uploaded ' + file.name);
   });
 
   // res.send('Thank for uploading');
-  setTimeout(function() {
-    // res.end(' World\n');
-    // res.status(200);
-    //res.json('success');
-    res.sendFile(  __dirname + '/public/student2.html');
-}, 4000);
  
   // res.render('index', { title: 'HungCHU2' });
 });

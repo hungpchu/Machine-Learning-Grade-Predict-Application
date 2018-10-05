@@ -28,6 +28,29 @@ router.get('/students', function(req, res) {
     });
 });
 
+// save data 
+router.get('/image/:username/:url', function(req, res) {
+    var collection = db.get('accounts');
+    console.log(" trong get image " );
+
+    var myquery = { Username: req.params.username };
+    var newvalues = { $set: {  URL: req.params.image } };
+    
+    collection.update(myquery, newvalues, function(err, res) {
+        if (err) return console.log(err);
+    console.log("1 document updated");
+    // if (account == null) {
+    //     return res.json({});
+    // }
+    
+    
+
+    });
+
+ 
+  
+}); 
+
 // get the accounts info with the username as the input from the database
 router.get('/:username', function(req, res) {
     var collection = db.get('accounts');
@@ -236,6 +259,9 @@ router.post('/', function(req, res) {
 		res.json(result);
 	});
 }); 
+
+
+
 
 //send email confirm
 router.post('/register', function(req, res) {

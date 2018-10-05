@@ -125,7 +125,7 @@ function onVoiceStart() {
 
     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[voiceIndex]);
    
-    if(voiceId > 0){
+    // if(voiceId > 0){
 
 
         if ( voiceFiles[0] == nameArray[0]){
@@ -136,13 +136,31 @@ function onVoiceStart() {
              first = false;
             }
         else{
-        if ( voiceFiles[0] == "High-risk"){
-        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[0];
+var i = 0;
+
+console.log(" predict = ", predict);
+            while( i < voiceFiles.length){
+        if ( voiceFiles[i] == "High-risk" && predict == "High-risk"){
+
+            var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
+        document.getElementById("speak").innerHTML = "You are at " + voiceFiles[i];
+        return;
         // first = true;
-        }else{
-            document.getElementById("speak").innerHTML = "You are " + voiceFiles[0];
+        }else if ( voiceFiles[i] == "Good" && predict == "Good"){
+            var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
+            console.log("vao vong good");
+            document.getElementById("speak").innerHTML = "You are " + predict;
+           return;
             // first = true
+        }else if ( voiceFiles[i] == "Ok" && predict == "Ok"){
+            var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
+            document.getElementById("speak").innerHTML = "You are " + voiceFiles[i];
+            return;
+
         }
+        i++;
+
+    // }
         }
         // first = false;
         // localStorage.setItem('first',first);
@@ -152,10 +170,10 @@ function onVoiceStart() {
 
             
     }
-    else{
-        console.log("voiceId = ", voiceId);
-        console.log("load voice fail");
-    }
+    // else{
+    //     console.log("voiceId = ", voiceId);
+    //     console.log("load voice fail");
+    // }
 }
 
 function onAnimationStart() {
@@ -231,6 +249,12 @@ function handleFileSelectAvtr(evt) {
     var xhr = new XMLHttpRequest(),blob,fileReader = new FileReader();
     
     // xhr.open("GET", input, true);
+    if(file.name  == undefined){
+
+
+        
+        return;
+    }
     xhr.open("GET", "../images/" + file.name, true);
 
     
@@ -325,9 +349,24 @@ jQuery(document).ready(function() {
         // var dataURI = localStorage.getItem("rhino1");
 
         // console.log("URL = ", URL);
-        var dataURI = imageContent;
+       
+        if (localStorage.getItem("rhino1") == null){
 
-        console.log("url = ",dataURI);
+           var dataURI = imageContent;
+
+        
+
+        }else{
+            var dataURI = localStorage.getItem("rhino1");
+        }
+
+
+    console.log("url hung trong demo = ",imageContent);
+        console.log("url trong demo = ",dataURI);
+
+
+        // var dataURI = imageContent;
+        
         
         var byteString = atob(dataURI.split(',')[1]);
         var ab = new ArrayBuffer(byteString.length);

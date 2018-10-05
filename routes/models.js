@@ -100,7 +100,7 @@ router.post('/', function(req, res) {
 	// tạo 1 object named wrapObj -> store data for each student 
     var wrapObj = {
 		course: req.body.course,
-		week: req.body.week,
+		prediction: req.body.prediction,
 		noOfModels: 0,
         params: "",
 		grades: []
@@ -114,7 +114,7 @@ router.post('/', function(req, res) {
 	const ls = spawn('python3', ['ml_scripts/train_models_new.py', req.body.course]);
 
 	console.log(" req.body.course = " + req.body.course );
-	console.log(" req.body.week = " + req.body.week );
+	console.log(" req.body.prediction = " + req.body.prediction );
 
 	// ls.stdout.on('data', (data) => {
 
