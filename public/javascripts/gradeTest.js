@@ -777,24 +777,24 @@ var voice = {
 	
 				if (data.Predict == "Good") {
 					console.log("good");
-					voiceFiles.push(data.Predict);
-					array.push(data.Predict);
-					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
+					array.push(nameArray[0]+ "_" + data.Predict);
+					voiceFiles = removeDuplicateUsingFilter(nameArray[0]+voiceFiles);
 					predict = "You are good";
 	
 	
 				} else if (data.Predict == "OK") {
 				
 					console.log("ok");
-					voiceFiles.push(data.Predict);
-					array.push(data.Predict);
+					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
+					array.push(nameArray[0]+ "_" + data.Predict);
 					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					predict = "You are ok";
 	
 				} else {
 					console.log("High-risk");
-					array.push(data.Predict);
-					voiceFiles.push(data.Predict);
+					array.push(nameArray[0]+ "_" +data.Predict);
+					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
 					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					predict = "You are high risk";
 					

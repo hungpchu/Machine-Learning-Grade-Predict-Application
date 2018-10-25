@@ -140,20 +140,27 @@ var i = 0;
 
 console.log(" predict = ", predict);
             while( i < voiceFiles.length){
-        if ( voiceFiles[i] == "High-risk" && predict == "High-risk"){
+                var voicePredict = voiceFiles[i].split("_");
+        if ( voicePredict == "High-risk" && predict == "High-risk"){
 
             var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
+        
+            document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FF0000";
         document.getElementById("speak").innerHTML = "You are at " + voiceFiles[i];
+
         return;
         // first = true;
-        }else if ( voiceFiles[i] == "Good" && predict == "Good"){
+        }else if ( voicePredict == "Good" && predict == "Good"){
             var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
             console.log("vao vong good");
+            // document.getElementsByClassName("anchor top reverse")[0].style.backgroundColor = "#008000";
+            document.getElementsByClassName("bubble top reverse")[0].style.backgroundColor = "#008000";
             document.getElementById("speak").innerHTML = "You are " + predict;
            return;
             // first = true
-        }else if ( voiceFiles[i] == "Ok" && predict == "Ok"){
+        }else if ( voicePredict == "Ok" && predict == "Ok"){
             var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
+            document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FFFF00";
             document.getElementById("speak").innerHTML = "You are " + voiceFiles[i];
             return;
 

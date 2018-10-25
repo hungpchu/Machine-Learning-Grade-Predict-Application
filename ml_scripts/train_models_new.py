@@ -622,7 +622,7 @@ inpgrade1 = inpgrade[inpgrade.columns.difference(['Student', 'SIS User ID', 'SIS
 
 chosenModels = [None]
 
-if ( len(inpgrade1.columns) == 2 ):
+if ( len(inpgrade1.columns) == 5 ):
 	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData1.csv")
 	X = grade[['Homework 1', 'Quiz 1 ']].values
 	scaler = StandardScaler().fit(X)

@@ -92,6 +92,8 @@ app.post('/', function (req, res){
       return;
     }
 
+   
+
     // console.log("name = ", name);
       file.path = __dirname + '/public/images/' + file.name;
       // file.path = __dirname + file.name;
@@ -170,3 +172,23 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
+
+// if (file.size == 0){
+
+
+//   alert('File Empty.Please choose file from browse file button first. ');
+ 
+//   console.log("File empty");
+
+//   res.sendFile(  __dirname + '/public/student2.html');
+//   return;
+// }else{
+
+//   alert('Thank for uploading. Please wait a few second for uploading the image');
+
+//   setTimeout(function() {
+
+//     res.sendFile(  __dirname + '/public/student2.html');
+// }, 4000);
+ 
+// }

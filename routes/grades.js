@@ -230,6 +230,8 @@ router.get('/csce235/:nuid', function(req, res) {
 		
 			var fn = account.Predict;
 
+			console.log(" length of account 235 = ", Object.keys(account).length);
+
 			if (fn == "High-risk"){
 
 				var text = "You are at " + account.Predict;
@@ -261,7 +263,7 @@ router.post('/csce235', function(req, res) {
 
 	var collection = db.get('csce235');
 
-	collection.remove({});
+	// collection.remove({});
 
 
 	console.log("inside router.post('/csce235', function(req, res)");
@@ -284,8 +286,19 @@ router.post('/csce235', function(req, res) {
 	// console.log("req.body.students = ", req.body.students);
 
 	// console.log("req.body.fields = ", req.body.fields);
-
-
+	var countData = req.body.fields - 2;
+	if (countData == 2){
+		collection.remove({});
+	}
+	else if (countData == 5){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}});
+	}
+	else if (countData == 9){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}});
+	}
+	else if (countData == 12){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}, "Predict3":{$nin:["Good","OK","High-risk"]}});
+	}
 
 
 	for(var i in req.body.grade) {
@@ -314,6 +327,19 @@ router.post('/csce235', function(req, res) {
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
+
+			if (countData == 2){
+				thisGrade.Predict1 = predict[i];
+				}
+			else if (countData == 5){
+				thisGrade.Predict2 = predict[i];
+				}
+			else if (countData == 9){
+				thisGrade.Predict3 = predict[i];
+				}
+			else if (countData == 12){
+			thisGrade.Predict4 = predict[i];
+			}
 
 			console.log("database cua csce235: ");
 
@@ -379,24 +405,59 @@ router.get('/csce156/:nuid', function(req, res) {
 
 		var name = account.FullName;
 		console.log("name trong 156 = ", name);
-		name = name.split(" ");
+		firstName = name.split(" ");
 
-
-		var text1 =  "Hello " + name[0] +", I am from your future. Click on the Visit Future button to see future!";
+		var text = "";
+		var text1 =  "Hello " + firstName[0] +", I am from your future. Click on the Visit Future button to see future!";
 		
 		textToMP3(name[0],text1);
-		
-		
-			var fn = account.Predict;
-
+		var countField = Object.keys(account).length - 3;
+		// console.log(" length of account 156 = ", Object.keys(account).length);
+		console.log(" firstName = ", firstName);
+			var fn = firstName[0]  + "_" +account.Predict;
+if ( countField - 2 == 4){
 			if (fn == "High-risk"){
 
-				var text = "You are at " + account.Predict;
+				 text = "You are at " + account.Predict;
 			}else{
 
-				var text = "You are " + account.Predict;
+				 text = "You are " + account.Predict;
 			}	
-		
+}else if ( countField - 3 == 8){
+
+	var predict1 = account.Predict1;
+	var predict2 = account.Predict2;
+
+	if (predict1 == "High-risk" && predict2 == "High-risk"){
+			text = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
+	}else if (predict1 == "High-risk" && predict2 == "OK"){
+		text = "Well done! You are doing OK. Previously you were at High-risk. PLease keep working hard";
+	}else if (predict1 == "High-risk" && predict2 == "OK"){
+		text = "Congratulations! You are doing Good. Previously you were at High-risk. PLease continue putting your best effort";
+	}
+
+	if (predict1 == "OK" && predict2 == "High-risk"){
+		text = "Warning! You are again at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+}else if (predict1 == "OK" && predict2 == "OK"){
+	text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
+}else if (predict1 == "OK" && predict2 == "Good"){
+	text = "Congratulations! You are doing Good. Previously you were OK. Please keep working hard";
+}
+
+if (predict1 == "Good" && predict2 == "High-risk"){
+	text = "Warning! Warning! You are at High-risk. Your performance degraded severely. It is highly that you will fail in this class.";
+}else if (predict1 == "Good" && predict2 == "OK"){
+text = "Warning! You are doing OK. Your performance degraded from "/Good/" to "/OK/". If you don't improve, you will do even worse.";
+}else if (predict1 == "Good" && predict2 == "Good"){
+text = "Congratulations! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance";
+}
+
+ 
+
+
+
+
+}
 			console.log("text = ",text);
 			console.log("fn = ",fn);
 
@@ -413,8 +474,10 @@ router.get('/csce156/:nuid', function(req, res) {
 
 router.post('/csce156', function(req, res) {
 	var collection = db.get('csce156');
-	
-	collection.remove({});
+	//,{"Predict0":{$nin:["OK","Good","High-risk"]}}
+	// collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}});
+
+	// collection.remove({});
 
     var uint8ToString = function(data) {
 		return String.fromCharCode.apply(null, data);
@@ -425,16 +488,35 @@ router.post('/csce156', function(req, res) {
 
 	// 
 	console.log("req.body.students 156 = ", req.body.students);
+	console.log("req.body.fields 156 = ", req.body.fields - 2);
+
+	var countData = req.body.fields - 2;
 
 
+	if (countData == 4){
+		collection.remove({});
+	}
+	else if (countData == 8){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}});
+	}
+	else if (countData == 13){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}});
+	}
+	else if (countData == 17){
+		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}, "Predict3":{$nin:["Good","OK","High-risk"]}});
+	}
 
 	for(var i in req.body.grade) {
 		var thisGrade = req.body.grade[i];
+
 		for(var prop in thisGrade) {
+			// console.log("prop = ", prop);
 			params.push(prop, thisGrade[prop]);
 		}
 	}
 
+
+	
 
 
 	//console.log("params 156 luc sau = ", params);
@@ -450,10 +532,26 @@ router.post('/csce156', function(req, res) {
 
 	ls.stdout.on('data', (data) => {
 		var predict = uint8ToString(data).split(',');
-		//console.log("predict = ", predict)
+		// print out all the predict
+		console.log("predict = ", predict);
+		// console.log("lenth of req.body.grade = ", Object.keys(req.body.grade).length);
+		// console.log(req.body.grade );
 		for(var i in req.body.grade) {
 			var thisGrade = req.body.grade[i];
 			thisGrade.Predict = predict[i];
+			
+			if (countData == 4){
+				thisGrade.Predict1 = predict[i];
+				}
+			else if (countData == 8){
+				thisGrade.Predict2 = predict[i];
+				}
+			else if (countData == 13){
+				thisGrade.Predict3 = predict[i];
+				}
+			else if (countData == 17){
+			thisGrade.Predict4 = predict[i];
+			}
 			console.log("this grade 156 = ");
 			console.log(thisGrade);
 			collection.update({ NUID: thisGrade.NUID }, { $set: thisGrade }, { upsert : true }, function(err, account) {
