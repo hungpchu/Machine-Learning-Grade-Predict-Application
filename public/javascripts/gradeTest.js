@@ -998,6 +998,26 @@ var voice = {
 	  
   
   ]);
+
+  function chooseColorPredict(predict){
+
+	var strong =  document.createElement('strong');
+	var g = document.createElement('font');
+	g.innerHTML = predict;
+	
+	if (predict == "High-risk"){
+		g.setAttribute("color", "red");
+	}else if (predict == "Good"){
+		g.setAttribute("color", "green");
+	}else{
+		g.setAttribute("color", "#ecc400");
+	}
+
+	strong.appendChild(g);
+	return strong;
+
+
+  }
   
   
   //quan tam den cai nay
@@ -1123,7 +1143,9 @@ var voice = {
 				//   var Predicts = $resource('/api/grades/' + $routeParams.course + '/:nuid');
 				//   var Predicts = $resource('/api/grades/csce235/:nuid');
 
-		
+				
+				// document.getElementById("predict2").innerHTML = data.Predict2;
+				
 				  var Predicts = $resource('/api/grades/' + course  + '/:nuid');
   
 				  Predicts.get({nuid: $scope.account.NUID}, function(data) {
@@ -1134,30 +1156,43 @@ var voice = {
 
 					console.log(" countField  trong stud view = ", countField );
 
-
+					console.log(" data.Predict1 out = " + data.Predict1);
+					console.log(" data.Predict2 out = " + data.Predict2);
 					if (countField  == 5 || countField == 8){
 
 						previousPredict = data.Predict1;
-					}else if (countField  == 9 || countField == 13){
 
+						document.getElementById("predictGroup").innerHTML += "<br>Your 1st Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
+					}else if (countField  == 9 || countField == 13){
+  
 						previousPredict = data.Predict2;
+				
+						document.getElementById("predictGroup").innerHTML += "<br>Your 2nd Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
+						document.getElementById("predictGroup").innerHTML += "<br><br>";
+						document.getElementById("predictGroup").innerHTML += "Your 1st Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
+
 					}else if (countField  == 12 || countField == 17){
 
-						previousPredict = data.Predict4;
+						previousPredict = data.Predict3;
 					}
 
 					console.log("previousPredict = ", previousPredict);
 				console.log("data.Predict = ", data.Predict);
+
+				
   
 					  document.getElementById("predict").innerHTML = data.Predict;
   
   
-					  if (data.Predict == "Good") {
+					  if (data.Predict == "Good" ) {
 						  document.getElementById("predict").setAttribute("color", "green");
   
   
   
-					  } else if (data.Predict == "OK") {
+					  } else if (data.Predict == "OK" ) {
 						  document.getElementById("predict").setAttribute("color", "#ecc400");
   
   
