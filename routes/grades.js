@@ -221,6 +221,7 @@ router.get('/csce235/:nuid', function(req, res) {
 
 		var name = account.FullName;
 		name = name.split(" ");
+		var text = "";
 
 
 		var text1 =  "Hello " + name[0] +", I am from your future. Click on the Visit Future button to see future!";
@@ -228,17 +229,72 @@ router.get('/csce235/:nuid', function(req, res) {
 		textToMP3(name[0],text1);
 		
 		
-			var fn = account.Predict;
+			var fn = name[0] + "_" + account.Predict;
+			var countField = Object.keys(account).length - 3;
 
-			console.log(" length of account 235 = ", Object.keys(account).length);
+			console.log("account = ");
 
-			if (fn == "High-risk"){
+			console.log(account);
 
-				var text = "You are at " + account.Predict;
-			}else{
 
-				var text = "You are " + account.Predict;
-			}	
+			console.log("countField 235 = ", countField );
+
+			if ( countField - 2 == 2){
+				if (fn == "High-risk"){
+	
+					 text = "You are at " + account.Predict;
+				}else{
+	
+					 text = "You are " + account.Predict;
+				}	
+	}else if ( countField - 3 >= 6){
+
+		console.log("countField 235  = ", countField);
+
+		if (countField - 3 == 6){
+			var predict1 = account.Predict1;
+			var predict2 = account.Predict2;
+		}else if (countField - 4 == 9){
+			var predict1 = account.Predict2;
+			var predict2 = account.Predict3;
+		
+		}else if (countField - 5 == 12){
+			var predict1 = account.Predict3;
+			var predict2 = account.Predict4;
+		}
+	
+		// var predict1 = account.Predict1;
+		// var predict2 = account.Predict2;
+	
+		if (predict1 == "High-risk" && predict2 == "High-risk"){
+				text = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
+		}else if (predict1 == "High-risk" && predict2 == "OK"){
+			text = "Well done! You are doing OK. Previously you were at High-risk. PLease keep working hard";
+		}else if (predict1 == "High-risk" && predict2 == "Good"){
+			text = "Congratulations! You are doing Good. Previously you were at High-risk. PLease continue putting your best effort";
+		}
+	
+		if (predict1 == "OK" && predict2 == "High-risk"){
+			text = "Warning! You are again at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+	}else if (predict1 == "OK" && predict2 == "OK"){
+		text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
+	}else if (predict1 == "OK" && predict2 == "Good"){
+		text = "Congratulations! You are doing Good. Previously you were OK. Please keep working hard";
+	}
+	
+	if (predict1 == "Good" && predict2 == "High-risk"){
+		text = "Warning! Warning! You are at High-risk. Your performance degraded severely. It is highly that you will fail in this class.";
+	}else if (predict1 == "Good" && predict2 == "OK"){
+	text = "Warning! You are doing OK. Your performance degraded from Good to OK. If you don't improve, you will do even worse.";
+	}else if (predict1 == "Good" && predict2 == "Good"){
+	text = "Congratulations! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance";
+	}
+	
+	 
+		
+	}
+
+			
 		
 			console.log("text = ",text);
 			console.log("fn = ",fn);
@@ -285,13 +341,20 @@ router.post('/csce235', function(req, res) {
 
 	// console.log("req.body.students = ", req.body.students);
 
-	// console.log("req.body.fields = ", req.body.fields);
+	console.log("req.body.fields trong 235 up = ", req.body.fields);
 	var countData = req.body.fields - 2;
+	console.log("countData 235 k tru = ", countData  + 2);
+	console.log("countData 235 up = ", countData);
 	if (countData == 2){
 		collection.remove({});
 	}
 	else if (countData == 5){
+		// collection.remove({});
 		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}});
+		console.log("collection 235 = ");
+		// return;
+		// console.log("collection 235 = ");
+		// console.log(collection.find({FullName:"Eric Carter"}));
 	}
 	else if (countData == 9){
 		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}});
@@ -412,9 +475,12 @@ router.get('/csce156/:nuid', function(req, res) {
 		
 		textToMP3(name[0],text1);
 		var countField = Object.keys(account).length - 3;
+
+		console.log("countField 156 = ", countField - 3);
+
 		// console.log(" length of account 156 = ", Object.keys(account).length);
 		console.log(" firstName = ", firstName);
-			var fn = firstName[0]  + "_" +account.Predict;
+			var fn = firstName[0]  + "_" + account.Predict;
 if ( countField - 2 == 4){
 			if (fn == "High-risk"){
 
@@ -423,16 +489,26 @@ if ( countField - 2 == 4){
 
 				 text = "You are " + account.Predict;
 			}	
-}else if ( countField - 3 == 8){
+}else if ( countField - 3 >= 8){
 
+	console.log("countField 156  = ", countField);
+if (countField - 3 == 8){
 	var predict1 = account.Predict1;
 	var predict2 = account.Predict2;
+}else if (countField - 4 == 13){
+	var predict1 = account.Predict2;
+	var predict2 = account.Predict3;
+
+}else if (countField - 5 == 17){
+	var predict1 = account.Predict3;
+	var predict2 = account.Predict4;
+}
 
 	if (predict1 == "High-risk" && predict2 == "High-risk"){
 			text = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
 	}else if (predict1 == "High-risk" && predict2 == "OK"){
 		text = "Well done! You are doing OK. Previously you were at High-risk. PLease keep working hard";
-	}else if (predict1 == "High-risk" && predict2 == "OK"){
+	}else if (predict1 == "High-risk" && predict2 == "Good"){
 		text = "Congratulations! You are doing Good. Previously you were at High-risk. PLease continue putting your best effort";
 	}
 
@@ -447,7 +523,7 @@ if ( countField - 2 == 4){
 if (predict1 == "Good" && predict2 == "High-risk"){
 	text = "Warning! Warning! You are at High-risk. Your performance degraded severely. It is highly that you will fail in this class.";
 }else if (predict1 == "Good" && predict2 == "OK"){
-text = "Warning! You are doing OK. Your performance degraded from "/Good/" to "/OK/". If you don't improve, you will do even worse.";
+text = "Warning! You are doing OK. Your performance degraded from Good to OK. If you don't improve, you will do even worse.";
 }else if (predict1 == "Good" && predict2 == "Good"){
 text = "Congratulations! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance";
 }
@@ -498,6 +574,8 @@ router.post('/csce156', function(req, res) {
 	}
 	else if (countData == 8){
 		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}});
+		console.log("return 156");
+		// return;
 	}
 	else if (countData == 13){
 		collection.remove({"Predict1":{$nin:["Good","OK","High-risk"]}, "Predict2":{$nin:["Good","OK","High-risk"]}});

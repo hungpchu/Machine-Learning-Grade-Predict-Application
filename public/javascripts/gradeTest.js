@@ -28,7 +28,11 @@ var voice = {
 
   var predict = "";
 
+  var previousPredict = "";
+
   var firstName = "";
+
+  var countField = 0;
 
 
 
@@ -716,7 +720,7 @@ var voice = {
 			  var name = account.FullName;
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
-			  firstName = 
+		
 
 			//   if (localStorage.getItem("rhino1") != account.URL){
 
@@ -744,7 +748,9 @@ var voice = {
 			  document.getElementById("header").innerHTML = "Your Future 'You' "; 
 
 
+			//   countField = Object.keys(account).length - 3;
 
+			//   console.log("countField trong student ctrl = ", countField);
 
 			
 
@@ -772,15 +778,17 @@ var voice = {
   
 				console.log(" account.NUID = " + account.NUID);
 	
-				console.log("vao predict");
+				console.log("vao predict 156");
 				
 	
 				if (data.Predict == "Good") {
 					console.log("good");
 					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
 					array.push(nameArray[0]+ "_" + data.Predict);
-					voiceFiles = removeDuplicateUsingFilter(nameArray[0]+voiceFiles);
+					
+					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					predict = "You are good";
+
 	
 	
 				} else if (data.Predict == "OK") {
@@ -788,30 +796,30 @@ var voice = {
 					console.log("ok");
 					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
 					array.push(nameArray[0]+ "_" + data.Predict);
-					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					voiceFiles = removeDuplicateUsingFilter( voiceFiles);
 					predict = "You are ok";
 	
 				} else {
 					console.log("High-risk");
 					array.push(nameArray[0]+ "_" +data.Predict);
 					voiceFiles.push(nameArray[0]+ "_" + data.Predict);
-					voiceFiles = removeDuplicateUsingFilter(voiceFiles);
+					voiceFiles = removeDuplicateUsingFilter( voiceFiles);
 					predict = "You are high risk";
 					
 				}	
-				
+				console.log(" Hung trong predict 156 = " );
 				console.log(" array = " ,array);
 				localStorage.setItem("array", JSON.stringify(array));
 				
 				localStorage.setItem('voice',voiceFiles);
-			  //   console.log(" voiceFiles trong predict = " + voiceFiles);
+			    console.log(" voiceFiles trong predict 156 = " + voiceFiles);
 				
 			});
 			  Predicts.get({nuid: account.NUID}, function(data) {
   
 				  console.log(" account.NUID = " + account.NUID);
 	  
-				  console.log("vao predict");
+				  console.log("vao predict 235");
 
 				  if (data.Predict == undefined){
 					  return;
@@ -819,24 +827,24 @@ var voice = {
 				  course2 = "csce235";
 				  if (data.Predict == "Good") {
 					  console.log("good");
-					  voiceFiles.push(data.Predict);
-					  array.push(data.Predict);
+					  voiceFiles.push(nameArray[0]+ "_" +data.Predict);
+					  array.push(nameArray[0]+ "_" +data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					  predict = "You are good";
-	  
+					  
 	  
 				  } else if (data.Predict == "OK") {
 				  
 					  console.log("ok");
-					  voiceFiles.push(data.Predict);
-					  array.push(data.Predict);
+					  voiceFiles.push(nameArray[0]+ "_" +data.Predict);
+					  array.push(nameArray[0]+ "_" +data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					  predict = "You are ok";
 	  
 				  } else {
 					  console.log("High-risk");
-					  array.push(data.Predict);
-					  voiceFiles.push(data.Predict);
+					  array.push(nameArray[0]+ "_" +data.Predict);
+					  voiceFiles.push(nameArray[0]+ "_" +data.Predict);
 					  voiceFiles = removeDuplicateUsingFilter(voiceFiles);
 					  predict = "You are high risk";
 					  
@@ -846,7 +854,7 @@ var voice = {
                   localStorage.setItem("array", JSON.stringify(array));
                   
                   localStorage.setItem('voice',voiceFiles);
-				  console.log(" voiceFiles trong predict = " + voiceFiles);
+				  console.log(" voiceFiles trong predict  235 = " + voiceFiles);
 				  
 			  });
 			  
@@ -923,26 +931,26 @@ var voice = {
 						name.nodeValue = "Full Name";
 					}
   
-					 console.log("name = ", name);
-					 console.log("val = ", val);
-					 console.log("b = ", b);
+					//  console.log("name = ", name);
+					//  console.log("val = ", val);
+					//  console.log("b = ", b);
 					
 					  b.appendChild(name);
 					  td_name.appendChild(b);
 					  td_val.appendChild(val);
 
-					  console.log("td_val = ",td_val);
+					//   console.log("td_val = ",td_val);
 
 
 					  tr.appendChild(td_name);
 					  tr.appendChild(td_val);
 
 
-					  console.log("tr = ",tr);
+					//   console.log("tr = ",tr);
 
 					  table.appendChild(tr);	
 					  
-					  console.log("table = ",table);
+					//   console.log("table = ",table);
 				  }		  
 			  
 			  });
@@ -1041,7 +1049,9 @@ var voice = {
 			document.getElementById("header").innerHTML = "Your Future 'You' ";
   
 			  console.log("account123");
-              console.log(account);
+			  console.log(account);
+			  
+			  
      
          
 			
@@ -1086,6 +1096,9 @@ var voice = {
 					  if (fullGrade[index]["SIS User ID"] == $scope.account.NUID) {
 
 						  thisGrade = fullGrade[index];
+						  countField = Object.keys(thisGrade).length - 3;
+
+			  			console.log("countField trong student view = ", countField);
   
 						  console.log("thisGrade = ");
 						  console.log(thisGrade);
@@ -1114,11 +1127,26 @@ var voice = {
 				  var Predicts = $resource('/api/grades/' + course  + '/:nuid');
   
 				  Predicts.get({nuid: $scope.account.NUID}, function(data) {
-					console.log(" data.Predict = " );
-					//   console.log(" data.Predict = " + data.Predict);
+					// console.log(" data.Predict = " );
+					  console.log(" data.Predict = " + data.Predict);
 
 					predict = data.Predict;
 
+					console.log(" countField  trong stud view = ", countField );
+
+
+					if (countField  == 5 || countField == 8){
+
+						previousPredict = data.Predict1;
+					}else if (countField  == 9 || countField == 13){
+
+						previousPredict = data.Predict2;
+					}else if (countField  == 12 || countField == 17){
+
+						previousPredict = data.Predict4;
+					}
+
+					console.log("previousPredict = ", previousPredict);
 				console.log("data.Predict = ", data.Predict);
   
 					  document.getElementById("predict").innerHTML = data.Predict;
