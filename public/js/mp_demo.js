@@ -201,7 +201,7 @@ function onVoiceStart() {
                     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                     document.getElementsByClassName("bubble top reverse")[0].style.backgroundColor = "#FF0000";
                     document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                    document.getElementById("speak").innerHTML = "Warning! You are again at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+                    document.getElementById("speak").innerHTML = "Warning! You are at High-risk. Your performance degraded. It is highly that you will fail in this class.";
                    return;
                 }else if (previousPredict == "Good" && predict == "High-risk"){
                     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);

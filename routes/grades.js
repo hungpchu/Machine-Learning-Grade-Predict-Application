@@ -265,7 +265,11 @@ router.get('/csce235/:nuid', function(req, res) {
 	
 		// var predict1 = account.Predict1;
 		// var predict2 = account.Predict2;
-	
+
+	console.log("predict1  = ", predict1);
+	console.log("predict2  = ", predict2);
+
+
 		if (predict1 == "High-risk" && predict2 == "High-risk"){
 				text = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
 		}else if (predict1 == "High-risk" && predict2 == "OK"){
@@ -275,7 +279,7 @@ router.get('/csce235/:nuid', function(req, res) {
 		}
 	
 		if (predict1 == "OK" && predict2 == "High-risk"){
-			text = "Warning! You are again at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+			text = "Warning! You are at High-risk. Your performance degraded. It is highly that you will fail in this class.";
 	}else if (predict1 == "OK" && predict2 == "OK"){
 		text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
 	}else if (predict1 == "OK" && predict2 == "Good"){
@@ -513,7 +517,7 @@ if (countField - 3 == 8){
 	}
 
 	if (predict1 == "OK" && predict2 == "High-risk"){
-		text = "Warning! You are again at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+		text = "Warning! You are at High-risk. Your performance degraded. It is highly that you will fail in this class.";
 }else if (predict1 == "OK" && predict2 == "OK"){
 	text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
 }else if (predict1 == "OK" && predict2 == "Good"){
