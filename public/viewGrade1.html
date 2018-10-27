@@ -17,14 +17,15 @@
 
       #text1 {
         position: absolute;
-	left:480px;
-	top:140px;
+	left:350px;
+	top:160px;
 	padding: 8.5px 8px;
 	padding-left:20px;
-	width: 18%;
+	width: 22%;
 	background-color: white;
   border: 3px solid lightskyblue;
-  font-size: 20px;
+  font-size: 24px;
+
 
 		}
 
@@ -41,8 +42,8 @@ left: 400px;
 max-height: 400px;
 max-width: 400px;
 position: absolute;
-top: 250px;
-left: 450px;
+top: 280px;
+left: 350px;
 
 }
 
@@ -53,39 +54,11 @@ max-height: 400px;
 max-width: 400px;
 position: absolute;
 top: 420px;
-left: 700px;
+left: 600px;
+
 
 }   
-
-#predictGroup1{
-
-max-height: 400px;
-max-width: 400px;
-position: absolute;
-top: 620px;
-left: 700px;
-
-}   
-
-#predictGroup2{
-
-max-height: 400px;
-max-width: 400px;
-position: absolute;
-top: 520px;
-left: 700px;
-
-}   
-
-#predictGroup3{
-
-max-height: 400px;
-max-width: 400px;
-position: absolute;
-top: 420px;
-left: 700px;
-
-}   
+ 
 
         #goBack{
 
@@ -256,26 +229,26 @@ left: 900px;
 
 
         <div ng-app = "Grade" ng-controller = "ViewCtrl" style = "margin:auto;max-width:600px;width:80%;text-align:center;">
-                <h1 id = "header" style = "margin:auto;text-align:center;background-color:#286090;color:white;padding:10px"></h1>
+                <h1 id = "header" style = "font-size:44px;margin:auto;text-align:center;background-color:#286090;color:white;padding:10px"></h1>
                    <a href = "/#/">Logout</a>
                 
           
 
-                    <div id = "text1" ></div>
+                    <div id = "text1"  ></div>
 
                     <div id = "table">
-                    <table border = "0" id = "profileTable" style = "max-width:300px;margin:auto; border:2px solid lightskyblue">
+                    <table border = "0" id = "profileTable" style = "font-size:18px;max-width:300px;margin:auto; border:2px solid lightskyblue">
                     </table>
                   </div>
 
-                    <div id = "predictGroup" style = "background-color:#f3f3f3;max-width:300px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightskyblue;border-radius:5px;font-size:16px">
+                    <div id = "predictGroup" style = "background-color:#f3f3f3;max-width:400px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightskyblue;border-radius:5px;font-size:18px">
                         Your Current Prediction: <strong><font id = "predict"></font></strong><br>
                     </div>
 
                     
                    
 
-                    <div id="goBack">
+                    <div id="goBack" style = "font-size: 18px">
                         <button><a href="/#/">Logout</a></button>
                         <button ng-click = "back()">Back</button>
                     </div>
