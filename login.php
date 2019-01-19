@@ -28,8 +28,8 @@ session_start();
         return $data;
    }
 
-   $service = "http%3A%2F%2Fcse.unl.edu/~hchu/login.php";
-   $serviceURL = "http://cse.unl.edu/~hchu/login.php";
+   $service = "http%3A%2F%2Fcse.unl.edu/~gpred/login.php";
+   $serviceURL = "http://cse.unl.edu/~gpred/login.php";
    $CASURL = "https://cse-apps.unl.edu/cas";
    $CASLogin = "$CASURL/login?service=$service";
    $CASLogout = "$CASURL/logout?service=$service";
@@ -65,7 +65,7 @@ session_start();
 
       print "<h3> I have a AUTH_USER in session variable and the user is $user </h3>";
       print "User is successfully logged in as $user<br/>";
-       print "<a href='http://cse.unl.edu/~hchu/login.php?logout=1'>Log Out</a><br/>";
+       print "<a href='http://cse.unl.edu/~gpred/login.php?logout=1'>Log Out</a><br/>";
      print "<a href='http://ec2-18-223-113-182.us-east-2.compute.amazonaws.com/#/'>Log In</a><br/>";
 
    # USER IS NOT LOGGGED IN!!! STEP 1 in login process...
