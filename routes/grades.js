@@ -455,6 +455,39 @@ router.get('/csce156/db', function(req, res) {
     });
 });
 
+router.get('/csce156search/:nuid', function(req, res) {
+    var collection = db.get('csce156');
+    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+		
+        if (err) return console.log(err);
+        if (account == null) {
+			return res.json({});
+		}
+
+		if (account.Predict == null){
+			return;
+		}
+
+		return res.json(account);
+    });
+});
+
+router.get('/csce235search/:nuid', function(req, res) {
+    var collection = db.get('csce235');
+    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+		
+        if (err) return console.log(err);
+        if (account == null) {
+			return res.json({});
+		}
+
+		if (account.Predict == null){
+			return;
+		}
+
+		return res.json(account);
+    });
+});
 
 
 router.get('/csce156/:nuid', function(req, res) {
@@ -477,7 +510,8 @@ router.get('/csce156/:nuid', function(req, res) {
 		var text = "";
 		var text1 =  "Hello " + firstName[0] +", I am from your future. Click on the Visit Future button to see future!";
 		
-		textToMP3(name[0],text1);
+		textToMP3(firstName[0],text1);
+		textToWav(firstName[0],text1);
 		var countField = Object.keys(account).length - 3;
 
 		console.log("countField 156 = ", countField - 3);
@@ -509,27 +543,27 @@ if (countField - 3 == 8){
 }
 
 	if (predict1 == "High-risk" && predict2 == "High-risk"){
-			text = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
+			text = "Warning! You are again at High-risk. It is highly likely that you will fail in this class.";
 	}else if (predict1 == "High-risk" && predict2 == "OK"){
-		text = "Well done! You are doing OK. Previously you were at High-risk. PLease keep working hard";
+		text = "Well done! You are doing OK. Previously you were at High-Risk. Please keep working hard.";
 	}else if (predict1 == "High-risk" && predict2 == "Good"){
-		text = "Congratulations! You are doing Good. Previously you were at High-risk. PLease continue putting your best effort";
+		text = "Congratulation! You are doing Good. Previously you were at High-Risk. PLease continue putting your best effort.";
 	}
 
 	if (predict1 == "OK" && predict2 == "High-risk"){
-		text = "Warning! You are at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+		text = "Warning! You are at High-Risk. Your performance degraded. It is highly likely that you will fail in this class.";
 }else if (predict1 == "OK" && predict2 == "OK"){
-	text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
+	text = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard.";
 }else if (predict1 == "OK" && predict2 == "Good"){
-	text = "Congratulations! You are doing Good. Previously you were OK. Please keep working hard";
+	text = "Congratulation! You are doing Good. Previously you were OK. Please keep working hard";
 }
 
 if (predict1 == "Good" && predict2 == "High-risk"){
-	text = "Warning! Warning! You are at High-risk. Your performance degraded severely. It is highly that you will fail in this class.";
+	text = "Warning! Warning! You are at High-Risk. Your performance degraded severely. It is highly that you will fail in this class.";
 }else if (predict1 == "Good" && predict2 == "OK"){
 text = "Warning! You are doing OK. Your performance degraded from Good to OK. If you don't improve, you will do even worse.";
 }else if (predict1 == "Good" && predict2 == "Good"){
-text = "Congratulations! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance";
+text = "Congratulation! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance.";
 }
 
  

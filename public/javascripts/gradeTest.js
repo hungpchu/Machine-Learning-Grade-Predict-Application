@@ -56,6 +56,10 @@ var voice = {
 		  templateUrl: 'partials/uploadGrade.html',
 		  controller: 'UploadCtrl'
 	  })
+	  .when('/searchStudent', {
+		templateUrl: 'partials/searchStudent.html',
+		controller: 'searchStudCtrl'
+	})
 	  .when('/partials/student2.html', {
 		  templateUrl: 'public/student2.html',
 		  controller: 'StudCtrl'
@@ -70,6 +74,7 @@ var voice = {
 		  controller: 'EditCtrl'
 	  })
 	  */
+
 	  .otherwise({
 		  redirectTo: '/'
 	  })
@@ -89,7 +94,6 @@ var voice = {
 
 // 	console.log($scope.username);
 //   console.log(angular.element('username').attr('ng-model'));
-
   
 		  $scope.validate = function() {
 			  $scope.username = $scope.username == undefined ? "" : $scope.username;
@@ -441,10 +445,22 @@ var voice = {
 		  }
 	  }
   ]);
+
+ 
   
   // professor.html
   app.controller('ProfCtrl', ['$scope', '$resource', '$location', '$routeParams',
 	  function($scope, $resource, $location, $routeParams) {
+
+		// $scope.searchStudent = function() {
+			
+		// 	console.log("To search");
+		// 	// to the upload page
+		// 	$location.path('/professor/searchStudent');
+		// 	window.location.href = '/partials/searchStudent.html';
+			
+			
+		// };
   
   
 		  var Account = $resource('/api/accounts/:username');
@@ -452,7 +468,7 @@ var voice = {
   
 		  // use resource Account here -> get accounts/hasan3
 		  Account.get({username: $routeParams.username}, function(account) {
-			  $scope.fullname = account["Full name"];
+			  $scope.fullname = account["FullName"];
   
 			  console.log(" account[Full name] =  " + account["Full name"]);
 			  
@@ -596,8 +612,12 @@ var voice = {
 						  wrapObj.fields = 0;
 						  var thisGrade = fullGrade[i];
 						  var validGrade = {};
+						  
 						  for(var prop in data.list) {
 							  wrapObj.fields++;
+							  console.log("thisGrade[data.list[prop]]  = ");
+						  console.log(thisGrade[data.list[prop]]);
+							  
 							  if (thisGrade[data.list[prop]] != undefined) {
 								  validGrade[data.list[prop]] = thisGrade[data.list[prop]];
 							  }
@@ -636,7 +656,7 @@ var voice = {
 			  $location.path('/professor/' + $routeParams.username + '/uploadGrade/' + $scope.course);
 		  };
   
-  
+	
 		  
   
 	  }
@@ -651,6 +671,221 @@ var voice = {
 		  $scope.course = str.toUpperCase();
 	  }
   ]);
+
+// SearchStud.html
+  app.controller('searchStudCtrl', ['$scope', '$resource', '$location', '$routeParams',
+  function($scope, $resource, $location, $routeParams) {
+
+
+	var addRow = function(table, fullname) {
+		var tr = document.createElement("tr");
+		var td = document.createElement("td");
+		var name = document.createTextNode(fullname);
+		td.appendChild(name);
+		tr.appendChild(td);
+		table.appendChild(tr);
+	};
+
+	var resetTable = function(table) {
+		while (table.children[1]) {
+			table.removeChild(table.children[1]);
+		}
+	};
+
+
+
+
+	$scope.getLists = function() {
+
+
+		document.getElementById('counter').innerHTML = '';
+		var option = $scope.courseStat;
+		var choice = $scope.choice;
+		var goodList = document.getElementById('Predict1');
+		var okList = document.getElementById('Predict2');
+		var hrList = document.getElementById('Predict3');
+		var counter = [0, 0, 0];
+		resetTable(goodList);
+		resetTable(okList);
+		resetTable(hrList);
+
+		if (option == "") return;
+
+		console.log("option trong search = "+ option);
+
+		// take option to put here -> generate table on the web
+		
+if ( choice != undefined && option != undefined){
+	var Students = $resource('/api/grades/' + option + '/db');
+		// Students return all the info from database 
+		Students.query(function(data) {
+			for(var i in data) {
+				var student = data[i];
+			
+
+				if (student.Predict1 == choice) {
+					addRow(Predict1, student["FullName"]);
+					counter[0] += 1;
+				}
+				else if (student.Predict2 == choice) {
+					addRow(Predict2, student["FullName"]);
+					counter[1] += 1;
+				}
+				else if (student.Predict3 == choice) {
+					addRow(Predict3, student["FullName"]);
+					counter[2] += 1;
+					hung = "hung3";
+				}
+			}
+			document.getElementById('counter').innerHTML = 'For '+ choice + ', there are ' + counter[0].toString() + ' students in Predict 1 and ' + counter[1].toString() + ' students in Predict 2 and ' + counter[2].toString() + ' students in Predict 3.';
+		});
+
+	}
+	}
+
+console.log("seach stud");
+var stud = $scope.username;
+console.log("stud = ", stud);
+
+$scope.search = function() {
+	//document.getElementById('predict') = '';
+	var div = document.getElementById("predictGroup");
+	while(div.hasChildNodes){
+		div.removeChild(div.firstChild);
+	}
+	//document.getElementById('predictGroup').childElementCount = '';
+	
+	//print(" x = ", document.getElementById("predictGroup").children.length) ;
+	
+	var stud = $scope.username;
+	console.log("stud trong nay = ", stud);
+	var NUID = "";
+
+
+	var Account = $resource('/api/accounts/:username');
+	Account.get({username: stud}, function(account) {
+	console.log("account name = ", account.FullName);
+	console.log("account name = ", account.NUID);
+	String.prototype.isNumber = function(){return /^\d+$/.test(this);}
+	if (isNaN(stud) ){
+		NUID = account.NUID;
+	}
+	else{
+		NUID = stud;
+	}
+	
+	var search156 = $resource('/api/grades/csce156search/:nuid');
+var search235 = $resource('/api/grades/csce235search/:nuid');
+
+search156.get({nuid:NUID}, function(data){
+
+
+	if (data.Predict == undefined){
+		return;
+	}
+	console.log("Predict1 of 156 = ", data.Predict1);
+	console.log("Predict2 of 156 = ", data.Predict2);
+	console.log("Predict3 of 156 = ", data.Predict3);
+
+	document.getElementById("predictGroup").innerHTML += "<br>Student 2nd Prediction:&nbsp;&nbsp;" ;
+	document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
+	document.getElementById("predictGroup").innerHTML += "<br><br>";
+	document.getElementById("predictGroup").innerHTML += "Student 1st Prediction:&nbsp;&nbsp;" ;
+document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
+
+document.getElementById("predict").innerHTML = data.Predict;
+  
+  
+					  if (data.Predict == "Good" ) {
+						  document.getElementById("predict").setAttribute("color", "green");
+  
+  
+  
+					  } else if (data.Predict == "OK" ) {
+						  document.getElementById("predict").setAttribute("color", "#ecc400");
+  
+  
+					  } else {
+						  document.getElementById("predict").setAttribute("color", "red");
+					
+					  }		
+
+
+	});
+
+	search235.get({nuid:NUID}, function(data){
+
+		if (data.Predict == undefined){
+			return;
+		}
+
+		console.log("Predict1 of 235 = ", data.Predict1);
+		console.log("Predict2 of 235 = ", data.Predict2);
+		console.log("Predict3 of 235 = ", data.Predict3);
+
+		document.getElementById("predictGroup").innerHTML += "<br>Student 2nd Prediction:&nbsp;&nbsp;" ;
+		document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
+		document.getElementById("predictGroup").innerHTML += "<br><br>";
+		document.getElementById("predictGroup").innerHTML += "Student 1st Prediction:&nbsp;&nbsp;" ;
+	document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
+
+	document.getElementById("predict").innerHTML = data.Predict;
+  
+  
+					  if (data.Predict == "Good" ) {
+						  document.getElementById("predict").setAttribute("color", "green");
+  
+  
+  
+					  } else if (data.Predict == "OK" ) {
+						  document.getElementById("predict").setAttribute("color", "#ecc400");
+  
+  
+					  } else {
+						  document.getElementById("predict").setAttribute("color", "red");
+					
+					  }		
+	
+		});
+
+		
+		
+
+});
+
+// var search156 = $resource('/api/grades/csce156/:nuid');
+// var search235 = $resource('/api/grades/csce235/:nuid');
+
+// search156.get({nuid:NUID}, function(data){
+
+
+// 	if (data.Predict == undefined){
+// 		return;
+// 	}
+// 	console.log("Predict1 of 156 = ", data.Predict1);
+// 	console.log("Predict2 of 156 = ", data.Predict2);
+// 	console.log("Predict3 of 156 = ", data.Predict3);
+
+
+// 	});
+
+// 	search235.get({nuid:NUID}, function(data){
+
+// 		if (data.Predict == undefined){
+// 			return;
+// 		}
+
+// 		console.log("Predict1 of 235 = ", data.Predict1);
+// 		console.log("Predict2 of 235 = ", data.Predict2);
+// 		console.log("Predict3 of 235 = ", data.Predict3);
+	
+// 		});
+
+
+  		}
+  	}
+
+]);
   
   
   // student.html + say here 
@@ -1177,6 +1412,16 @@ var voice = {
 					}else if (countField  == 12 || countField == 17){
 
 						previousPredict = data.Predict3;
+
+						document.getElementById("predictGroup").innerHTML += "<br>Your 3rd Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict3));
+						document.getElementById("predictGroup").innerHTML += "<br>";
+						document.getElementById("predictGroup").innerHTML += "<br>Your 2nd Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
+						document.getElementById("predictGroup").innerHTML += "<br><br>";
+						document.getElementById("predictGroup").innerHTML += "Your 1st Prediction:&nbsp;&nbsp;" ;
+						document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
+
 					}
 
 					console.log("previousPredict = ", previousPredict);

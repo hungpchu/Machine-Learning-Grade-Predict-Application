@@ -672,9 +672,10 @@ elif ( len(inpgrade1.columns) == 9 ):
 	model.fit(X, y1)
 	chosenModels[0] = model
 
-elif ( len(inpgrade1.columns) == 6 ): 
+elif ( len(inpgrade1.columns) == 12 ): 
 	grade = load_data("ml_scripts/data/" + course + "/MasterTrainingData4.csv")
-	X = grade[['Quiz 7', 'Homework 1', 'Homework 2', 'Homework 3', 'Homework 4 ', 'Midterm']].values
+	# X = grade[['Quiz 7', 'Homework 1', 'Homework 2', 'Homework 3', 'Homework 4 ', 'Midterm']].values
+	X = grade[['Quiz 1 ', 'Quiz 2 ', 'Quiz 3','Quiz 4 ','Quiz 5 ','Quiz 6','Quiz 7','Homework 1', 'Homework 2', 'Homework 3', 'Homework 4 ', 'Midterm']].values
 	y = grade[["Grade"]].values.ravel()
 	y1 = []
 	for label in y:
@@ -756,6 +757,7 @@ elif ( len(inpgrade1.columns) == 17 ):
 	model = MLPClassifier(random_state=0, hidden_layer_sizes=(5, 20), alpha=0.001, solver='lbfgs',max_iter=1000, learning_rate = 'adaptive')
 	model.fit(X, y1)
 	chosenModels[0] = model
+
 
 
 #Load data

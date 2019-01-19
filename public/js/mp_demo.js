@@ -195,19 +195,19 @@ function onVoiceStart() {
     
                 document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FF0000";
                 document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                 document.getElementById("speak").innerHTML = "Warning! You are again at High-risk. It is highly that you will fail in this class.";
+                 document.getElementById("speak").innerHTML = "Warning! You are again at High-risk. It is highly likely that you will fail in this class.";
                 return;
                 }else if (previousPredict == "OK" && predict == "High-risk"){
                     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                     document.getElementsByClassName("bubble top reverse")[0].style.backgroundColor = "#FF0000";
                     document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                    document.getElementById("speak").innerHTML = "Warning! You are at High-risk. Your performance degraded. It is highly that you will fail in this class.";
+                    document.getElementById("speak").innerHTML = "Warning! You are at High-Risk. Your performance degraded. It is highly likely that you will fail in this class.";
                    return;
                 }else if (previousPredict == "Good" && predict == "High-risk"){
                     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                     document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FF0000";
                     document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                    document.getElementById("speak").innerHTML =  "Warning! Warning! You are at High-risk. Your performance degraded severely. It is highly that you will fail in this class.";
+                    document.getElementById("speak").innerHTML =  "Warning! Warning! You are at High-Risk. Your performance degraded severely. It is highly likely that you will fail in this class.";
                     return;
                 }
     // first = true;
@@ -219,17 +219,17 @@ function onVoiceStart() {
 
             document.getElementsByClassName("bubble")[0].style.backgroundColor = "#008000";
             document.getElementsByClassName("bubble")[0].style.color = "#000000";
-             document.getElementById("speak").innerHTML = "Congratulations! You are doing Good. Previously you were at High-risk. PLease continue putting your best effort";
+             document.getElementById("speak").innerHTML = "Congratulation! You are doing Good. Previously you were at High-risk. Please continue putting your best effort.";
             }else if (previousPredict == "OK" && predict == "Good"){
                 var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                 document.getElementsByClassName("bubble")[0].style.backgroundColor = "#008000";
                 document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                document.getElementById("speak").innerHTML = "Congratulations! You are doing Good. Previously you were OK. Please keep working hard";
+                document.getElementById("speak").innerHTML = "Congratulation! You are doing Good. Previously you were OK. Please keep working hard.";
             }else if (previousPredict == "Good" && predict == "Good"){
                 var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                 document.getElementsByClassName("bubble top reverse")[0].style.backgroundColor = "#008000";
                 document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                document.getElementById("speak").innerHTML =  "Congratulations! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance";
+                document.getElementById("speak").innerHTML =  "Congratulation! You are doing Good. Previously you were Good as well. Continue your hard work to maintain good performance.";
                 return;
             }
         // first = true
@@ -245,13 +245,13 @@ function onVoiceStart() {
 
             document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FFFF00";
             document.getElementsByClassName("bubble")[0].style.color = "#000000";
-             document.getElementById("speak").innerHTML = "Well done! You are doing OK. Previously you were at High-risk. PLease keep working hard";
+             document.getElementById("speak").innerHTML = "Well done! You are doing OK. Previously you were at High-risk. Please keep working hard.";
             return;
             }else if (previousPredict == "OK" && predict == "OK"){
                 var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
                 document.getElementsByClassName("bubble top reverse")[0].style.backgroundColor = "#FFFF00";
                 document.getElementsByClassName("bubble")[0].style.color = "#000000";
-                document.getElementById("speak").innerHTML = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard";
+                document.getElementById("speak").innerHTML = "You are doing OK. Previously you were OK as well. There has been no improvement. You need to work hard.";
                return;
             }else if (previousPredict == "Good" && predict == "OK"){
                 var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
