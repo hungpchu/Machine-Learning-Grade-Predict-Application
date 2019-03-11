@@ -14,11 +14,11 @@ body{
   margin: 0;
 }
 #mpcanvas{
-  max-height: 375px;
-  max-width: 324px;
-  position: absolute;
+  max-height: 405px;
+  max-width: 354px;
+  /* position: absolute;
 top: 50px;
-left: 1150px;
+left: 1150px; */
   /* display:  none; */
 
 }
@@ -33,10 +33,10 @@ left: 1150px;
 
 
 #voiceStart {
-  position: absolute;
-  left: 1230px;
-  top: 520px;
-  width: 10%;
+  /* position: absolute; */
+  /* left: 1230px;
+  top: 520px; */
+  /* width: 10%; */
   font-size: 18px;
   
   }

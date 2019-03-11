@@ -9,13 +9,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/javascripts/gradeTest.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   </head>
   <body>
 
         <div ng-app = "Grade" ng-controller = "StudCtrl" style = "text-align:center">
-	
 
-                 <div> 
+            
+                <!-- <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">.col-sm-4</div>
+                        <div class="col-sm-4">.col-sm-4</div>
+                      </div> -->
+        <div class="row">
+         <div class="col-sm-4">
+
+            <div> 
             
                 <canvas id="mpcanvas" ></canvas>
               
@@ -29,9 +41,9 @@
                 </div>
               </div>     
               
+            </div>
             
-            
-                
+            <div class="col-sm-4">
                 <h1 style = "max-width:600px;margin:auto;text-align:center;width:80%;background-color:#8f8f8f;color:white;padding:10px">{{account["Full name"]}}</h1>
                 <a href = "/#/">Logout</a>
                 <p>
@@ -57,8 +69,10 @@
             
                 
                
-            
+            </div>
               
+            </div>
+
             </div>
 
 
@@ -76,33 +90,3 @@
   </body>
 </html>
 
-<!-- <div>
-    <canvas id="mpcanvas"></canvas>
-  </div>
-  <div id="mplogs">
-    <div class="emscripten" id="status"></div>
-    <div class="emscripten">
-      <progress id="progress" value="0" max="100" hidden="1"></progress>
-    </div>
-  </div>
-</body>
-</html>
-<div id="mpfooter">
-<div id="tabs">
-  <ul>
-    <li><a href="#tabs-1">Avatar</a></li>
-  </ul>
-  <div id="tabs-1">
-    <div id="avatar">
-      <div><a class="btn btn--blue" id="avatarChange" href="#" style="margin-bottom: 30px;">ChangeAvatar</a></div>
-      <form action="/" enctype="multipart/form-data" method="post">
-        <label class="btn btn-default btn-file" id="lblfilesavtr">Browse File... 
-          <input id="filesavtr" type="file" name="upload" multiple="" style="display: none;" accept="image/jpg,image/jpeg,image/png">
-        </label>
-        <input type="submit" value="Upload">
-      </form>
-    </div>
-  </div>
-</div>
-</div>
-<button id="voiceStart">Speak -->

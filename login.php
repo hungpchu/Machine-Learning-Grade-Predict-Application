@@ -1,3 +1,23 @@
+
+<html>
+<head>
+  <style type="text/css">
+    .button {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px; /* width of button */
+    height: 30px; /* height of button */
+}
+
+
+  </style>
+   
+</head>
+<body>
 <?php
 // Start the session
 session_start();
@@ -65,8 +85,10 @@ session_start();
 
       print "<h3> I have a AUTH_USER in session variable and the user is $user </h3>";
       print "User is successfully logged in as $user<br/>";
+       <button class="button">The button</button> 
        print "<a href='http://cse.unl.edu/~gpred/login.php?logout=1'>Log Out</a><br/>";
      print "<a href='http://ec2-18-223-113-182.us-east-2.compute.amazonaws.com/#/'>Log In</a><br/>";
+
 
    # USER IS NOT LOGGGED IN!!! STEP 1 in login process...
    } else{

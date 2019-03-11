@@ -551,6 +551,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler, Normalizer
 import re
@@ -636,7 +637,8 @@ if ( len(inpgrade1.columns) == 2 ):
 			y1.append(1)
 		if label == "High-risk":
 			y1.append(2)
-	model = MLPClassifier(random_state=0, hidden_layer_sizes=(7, 20), alpha=0.0001, solver='lbfgs',max_iter=200, learning_rate = 'adaptive')
+	# model = MLPClassifier(random_state=0, hidden_layer_sizes=(7, 20), alpha=0.0001, solver='lbfgs',max_iter=200, learning_rate = 'adaptive')
+	model = AdaBoostClassifier(random_state=0, n_estimators=1000)
 	model.fit(X, y1)
 	chosenModels[0] = model
 	

@@ -102,6 +102,28 @@ router.get('/:username', function(req, res) {
     });
 });
 
+router.get('/searchFullName/:fullname', function(req, res) {
+    var collection = db.get('accounts');
+
+    console.log(" co account trong fullname ");
+
+
+    collection.findOne({ FullName: req.params.fullname}, function(err, account) {
+
+        if (err) return console.log(err);
+        if (account == null) {
+            console.log("account null trong fullname ");
+			return res.json({});
+        }
+
+
+
+        
+		res.json(account);
+		
+    });
+});
+
 // router.get('/:nuid1', function(req, res) {
 //     var collection = db.get('accounts');
 
@@ -155,14 +177,15 @@ router.get('/:username', function(req, res) {
 router.get('/hung/:nuid', function(req, res) {
     var collection = db.get('accounts');
 
+    console.log(collection);
   
-    console.log(" co account trong NUID ");
+    console.log("vao /hung/:nuid");
 
     collection.findOne({ NUID: req.params.nuid }, function(err, account) {
 
         if (err) return console.log(err);
         if (account == null) {
-            //console.log("account null  ");
+            console.log("account null  ");
 			return res.json({});
         }
         

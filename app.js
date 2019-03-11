@@ -76,16 +76,18 @@ app.post('/', function (req, res){
 // });
 
   form.on('fileBegin', function (name, file){
+    console.log("file trong begin = ");
+    console.log(file);
 
-    // console.log("file.size trong undefined ngoai = ",file.size );
+    console.log("file.size trong undefined ngoai = ",file.size );
 
-    if (file.size == 0){
+    if (file.name == ''){
 
       // import alert from 'alert-node'
 
       // alert('File Empty.Please choose file from browse file button first. ');
-      console.log("filename = ", file.name);
-      // console.log("File empty");
+      console.log("filename trong file.size 0 = ", file.name);
+      console.log("File empty");
       // res.send('File Empty.Please choose file from browse file button first. Now please click go back ');
 
       // JSAlert.alert("This is an alert.");
@@ -123,7 +125,7 @@ app.post('/', function (req, res){
      
       console.log("File empty");
 
-      res.sendFile(  __dirname + '/public/student2.html');
+      res.sendFile(  __dirname + '/public/student3.html');
       // res.send('File Empty.Please choose file from browse file button first. Now please click go back ');
 
       // JSAlert.alert("This is an alert.");
@@ -136,7 +138,7 @@ app.post('/', function (req, res){
         // res.end(' World\n');
         // res.status(200);
         //res.json('success');
-        res.sendFile(  __dirname + '/public/student2.html');
+        res.sendFile(  __dirname + '/public/student3.html');
     }, 4000);
      
     }

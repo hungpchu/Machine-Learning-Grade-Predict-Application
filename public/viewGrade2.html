@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html ng-app="Grade">
+  <head>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <script src="javascripts/gradeTest.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
+    <!-- <script src="javascripts/gradeTest.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="javascripts/gradeTest.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <style>
+
+      #text1 {
+        /* position: absolute;
+	left:350px;
+	top:160px; */
+	padding: 12px 10px;
+	padding-left:30px;
+	width: 80%;
+	background-color: white;
+  border: 3px solid lightskyblue;
+  font-size: 24px;
+
+
+		}
+
+      #header{
+width:35%;
+/* position: absolute;
+top: 50px;
+left: 400px; */
+
+}  
+
+   #table{
+
+max-height: 400px;
+max-width: 400px;
+
+}
+
+
+           #predictGroup{
+
+/* max-height: 400px;
+max-width: 600px; */
+/* position: absolute;
+top: 420px;
+left: 600px; */
+/* padding: 12px 10px;
+	padding-left:30px;
+	width: 80%;
+	background-color: white;
+  border: 3px solid lightskyblue;
+  font-size: 24px; */
+
+
+
+}   
+ 
+
+        #goBack{
+
+max-height: 400px;
+max-width: 400px;
+position: absolute;
+top: 850px;
+left: 900px;
+
+}  
+
+            table, th, td {
+                border: 1px solid grey;
+                border-collapse: collapse;
+                padding: 5px;
+            }
+            
+            tr:nth-child(odd) {
+                background-color: #f2f2f2;
+            }
+        
+            .back-button {
+                background-color: #8f8f8f;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                cursor: pointer;
+                text-decoration: none;
+                width:80%;
+            }
+            .back-button:hover {
+                background-color: #4b4b4b;
+                color: white;
+            }
+            .bubble-wrapper {
+     display: inline-block;
+
+     margin: 4em;
+     font-size: 18px;
+   }
+   .bubble {
+     padding: 1.6em;
+     background-color: #000080;
+     color: #d3d3d3;
+     -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+     border-radius: 8px;
+     
+   }
+
+   .bubble.right {
+     padding-right: 0;
+     display: inline-block;
+   }
+   .bubble.right:after {
+     content: '';
+     height: 0;
+     width: 0;
+     left: 2em;
+     top: -0.75em;
+     position: relative;
+     font-size: 16px;
+     display: inline-block;
+     border-right: 2em solid transparent;
+     border-bottom: 2em solid #000080;
+   }
+   .bubble.right.reverse:after {
+     border-bottom: 0;
+     border-right: 2em solid transparent;
+     border-top: 2em solid #000080;
+     top: 0.75em;
+   }
+   .bubble.left {
+     /* float: left; */
+     margin-left: 1.5em;
+     padding-left: 0;
+   }
+   .bubble.left:before {
+     content: '';
+     height: 0;
+     width: 0;
+     left: -2em;
+     /* position: relative; */
+     font-size: 10px;
+     display: inline-block;
+     border-left: 2em solid transparent;
+     border-top: 2em solid #000080;
+   }
+ 
+   .anchor.left {
+     float: left;
+   }
+   .anchor.left.reverse {
+     /* position: relative; */
+     display: inline-block;
+     bottom: -2em;
+   }
+   .anchor.top:after {
+     left: -40%;
+     /* position: relative; */
+     content: '';
+     height: 0;
+     width: 0;
+     font-size: 10px;
+     display: inline-block;
+     margin-bottom: -2.4em;
+     border-left: 2em solid #000080; 
+     border-top: 2em solid #FFF;
+     border-top: 2em solid transparent;
+   }
+   .anchor.top.reverse:after {
+     border-left: 0;
+     left: -60%;
+     border-right: 2em solid #000080; 
+     border-top: 2em solid #FFF;
+     border-top: 2em solid transparent;
+     font-size: 12px;
+   }
+   .bubble.top.reverse.big {
+     width: 30em;
+     margin-left: 3em;
+   }
+
+   .anchor.top {
+     margin-bottom: 1.1em;
+     display: inline-block;
+   }
+          /* .header{
+            top:10px;
+
+          }
+           */
+        </style>
+        
+  </head>
+  <body>
+
+      
+              
+              <div id="mplogs">
+              
+                <div class="emscripten" id="status"></div>
+                <div class="emscripten">
+                  <progress value="0" max="100" id="progress" hidden=1></progress>
+                </div>
+              </div>   
+
+
+
+        <div ng-app = "Grade" ng-controller = "ViewCtrl" style = "text-align:center">
+
+
+
+                <div class="container-fluid">
+
+
+                        <h1 id = "header" style = "font-size:44px;max-width:620px;margin:auto;text-align:center;width:80%;background-color:#286090;color:white;padding:10px"></h1></h1>
+                        <div class="row"> </div>
+                        <div class="row"> </div>
+                       <div class="row">
+
+                            <div class="col-sm-7" style="background-color:#f3f3f3;">
+
+                                    <div class="row"> </div>
+                                   
+                                    <div class="col-sm-9">
+                                            <div  id = "text1" class="panel panel-default" ><div class="panel-body"></div></div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                          
+                                        </div>
+                                  
+                                
+                                
+                                    <div class="row"> </div>
+                                    <div class="row"> </div>
+                                    <div class="row"> </div>
+
+                                   
+
+                                    <div class="col-sm-5">
+                   <!-- // <div id = "table"> -->
+                            <table border = "0" id = "profileTable" style = "font-size:18px;max-width:300px;margin:auto; border:2px solid lightskyblue">
+                            </table>
+
+                        </div>
+
+                        <div class="col-sm-5">
+                                <div class="panel panel-default" id = "predictGroup"  style = "border:2px solid lightskyblue">
+                                        <!-- Your Current Prediction: <strong><font id = "predict"></font></strong><br> -->
+                                        <div class="panel-body"> Your Current Prediction: <strong><font id = "predict"></font></strong><br></div>
+                                    </div>
+
+                                    <div class="row"> </div>
+
+                                    <a class="btn btn-primary btn-lg" href="http://csce.unl.edu:3001" >Log Out</a>
+                                    <div class="row"> </div>
+                                          
+                            </div>
+                          <!-- </div> -->
+
+
+
+                                </div>
+
+                                <!-- <div class="col-sm-5" style="background-color:rgb(255,0,255);"></div>d -->
+
+
+                                <div class="col-sm-5" >
+
+                                        <div class="row"> </div>
+      
+                                          <canvas id="mpcanvas" ></canvas>
+                                          <div class="row">
+                                              
+                                          <div class="bubble-wrapper">
+                                                  <!-- <div class="anchor top reverse"></div> -->
+                                                  <div class="bubble top reverse" id ="speak" ></div>
+                                                </div>
+                                              
+      
+                                <div class="row">
+                                      <!-- <button id="voiceStart" class="btn btn-primary btn-lg" >Talk to Me!</button> -->
+                                      <button id="voiceStart" >Simulate Your Future</button>
+      
+                                </div>
+                                              
+      
+                                    </div>
+      
+                                  
+                                  </div>
+
+                                  <div class="row"> </div>
+                                  <div class="row"> </div>
+
+                        </div>
+
+                        <div class="row"> </div>
+                                  <div class="row"> </div>
+                    </div>
+
+
+
+                <!-- <h1 id = "header" style = "font-size:44px;margin:auto;text-align:center;background-color:#286090;color:white;padding:10px"></h1>
+                   <a href = "/#/">Logout</a>
+                
+          
+
+                    <div id = "text1"  ></div>
+
+                    <div id = "table">
+                    <table border = "0" id = "profileTable" style = "font-size:18px;max-width:300px;margin:auto; border:2px solid lightskyblue">
+                    </table>
+                  </div>
+
+                    <div id = "predictGroup" style = "background-color:#f3f3f3;max-width:400px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightskyblue;border-radius:5px;font-size:18px">
+                        Your Current Prediction: <strong><font id = "predict"></font></strong><br>
+                    </div>
+
+                    
+                   
+
+                    <div id="goBack" style = "font-size: 18px">
+                        <button><a href="/#/">Logout</a></button>
+                        <button ng-click = "back()">Back</button>
+                    </div> -->
+               
+            </div>
+     
+
+
+        
+            <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src='js/mp_config.js'></script>
+            <script type="text/javascript" src="js/mp_fileio.js"></script>
+            <script type="text/javascript" src='js1/mplib.js'></script>
+            <script type="text/javascript" src='js/mp_demo.js'></script>
+            <script type="text/javascript" src='lib/jszip/jszip.min.js'></script>
+            <script type="text/javascript" src='js/resizecanvas.js'></script>
+
+    
+  </body>
+</html>

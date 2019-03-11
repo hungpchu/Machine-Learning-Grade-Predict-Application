@@ -129,13 +129,14 @@ function onVoiceStart() {
 
 
         if ( voiceFiles[0] == nameArray[0]){
+
             document.getElementById("speak").innerHTML =  "Hello " + nameArray[0] +", I am from your future.\n"+ 
             "Click on the Visit Future button to see future!\n";
             voiceIndex = 0;
             return;
              first = false;
-            }
-        else{
+
+        } else{
 
 
             var i = 0;
@@ -147,8 +148,10 @@ function onVoiceStart() {
             
             while( i < voiceFiles.length){
                 var voicePredict = voiceFiles[i].split("_");
+
+                console.log(" voicePredict trong la = ", voicePredict[1]);
                 
-                if ( voicePredict == "High-risk" && predict == "High-risk"){
+                if ( voicePredict[1] == "High-risk" && predict == "High-risk"){
 
                     var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
         
@@ -157,7 +160,7 @@ function onVoiceStart() {
 
         return;
         // first = true;
-        }else if ( voicePredict == "Good" && predict == "Good"){
+        }else if ( voicePredict[1] == "Good" && predict == "Good"){
             var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
             console.log("vao vong good");
             // document.getElementsByClassName("anchor top reverse")[0].style.backgroundColor = "#008000";
@@ -165,7 +168,7 @@ function onVoiceStart() {
             document.getElementById("speak").innerHTML = "You are " + predict;
            return;
             // first = true
-        }else if ( voicePredict == "OK" && predict == "OK"){
+        }else if ( voicePredict[1] == "OK" && predict == "OK"){
             var voiceId = mpwebgl.instance.loadvoice('items/voice/' + voiceFiles[i]);
             document.getElementsByClassName("bubble")[0].style.backgroundColor = "#FFFF00";
             document.getElementById("speak").innerHTML = "You are " + voiceFiles[i];
@@ -366,6 +369,7 @@ function handleFileSelectAvtr(evt) {
         
         return;
     }
+    console.log("file.name trong handleFileSelectAvtr = " + file.name);
     xhr.open("GET", "../images/" + file.name, true);
 
     
@@ -482,6 +486,7 @@ jQuery(document).ready(function() {
         var byteString = atob(dataURI.split(',')[1]);
         var ab = new ArrayBuffer(byteString.length);
         var ia = new Uint8Array(ab);
+
         for (var i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
         }

@@ -455,9 +455,9 @@ router.get('/csce156/db', function(req, res) {
     });
 });
 
-router.get('/csce156search/:nuid', function(req, res) {
+router.get('/csce156search/:fullname', function(req, res) {
     var collection = db.get('csce156');
-    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+    collection.findOne({ FullName: req.params.fullname }, function(err, account) {
 		
         if (err) return console.log(err);
         if (account == null) {
@@ -472,9 +472,26 @@ router.get('/csce156search/:nuid', function(req, res) {
     });
 });
 
-router.get('/csce235search/:nuid', function(req, res) {
+router.get('/csce235search/:fullname', function(req, res) {
     var collection = db.get('csce235');
-    collection.findOne({ NUID: req.params.nuid }, function(err, account) {
+    collection.findOne({ FullName: req.params.fullname }, function(err, account) {
+		
+        if (err) return console.log(err);
+        if (account == null) {
+			return res.json({});
+		}
+
+		if (account.Predict == null){
+			return;
+		}
+
+		return res.json(account);
+    });
+});
+
+router.get('/csce235search/:fullname', function(req, res) {
+    var collection = db.get('csce235');
+    collection.findOne({ FULLNAME: req.params.fullname }, function(err, account) {
 		
         if (err) return console.log(err);
         if (account == null) {

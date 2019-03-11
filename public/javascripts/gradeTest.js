@@ -60,12 +60,12 @@ var voice = {
 		templateUrl: 'partials/searchStudent.html',
 		controller: 'searchStudCtrl'
 	})
-	  .when('/partials/student2.html', {
-		  templateUrl: 'public/student2.html',
+	  .when('/partials/student3.html', {
+		  templateUrl: 'public/student3.html',
 		  controller: 'StudCtrl'
 	  })
 	  .when('/partials/viewGrade1.html', {
-		  templateUrl: 'public/viewGrade1.html',
+		  templateUrl: 'public/viewGrade2.html',
 		  controller: 'ViewCtrl'
 	  })
 	  /*
@@ -144,7 +144,7 @@ var voice = {
 						});
 
 						// window.location.href = '../partials/action.html';
-						window.location.href = 'student2.html';
+						window.location.href = 'student3.html';
 						//   $location.path('/student/' + $scope.username);
 						//   $location.path('action.html');
 					  }
@@ -744,40 +744,36 @@ if ( choice != undefined && option != undefined){
 	}
 
 console.log("seach stud");
-var stud = $scope.username;
+var stud = $scope.fullname;
 console.log("stud = ", stud);
 
 $scope.search = function() {
-	//document.getElementById('predict') = '';
-	var div = document.getElementById("predictGroup");
-	while(div.hasChildNodes){
-		div.removeChild(div.firstChild);
+
+	var list = document.getElementById("predictGroup");
+	
+	var childNodeCount = list.childElementCount;
+	console.log("childNodeCount = ", childNodeCount);
+
+	var c = list.childNodes.length;
+	if (childNodeCount > 2) {
+	while(c > 0){
+		list.removeChild(list.childNodes[c - 1]);
+		c--;		
 	}
-	//document.getElementById('predictGroup').childElementCount = '';
+	}
+
 	
-	//print(" x = ", document.getElementById("predictGroup").children.length) ;
-	
-	var stud = $scope.username;
+	var stud = $scope.fullname;
 	console.log("stud trong nay = ", stud);
 	var NUID = "";
 
-
-	var Account = $resource('/api/accounts/:username');
-	Account.get({username: stud}, function(account) {
-	console.log("account name = ", account.FullName);
-	console.log("account name = ", account.NUID);
-	String.prototype.isNumber = function(){return /^\d+$/.test(this);}
-	if (isNaN(stud) ){
-		NUID = account.NUID;
-	}
-	else{
-		NUID = stud;
-	}
 	
-	var search156 = $resource('/api/grades/csce156search/:nuid');
-var search235 = $resource('/api/grades/csce235search/:nuid');
+	var check = false;
+	
+	var search156 = $resource('/api/grades/csce156search/:fullname');
+var search235 = $resource('/api/grades/csce235search/:fullname');
 
-search156.get({nuid:NUID}, function(data){
+search156.get({fullname:stud}, function(data){
 
 
 	if (data.Predict == undefined){
@@ -787,33 +783,42 @@ search156.get({nuid:NUID}, function(data){
 	console.log("Predict2 of 156 = ", data.Predict2);
 	console.log("Predict3 of 156 = ", data.Predict3);
 
+	check = true;
+
+	if (childNodeCount > 2){
+		document.getElementById("predictGroup").innerHTML += "CSCE 156<br>" ;
+	}else{
+		document.getElementById("predictGroup").innerHTML += "CSCE 156<br>" ;
+	
+	}
+	
+	if (data.Predict4 != undefined){
+		document.getElementById("predictGroup").innerHTML += "<br>Student 4th Prediction:&nbsp;&nbsp;" ;
+		document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict4));
+		document.getElementById("predictGroup").innerHTML += "<br>";
+		}
+
+	if (data.Predict3 != undefined){
+		document.getElementById("predictGroup").innerHTML += "<br>Student 3rd Prediction:&nbsp;&nbsp;" ;
+		document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict3));
+		document.getElementById("predictGroup").innerHTML += "<br>";
+		}
+
+	if (data.Predict2 != undefined){
 	document.getElementById("predictGroup").innerHTML += "<br>Student 2nd Prediction:&nbsp;&nbsp;" ;
 	document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
-	document.getElementById("predictGroup").innerHTML += "<br><br>";
-	document.getElementById("predictGroup").innerHTML += "Student 1st Prediction:&nbsp;&nbsp;" ;
+	document.getElementById("predictGroup").innerHTML += "<br>";
+	}
+	document.getElementById("predictGroup").innerHTML += "<br>Student 1st Prediction:&nbsp;&nbsp;" ;
 document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
 
-document.getElementById("predict").innerHTML = data.Predict;
+ 
   
-  
-					  if (data.Predict == "Good" ) {
-						  document.getElementById("predict").setAttribute("color", "green");
-  
-  
-  
-					  } else if (data.Predict == "OK" ) {
-						  document.getElementById("predict").setAttribute("color", "#ecc400");
-  
-  
-					  } else {
-						  document.getElementById("predict").setAttribute("color", "red");
-					
-					  }		
 
 
 	});
 
-	search235.get({nuid:NUID}, function(data){
+	search235.get({fullname:stud}, function(data){
 
 		if (data.Predict == undefined){
 			return;
@@ -823,63 +828,40 @@ document.getElementById("predict").innerHTML = data.Predict;
 		console.log("Predict2 of 235 = ", data.Predict2);
 		console.log("Predict3 of 235 = ", data.Predict3);
 
+		if (childNodeCount > 2){
+			if( check )  document.getElementById("predictGroup").innerHTML += "<br><br>";
+			document.getElementById("predictGroup").innerHTML += "CSCE 235<br>" ;
+			
+		}else{
+			if( check )  document.getElementById("predictGroup").innerHTML += "<br><br>";
+			document.getElementById("predictGroup").innerHTML += "CSCE 235<br>" ;
+	
+	  
+		}
+
+		if (data.Predict4 != undefined){
+			document.getElementById("predictGroup").innerHTML += "<br>Student 4th Prediction:&nbsp;&nbsp;" ;
+			document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict4));
+			document.getElementById("predictGroup").innerHTML += "<br><br>";
+			}
+
+		if (data.Predict3 != undefined){
+			document.getElementById("predictGroup").innerHTML += "<br>Student 3rd Prediction:&nbsp;&nbsp;" ;
+			document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict3));
+			document.getElementById("predictGroup").innerHTML += "<br><br>";
+			}
+
+		if (data.Predict2 != undefined){
 		document.getElementById("predictGroup").innerHTML += "<br>Student 2nd Prediction:&nbsp;&nbsp;" ;
 		document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict2));
 		document.getElementById("predictGroup").innerHTML += "<br><br>";
-		document.getElementById("predictGroup").innerHTML += "Student 1st Prediction:&nbsp;&nbsp;" ;
+		}
+		document.getElementById("predictGroup").innerHTML += "<br>Student 1st Prediction:&nbsp;&nbsp;" ;
 	document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Predict1));
 
-	document.getElementById("predict").innerHTML = data.Predict;
-  
-  
-					  if (data.Predict == "Good" ) {
-						  document.getElementById("predict").setAttribute("color", "green");
-  
-  
-  
-					  } else if (data.Predict == "OK" ) {
-						  document.getElementById("predict").setAttribute("color", "#ecc400");
-  
-  
-					  } else {
-						  document.getElementById("predict").setAttribute("color", "red");
-					
-					  }		
+	
 	
 		});
-
-		
-		
-
-});
-
-// var search156 = $resource('/api/grades/csce156/:nuid');
-// var search235 = $resource('/api/grades/csce235/:nuid');
-
-// search156.get({nuid:NUID}, function(data){
-
-
-// 	if (data.Predict == undefined){
-// 		return;
-// 	}
-// 	console.log("Predict1 of 156 = ", data.Predict1);
-// 	console.log("Predict2 of 156 = ", data.Predict2);
-// 	console.log("Predict3 of 156 = ", data.Predict3);
-
-
-// 	});
-
-// 	search235.get({nuid:NUID}, function(data){
-
-// 		if (data.Predict == undefined){
-// 			return;
-// 		}
-
-// 		console.log("Predict1 of 235 = ", data.Predict1);
-// 		console.log("Predict2 of 235 = ", data.Predict2);
-// 		console.log("Predict3 of 235 = ", data.Predict3);
-	
-// 		});
 
 
   		}
@@ -1204,11 +1186,20 @@ document.getElementById("predict").innerHTML = data.Predict;
 				  return;
 			  }
 			  if (course1 == "" && $scope.course == "csce156"){
+			
+  
+					$(".alert").hide().show('medium');
+				
 				$scope.message = "You not enrolled in csce156";
 				return;
 			  }
 			  if (course2 == "" && $scope.course == "csce235"){
-				$scope.message = "You not enrolled in csce235";
+				
+  
+					$(".alert").hide().show('medium');
+			
+				  $scope.message = "You not enrolled in csce235";
+				
 				return;
 			  }
 			  if ($scope.course == "csce235"){
@@ -1220,7 +1211,7 @@ document.getElementById("predict").innerHTML = data.Predict;
 			  }
               console.log('/student/' + $routeParams.username + "/viewGrade/" + $scope.course);
               localStorage.setItem('course', $scope.course);
-              window.location.href = 'viewGrade1.html';
+              window.location.href = 'viewGrade2.html';
 			//   console.log('/student/' + $routeParams.username + "/viewGrade/" + $scope.course);
 			//   $location.path('/student/' + $routeParams.username + "/viewGrade/" + $scope.course);
 		  
