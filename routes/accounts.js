@@ -51,6 +51,29 @@ router.get('/image/:username/:url', function(req, res) {
   
 }); 
 
+// change password
+router.get('/changePassword/:nuid/:password', function(req, res) {
+    var collection = db.get('accounts');
+    console.log(" trong get image " );
+
+    var myquery = { NUID: req.params.nuid };
+    var newvalues = { $set: {  Password: req.params.password } };
+    
+    collection.update(myquery, newvalues, function(err, res) {
+        if (err) return console.log(err);
+    console.log("1 password updated");
+    // if (account == null) {
+    //     return res.json({});
+    // }
+    
+    
+
+    });
+
+ 
+  
+}); 
+
 // get the accounts info with the username as the input from the database
 router.get('/:username', function(req, res) {
     var collection = db.get('accounts');
@@ -292,22 +315,28 @@ router.post('/register', function(req, res) {
     var wrapObj = {
         code: ""
     };
+    console.log("hung chu");
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < 6; i++)
         wrapObj.code += possible.charAt(Math.floor(Math.random() * possible.length));
+        console.log("hung chu 1");
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'Outlook',
         auth: {
-            user: 'predapp.system@gmail.com',
-            pass: 'metsysppaderp'
+            user: 'gradePredict@outlook.com',
+            pass: 'Grade1997@'
         }
     });
+    console.log("hung chu 2");
     var mailOptions = {
-        from: 'predapp.system@gmail.com',
+        from: 'gradePredict@outlook.com',
         to: req.body.email,
         subject: 'Confirmation',
         html: '<h1>Hi! Welcome to the system.</h1><p><i>This is an auto-generated email from Grade Prediction System.</i></p><p>Your confirmation code is: <font size="6"><b>' + wrapObj.code + '</b></font></p>'
     };
+    wrapObj.code
+    console.log(" wrapObj.code = ",  wrapObj.code);
+    console.log("req.body.email = ", req.body.email);
 
     // press send confirmation code 
     transporter.sendMail(mailOptions, function(error, info) {
@@ -318,6 +347,57 @@ router.post('/register', function(req, res) {
         }
     });
     res.json(wrapObj);
+
+ 
+
+
+}); 
+
+// change pass 
+router.post('/changePassword', function(req, res) {
+    const nodemailer = require('nodemailer');
+    var wrapObj = {
+        code: ""
+    };
+    console.log("hung chu");
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 6; i++)
+        wrapObj.code += possible.charAt(Math.floor(Math.random() * possible.length));
+        console.log("hung chu 1");
+    var transporter = nodemailer.createTransport({
+        service: 'Outlook',
+        auth: {
+            user: 'gradePredict@outlook.com',
+            pass: 'Grade1997@'
+        }
+    });
+    console.log("hung chu 2");
+    var mailOptions = {
+        from: 'gradePredict@outlook.com',
+        to: req.body.email,
+        subject: 'Student request to change the password',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://localhost:3001/#/changePassword\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+    };
+    wrapObj.code
+    console.log(" wrapObj.code = ",  wrapObj.code);
+    console.log("req.body.email = ", req.body.email);
+
+    // press send confirmation code 
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+    res.json(wrapObj);
+
+ 
+
+
 }); 
 
 module.exports = router;

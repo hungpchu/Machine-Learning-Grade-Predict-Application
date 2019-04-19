@@ -44,6 +44,14 @@ var voice = {
 		  templateUrl: 'partials/home.html',
 		  controller: 'LoginCtrl'
 	  })
+	  .when('/forgotPassword', {
+		templateUrl: 'partials/forgotPassword.html',
+		controller: 'ForgotCtrl'
+	})
+	.when('/changePassword', {
+		templateUrl: 'partials/changePassword.html',
+		controller: 'ChangePasswordCtrl'
+	})
 	  .when('/register', {
 		  templateUrl: 'partials/register.html',
 		  controller: 'RegisterCtrl'
@@ -94,6 +102,7 @@ var voice = {
 
 // 	console.log($scope.username);
 //   console.log(angular.element('username').attr('ng-model'));
+
   
 		  $scope.validate = function() {
 			  $scope.username = $scope.username == undefined ? "" : $scope.username;
@@ -154,6 +163,98 @@ var voice = {
 				  }
 			  });
 		  }
+
+		//   $scope.forgot = function() {
+
+		// 	// var Email = $resource('/api/accounts/register');
+			  
+		// 	// Email.save({email: "cphung1997@gmail.com"}, function(data) {
+		// 	// 	correctCode = data.code;
+		// 	// });
+
+		// 	window.location.href = 'forgotPassword.html';
+
+
+
+		//   }
+	  }
+  ]);
+// forgotPassword
+  app.controller('ForgotCtrl', ['$scope', '$resource', '$location',
+  
+  
+  function($scope, $resource, $location) {
+
+	// window.location.href = '/partials/forgotPassword.html';
+	
+//   console.log(angular.element('username').attr('ng-model'));
+console.log("Hung");
+
+$scope.sendEmail = function(){
+	console.log("jing");
+	console.log($scope.email);
+
+	
+
+	var Email = $resource('/api/accounts/changePassword');
+			  
+			Email.save({email: $scope.email}, function(data) {
+				// correctCode = data.code;
+			
+			if($scope.email != undefined){
+				$(".alert").show('medium');
+	
+	$scope.message = "Please check your email for changing password";
+			}else{
+				$(".alert").show('medium');
+	
+	$scope.message = "Your email is wrong";
+			}
+			});
+
+			$(".alert").alert('close');
+				
+}
+  
+		 
+	  }
+  ]);
+
+  // changePassword
+  app.controller('ChangePasswordCtrl', ['$scope', '$resource', '$location',
+  
+  
+  function($scope, $resource, $location) {
+
+	
+//   console.log(angular.element('username').attr('ng-model'));
+console.log("changePassword");
+
+
+$scope.reset = function(){
+	console.log("jing");
+	console.log($scope.nuid);
+	console.log($scope.password);
+	$(".alert").show('medium');
+	
+	$scope.message = "Changed password successfully";
+
+	var resetPassword =  $resource('/api/accounts/changePassword/:nuid/:password');
+
+	resetPassword.get({nuid: $scope.nuid,password: $scope.password}, function(account) {
+			console.log("update password");
+
+
+
+	  });
+
+
+
+				
+}
+
+  
+		 
 	  }
   ]);
   
@@ -258,22 +359,22 @@ var voice = {
 			  });
 		  }
 		  
-		  // verify
-		//   $scope.verify = function() {
-		// 	  $scope.message = "";
-		// 	  if (correctCode == "") {
-		// 		  $scope.message = "The confirmation code has not been generated.";
-		// 		  return;
-		// 	  }
+		 // verify
+		  $scope.verify = function() {
+			  $scope.message = "";
+			  if (correctCode == "") {
+				  $scope.message = "The confirmation code has not been generated.";
+				  return;
+			  }
 			  
-		// 	  // press verify
-		// 	  if (($scope.confirmCode).trim() == correctCode) {
-		// 		  confirmed = true;
-		// 		  $scope.message = "Email confirmed!";
-		// 	  } else {
-		// 		  $scope.message = "Incorrect code!";
-		// 	  }
-		 // }
+			  // press verify
+			  if (($scope.confirmCode).trim() == correctCode) {
+				  confirmed = true;
+				  $scope.message = "Email confirmed!";
+			  } else {
+				  $scope.message = "Incorrect code!";
+			  }
+		 }
 		  
   
 		  $scope.reset = function() {
@@ -373,10 +474,10 @@ var voice = {
 			//   }
   
 
-			//   if (!confirmed) {
-			// 	  $scope.message = "Your email has not been confirmed yet!";
-			// 	  return;
-			//   }
+			  if (!confirmed) {
+				  $scope.message = "Your email has not been confirmed yet!";
+				  return;
+			  }
 			  
 			  if ($scope.password == undefined || $scope.password == "") {
 				  $scope.message = "Password cannot be empty!";

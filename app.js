@@ -24,6 +24,7 @@ var accounts = require('./routes/accounts');
 var models = require('./routes/models');
 var multipp = require('./routes/multipp');
 var grades = require('./routes/grades');
+var forgot = require('./routes/forgot')
 // var picture = require('./routes/picture');
 
 var app = express();
@@ -44,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.use('/users', users);
-
+app.use('/forgot', forgot);
 app.use('/api/accounts', accounts);
 
 app.use('/api/grades', grades);
@@ -148,7 +149,7 @@ app.post('/', function (req, res){
 
   // res.send('Thank for uploading');
  
-  // res.render('index', { title: 'HungCHU2' });
+  // res.render('', { title: 'HungCHU2' });
 });
 
 
@@ -172,6 +173,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
 module.exports = app;
 
 
@@ -194,3 +197,4 @@ module.exports = app;
 // }, 4000);
  
 // }
+

@@ -1,0 +1,145 @@
+<style>
+        table, th, td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+            background-color:white;
+        }
+    
+    
+    input[type=text]{
+        width:100%;
+        border:2px solid #aaa;
+        border-radius:4px;
+        margin:8px 0;
+        outline:none;
+        padding:8px;
+        box-sizing:border-box;
+        transition:.3s;
+        
+      }
+      
+      input[type=text]:focus{
+        border-color:dodgerBlue;
+        box-shadow:0 0 8px 0 dodgerBlue;
+      }
+      
+      .inputWithIcon input[type=text]{
+        padding-left:10px;
+      }
+      
+      .inputWithIcon{
+        position:relative;
+      }
+      
+      .inputWithIcon i{
+        position:absolute;
+        padding-left:60px;
+        right:10px;
+        top:36px;
+        padding:8.5px 8px;
+        color:#aaa;
+        transition:.3s;
+      }
+      
+      .inputWithIcon input[type=text]:focus + i{
+        color:dodgerBlue;
+      }
+      
+      .inputWithIcon.inputIconBg i{
+        background-color:#aaa;
+        color:#fff;
+        padding:9px 4px;
+        border-radius:4px 0 0 4px;
+      }
+      
+      .inputWithIcon.inputIconBg input[type=text]:focus + i{
+        color:#fff;
+        background-color:dodgerBlue;
+      }
+    
+       #predictGroup{
+    
+    max-height: 600px;
+    max-width: 400px;
+    position: absolute;
+    top: 420px;
+    left: 40px;
+    
+    
+    }   
+    </style>
+    
+    <div ng-app = "Grade" ng-controller = "searchStudCtrl" style = "text-align:center">
+  
+    
+            <div style = "width: 260px; height: 30px;" class="inputWithIcon">
+                    <label>Search studentname</label>
+                <input type="text" placeholder="Enter studentname" ng-model = "fullname">
+                <i class="fa fa-user fa-lg fa-fw" aria-hidden="true" ></i>
+                <button class = "btn btn-primary" style = "width:80px;margin-left:10px" ng-click = "search()">Search</button>	
+            </div>
+    
+            <div id = "predictGroup" style = "background-color:#f3f3f3;max-width:400px;width:80%;margin:10px auto;padding:20px 20px 20px 20px;border:2px solid lightskyblue;border-radius:5px;font-size:18px"><strong><font id = "predict"></font></strong><br>
+                </div>
+    
+            
+                <div style = "float:right;width:68%;padding-left:5px">
+                  <div style = "min-height:100px;overflow:hidden;display:block;background-color:#f3f3f3;width:100%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
+                    <h4><strong>Statistics for each prediction group:</strong></h4>
+                    <div style = "margin-bottom:15px">
+                      <label>Choose class</label>
+                      <select ng-model = "courseStat" style = "width:150px;height:30px;" ng-change = "getLists()">
+                        <option disable selected value>Choose course...</option>
+                        <option value = "csce156">CSCE 156</option>
+                        <option value = "csce235">CSCE 235</option>
+                      </select>
+                    </div>
+
+                    <!-- <button class = "btn btn-primary" style = "width:80px;margin-left:10px" ng-click = "good">Good</button>	
+                    <button class = "btn btn-primary" style = "width:80px;margin-left:10px" ng-click = "ok">OK</button>	
+                    <button class = "btn btn-primary" style = "width:80px;margin-left:10px" ng-click = "highRisk">High-risk</button>	 -->
+
+                    <label>Show predict</label>
+                    <select ng-model = "choice" style = "width:150px;height:30px;" ng-change = "getLists()">
+                      <option disable selected value>Choose Prediction</option>
+                      <option value = "Good">Good</option>
+                      <option value = "OK">OK</option>
+                      <option value = "High-risk">High-risk</option>
+                  
+                      
+                    </select>
+                  
+
+                  <br></br>
+                    <p id = "counter"></p>
+
+            
+                    <table border = "0" id = "Predict1" style = "width:32.5%;margin-right:10px;float:left;">
+                      <tr>
+                        <th style = "text-align:center;background-color:rgb(0, 92, 128);color:white;border-color:rgba(255,255,255,0)">Predict1</th>
+                      </tr>
+                    </table>
+            
+                    <table border = "0" id = "Predict2" style = "width:32.5%;margin-right:10px;float:left;">
+                      <tr>
+                        <th style = "text-align:center;background-color:rgb(0, 92, 128);color:white;border-color:rgba(255,255,255,0)">Predict2</th>
+                      </rgb(0, 92, 128)
+                    </table>
+            
+                    <table border = "0" id = "Predict3" style = "width:32.5%;float:left;">
+                      <tr>
+                        <th style = "text-align:center;background-color:rgb(0, 92, 128);color:white;border-color:rgba(255,255,255,0)">Predict3</th>
+                      </tr>
+                    </table>
+            
+                  </div>
+            
+            
+                
+                </div>
+    
+    
+    </div>
+    
+    
