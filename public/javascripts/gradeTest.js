@@ -235,16 +235,22 @@ $scope.reset = function(){
 	console.log("jing");
 	console.log($scope.nuid);
 	console.log($scope.password);
-	$(".alert").show('medium');
 	
-	$scope.message = "Changed password successfully";
 
 	var resetPassword =  $resource('/api/accounts/changePassword/:nuid/:password');
 
 	resetPassword.get({nuid: $scope.nuid,password: $scope.password}, function(account) {
 			console.log("update password");
 
-
+			if($scope.nuid != undefined && $scope.password != undefined){
+				$(".alert").show('medium');
+	
+	$scope.message = "Changed password successfully";
+			}else{
+				$(".alert").show('medium');
+	
+	$scope.message = "There is something wrong with your NUID and new";
+			}
 
 	  });
 
@@ -695,6 +701,11 @@ $scope.reset = function(){
 				  $scope.message = "No course is chosen.";
 				  return;
 			  }
+
+		
+var test = $scope.predictionToRun;
+			  console.log("predict = "+ $scope.predictionToRun);
+			  console.log("predict end= "+ test[test.length - 1]);
 			  var Grades = $resource('/api/grades/' + $scope.courseToRun);
   
   
@@ -717,7 +728,7 @@ $scope.reset = function(){
 						  for(var prop in data.list) {
 							  wrapObj.fields++;
 							  console.log("thisGrade[data.list[prop]]  = ");
-						  console.log(thisGrade[data.list[prop]]);
+						//   console.log(thisGrade[data.list[prop]]);
 							  
 							  if (thisGrade[data.list[prop]] != undefined) {
 								  validGrade[data.list[prop]] = thisGrade[data.list[prop]];
@@ -740,8 +751,19 @@ $scope.reset = function(){
 						  $scope.message = "Predictions are generated!"
 					  });
 				  });
+
+
   
   
+			  });
+			  var predictEmail = "prediction " + test[test.length - 1];
+
+			  console.log("predictEmail = "+ predictEmail);
+
+			  var Email = $resource('/api/accounts/newPrediction');
+			  
+			  Email.save({email:predictEmail}, function(data) {
+		
 			  });
 		  };
   

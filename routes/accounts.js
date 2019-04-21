@@ -312,6 +312,8 @@ router.post('/', function(req, res) {
 //send email confirm
 router.post('/register', function(req, res) {
     const nodemailer = require('nodemailer');
+
+ 
     var wrapObj = {
         code: ""
     };
@@ -396,6 +398,59 @@ router.post('/changePassword', function(req, res) {
     res.json(wrapObj);
 
  
+
+
+}); 
+
+router.post('/newPrediction', function(req, res) {
+    const nodemailer = require('nodemailer');
+
+    var collection = db.get('accounts');
+
+    collection.distinct("Email", {},(function(err, docs){
+              if(err){
+                  return console.log(err);
+              }
+              if(docs){  
+                 console.log("allEmail");
+                  console.log(docs);
+            
+                 console.log("hung chu");
+                 
+                 var transporter = nodemailer.createTransport({
+                     service: 'Outlook',
+                     auth: {
+                         user: 'gradePredict@outlook.com',
+                         pass: 'Grade1997@'
+                     }
+                 });
+                 console.log("hung chu 2");
+                 var mailOptions = {
+                    from: 'gradePredict@outlook.com',
+                    to: docs,
+                    subject: 'New ' + req.body.email + ' available',
+                    text: 'There are new prediction in your account.\n\n' +
+                      'Please click on the following link to check your new prediction:\n\n' +
+                      'http://localhost:3001/#/\n\n'
+                };
+               
+             
+                 // press send confirmation code 
+                 transporter.sendMail(mailOptions, function(error, info) {
+                     if (error) {
+                         console.log(error);
+                     } else {
+                         console.log('Email sent: ' + info.response);
+                     }
+                 });
+
+                  
+              
+              
+              
+                 }
+         })
+      ); 
 
 
 }); 
