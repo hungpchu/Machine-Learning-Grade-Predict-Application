@@ -51,6 +51,42 @@ router.get('/image/:username/:url', function(req, res) {
   
 }); 
 
+router.get('/view/:nuid/:viewCount', function(req, res) {
+    var collection = db.get('accounts');
+    console.log(" trong get view count " );
+
+    var myquery = { NUID: req.params.nuid };
+    var newvalues = { $set: {  viewCount: req.params.viewCount } };
+    
+    collection.update(myquery, newvalues, function(err, res) {
+        if (err) return console.log(err);
+    console.log("view updated");
+     
+
+    });
+
+ 
+  
+}); 
+
+router.get('/allView/:nuid/:allViewCount', function(req, res) {
+    var collection = db.get('accounts');
+    console.log(" trong get view count " );
+
+    var myquery = { NUID: req.params.nuid };
+    var newvalues = { $set: {  allView: req.params.allViewCount } };
+    
+    collection.update(myquery, newvalues, function(err, res) {
+        if (err) return console.log(err);
+    console.log("all view updated");
+     
+
+    });
+
+ 
+  
+}); 
+
 // change password
 router.get('/changePassword/:nuid/:password', function(req, res) {
     var collection = db.get('accounts');
@@ -454,5 +490,43 @@ router.post('/newPrediction', function(req, res) {
 
 
 }); 
+
+
+router.post('/viewCount', function(req, res) {
+    
+    var collection = db.get('accounts');
+
+    collection.distinct("viewCount", {},(function(err, docs){
+              if(err) return console.log(err);
+            
+             // if(docs){  
+                 console.log("userView = ");
+                  console.log(docs); 
+                  var sum = 0;
+                  for( var i = 0; i < docs.length; i++){
+                          sum += parseInt(docs[i]);
+                  }              
+                  console.log("sum = " + sum);
+
+                  var myquery = { Role: "Professor" };
+              var newvalues = { $set: {  userView: sum } };
+    
+       collection.update(myquery, newvalues, function(err, res) {
+            if (err) return console.log(err);
+                         console.log("user view updated");
+     
+
+           });
+
+
+              
+                // }
+         })
+      ); 
+
+
+}); 
+
+
 
 module.exports = router;

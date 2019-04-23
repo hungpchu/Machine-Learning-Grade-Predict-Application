@@ -28,8 +28,10 @@
 		{{message}}
 	</p>
 
+	<div class="col-sm-4">
+
 	<div style = "max-width:1200px;margin:auto;width:100%">
-		<div style = "width:30%;float:left">
+		<div style = "width:80%">
 			<div style = "display:block;background-color:#f3f3f3;max-width:600px;width:100%;min-width:320px;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
 				<h4>Profile:</h4>
 				<table border = "0" id = "profileTable" style = "margin:auto">
@@ -99,7 +101,7 @@
 	
 		
 		
-		<div style = "float:right;width:68%;padding-left:5px">
+		<!-- <div style = "float:right;width:68%;padding-left:5px">
 			<div style = "min-height:100px;overflow:hidden;display:block;background-color:#f3f3f3;width:100%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
 				<h4>Statistics:</h4>
 				<div style = "margin-bottom:15px">
@@ -134,8 +136,80 @@
 
 
 		
-		</div>
+		</div> -->
+
+		<!-- <div class="row"></div> -->
+
+		<!-- <div class="well span3">
+			<h3>Right Now</h3>
+			<p id="connections" style="font-size: 96px;line-height: 66px">1</p>
+			<h5>active visitors</h5>
+	
+</div> -->
 	</div>
+	<div class="row"></div>
+
+	<div class="col-sm-5">
+	<div class="well span3">
+			<h3>Right Now</h3>
+			<p id="userView" style="font-size: 46px;line-height: 96px"></p>
+			<h5>active visitors</h5>
+	
+</div>
+</div>
+<div class="col-sm-5">
+		<div class="well span3">
+				<h3>Right Now</h3>
+				<p id="uniqueView" style="font-size: 46px;line-height: 96px"></p>
+				<h5>unique visitors</h5>
+		
+	</div>
+	</div>
+
+	</div>
+
+	<div class="col-sm-4">
+
+	<!-- <div style = "float:right;width:68%;padding-left:5px"> -->
+		<div style = "min-height:100px;overflow:hidden;display:block;background-color:#f3f3f3;width:190%;margin:auto;padding:0 20px 20px 20px;border:2px solid grey;border-radius:5px">
+			<h4>Statistics:</h4>
+			<div style = "margin-bottom:15px">
+				<label>Show statistics for</label>
+				<select ng-model = "courseStat" style = "width:150px;height:30px;" ng-change = "getLists()">
+					<option disable selected value>Choose course...</option>
+					<option value = "csce156">CSCE 156</option>
+					<option value = "csce235">CSCE 235</option>
+				</select>
+			</div>
+			<p id = "counter"></p>
+
+			<table border = "0" id = "goodList" style = "width:32.5%;margin-right:10px;float:left;">
+				<tr>
+					<th style = "text-align:center;background-color:green;color:white;border-color:rgba(255,255,255,0)">Good</th>
+				</tr>
+			</table>
+
+			<table border = "0" id = "okList" style = "width:32.5%;margin-right:10px;float:left;">
+				<tr>
+					<th style = "text-align:center;background-color:#ecc400;color:white;border-color:rgba(255,255,255,0)">OK</th>
+				</tr>
+			</table>
+
+			<table border = "0" id = "hrList" style = "width:32.5%;float:left;">
+				<tr>
+					<th style = "text-align:center;background-color:red;color:white;border-color:rgba(255,255,255,0)">High-risk</th>
+				</tr>
+			</table>
+
+		</div>
+
+
+	
+	<!-- </div> -->
+
+</div>
+
+
 
 
 

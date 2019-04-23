@@ -103,6 +103,28 @@ var voice = {
 // 	console.log($scope.username);
 //   console.log(angular.element('username').attr('ng-model'));
 
+var Account = $resource('/api/accounts/:username');
+var View =  $resource('/api/accounts/allView/:nuid/:allViewCount');
+
+Account.get({username: "hasan3"}, function(account) {
+
+	var allView = account.allView;
+
+	allView++;
+
+	console.log("NUID cua login= " + account.NUID);
+  
+	console.log("alView trong login  = "+ allView);
+
+	View.get({nuid: account.NUID,allViewCount: allView}, function(account) {
+			  console.log("update all view");
+
+		});
+
+
+
+});
+
   
 		  $scope.validate = function() {
 			  $scope.username = $scope.username == undefined ? "" : $scope.username;
@@ -572,12 +594,43 @@ $scope.reset = function(){
   
 		  var Account = $resource('/api/accounts/:username');
 		  var Properties = $resource('/api/multipp/properties');
+
+		  var View =  $resource('/api/accounts/view/:nuid/:viewCount');
+
+		  var Allview =  $resource('/api/accounts/viewCount');
+
   
 		  // use resource Account here -> get accounts/hasan3
 		  Account.get({username: $routeParams.username}, function(account) {
 			  $scope.fullname = account["FullName"];
   
 			  console.log(" account[Full name] =  " + account["Full name"]);
+
+			  var viewCount = account.viewCount;
+
+			  viewCount++;
+
+			
+			  console.log("view trong professor = "+ viewCount);
+
+			  View.get({nuid: account.NUID,viewCount: viewCount}, function(account) {
+						console.log("update viewCount");
+	
+				  });
+
+				  Allview.save({viewCount: viewCount}, function(data){
+						console.log("userView updated");
+
+				  });
+
+				  console.log("allview = " + account.allView);
+
+				  var uniqueView = 0;
+
+				  if (account.allView  >  account.userView) uniqueView = account.allView - account.userView;
+
+				  document.getElementById("userView").innerHTML = account.userView;
+				  document.getElementById("uniqueView").innerHTML = uniqueView;
 			  
 			  // use resource Properties here -> post /api/multipp/properties
 			  Properties.save({filename: "UserInfo"}, function(data) {
@@ -646,6 +699,8 @@ $scope.reset = function(){
   
 			  // Students return all the info from database 
 			  Students.query(function(data) {
+
+			
 				  for(var i in data) {
 					  var student = data[i];
 					  if (student.Predict == "Good") {
@@ -1035,7 +1090,12 @@ document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Pred
   
 			  // route den file accounts.js 
               var Account = $resource('/api/accounts/:username');
-              var stud = sessionStorage.getItem('hung');
+			  var stud = sessionStorage.getItem('hung');
+			  
+			  var View =  $resource('/api/accounts/view/:nuid/:viewCount');
+
+			
+  
 
   
 			  console.log("stud =" + stud);
@@ -1060,6 +1120,20 @@ document.getElementById("predictGroup").appendChild(chooseColorPredict(data.Pred
 			  var name = account.FullName;
 			  nameArray = name.split(" ");
 			  voiceFiles.push(nameArray[0]);
+
+			  var viewCount = account.viewCount;
+
+			  viewCount++;
+
+			  var viewCountToString = viewCount.toString();
+
+			  console.log("view = "+ viewCount);
+
+			  View.get({nuid: account.NUID,viewCount: viewCount}, function(account) {
+						console.log("update picture");
+	
+				  });
+				
 		
 
 			//   if (localStorage.getItem("rhino1") != account.URL){
